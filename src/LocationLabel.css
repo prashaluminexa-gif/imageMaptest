@@ -1,0 +1,157 @@
+/* LocationLabel.css */
+
+/* Base styles for all animated labels (locations array) */
+.animated-label {
+    position: absolute;
+    text-align: center;
+    font-family: "'Montserrat', sans-serif";
+    font-size: 14px;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 6px 12px;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgb(85, 85, 85);
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+
+  .project-8-label{
+    background-color: none;
+    font-size: 8px;
+  }
+  
+  /* Hover effect for animated labels */
+  .animated-label:hover {
+    background-color: rgba(255, 255, 255, 1);
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Specific styles for project-5-label (most locations) */
+  .project-5-label {
+    font-family: "'Montserrat', sans-serif";
+    border: 1px solid #d6d6d6;
+  }
+  
+  /* Specific styles for project-8-label (Club House) */
+  .project-8-label {
+    font-family: "'Montserrat', sans-serif";
+    border: 1px solid #666;
+    color: white !important;
+    background-color: rgba(15, 77, 35, 0.85) !important;
+  }
+  
+  /* Separate styles for plotLabel (Plot 1 in locations array) */
+  .plotLabel {
+    font-family: "'Montserrat', sans-serif";
+    font-weight: 900;
+    font-size: 16px;
+    color: #007bff !important; /* Bootstrap blue for distinction */
+    background-color: rgba(230, 240, 255, 0.9); /* Light blue background */
+    padding: 8px 14px;
+    border-radius: none !important;
+  }
+  
+  /* Hover effect for plotLabel */
+  .plotLabel:hover {
+    background-color: rgba(230, 240, 255, 1);
+    transform: translate(-50%, -50%) scale(1.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Base styles for persistent tooltips (tooltips array) */
+  .persistent-tooltip {
+    position: absolute;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    line-height: 1.4; /* Improve readability for multi-line text */
+  }
+  
+  /* Specific styles for project-6-label (Survey- No. 215) */
+  .project-6-label {
+    font-family: "'Montserrat', sans-serif";
+    font-weight: bold;
+  }
+  
+  /* Specific styles for project-7-label (Mogg’s Terra Hill) */
+  .project-7-label {
+    font-family: "'Montserrat', sans-serif";
+    border: 1px solid rgb(82, 82, 82); /* Matches the border prop in JS */
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+  
+  /* Ensure strong tags in tooltips are bold */
+  .persistent-tooltip strong {
+    font-weight: bold;
+  }
+  
+  /* Styles for plot hover labels (plot blocks on hover) */
+  .plot-hover-label {
+    position: absolute;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 6px 12px;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(185, 185, 185, 0.1);
+    pointer-events: none; /* Prevents interference with mouse events */
+    white-space: nowrap;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    /* Adjustments for animated labels */
+    .animated-label {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 2px;
+    }
+    
+    .plot-center-label{
+      font-size: 2px !important;
+      padding: 2px 1px !important;
+    }
+    .project-5-label {
+        border: 1px solid #ccc;
+        border-radius: none !important;
+      }
+    /* Adjustments for plotLabel */
+    .plotLabel {
+      font-size: 14px;
+      padding: 6px 10px;
+    }
+  
+    /* Adjustments for persistent tooltips */
+    .persistent-tooltip {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 1px;
+    }
+  
+    /* Decrease size of project-6-label on mobile */
+    .project-6-label {
+      font-size: 10px; /* Smaller size for mobile */
+      padding: 4px 8px;
+      border: none !important; /* Adjust padding to match smaller size */
+    }
+  
+    /* Decrease size of project-7-label on mobile */
+    .project-7-label {
+      font-size: 8px; /* Smaller size for mobile */
+      padding: 4px 8px; /* Adjust padding to match smaller size */
+    }
+  
+    /* Adjustments for plot hover labels */
+    .plot-hover-label {
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+    
+  }

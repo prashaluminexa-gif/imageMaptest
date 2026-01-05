@@ -1,0 +1,2042 @@
+{
+  "plots": [
+    {
+      "projectId": "plot-1",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R1",
+      "SurveyNumber": "21/3",
+      "AreaSqFt": 7078.5,
+      "AreaSqMt": 657.605,
+      "AreaGuntas": 6.5,
+      "facing": "N&W",
+      "coconutTree": 1,
+      "lengthFt": 76.752,
+      "widthFt": 91.184,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-2",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R2",
+      "SurveyNumber": "21/3",
+      "AreaSqFt": 7078.5,
+      "AreaSqMt": 657.605,
+      "AreaGuntas": 6.5,
+      "facing": "N",
+      "coconutTree": 0,
+      "lengthFt": 72.816,
+      "widthFt": 91.184,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-3",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R3",
+      "SurveyNumber": "21/3",
+      "AreaSqFt": 8167.5,
+      "AreaSqMt": 758.775,
+      "AreaGuntas": 7.5,
+      "facing": "N&E",
+      "coconutTree": 0,
+      "lengthFt": 82.656,
+      "widthFt": 91.184,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-4",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R4",
+      "SurveyNumber": "21/2",
+      "AreaSqFt": 7623.0,
+      "AreaSqMt": 708.19,
+      "AreaGuntas": 7.0,
+      "facing": "N&W",
+      "coconutTree": 0,
+      "lengthFt": 77.408,
+      "widthFt": 99.056,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-5",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R5",
+      "SurveyNumber": "21/2",
+      "AreaSqFt": 7623.0,
+      "AreaSqMt": 708.19,
+      "AreaGuntas": 7.0,
+      "facing": "N",
+      "coconutTree": 0,
+      "lengthFt": 75.44,
+      "widthFt": 100.368,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-6",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R6",
+      "SurveyNumber": "21/2",
+      "AreaSqFt": 7623.0,
+      "AreaSqMt": 708.19,
+      "AreaGuntas": 7.0,
+      "facing": "N",
+      "coconutTree": 0,
+      "lengthFt": 75.112,
+      "widthFt": 102.992,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-7",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R7",
+      "SurveyNumber": "21/2",
+      "AreaSqFt": 7623.0,
+      "AreaSqMt": 708.19,
+      "AreaGuntas": 7.0,
+      "facing": "N&E",
+      "coconutTree": 0,
+      "lengthFt": 73.472,
+      "widthFt": 104.304,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-8",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R8",
+      "SurveyNumber": "21/3",
+      "AreaSqFt": 7078.5,
+      "AreaSqMt": 657.605,
+      "AreaGuntas": 6.5,
+      "facing": "S&W",
+      "coconutTree": 0,
+      "lengthFt": 77.08,
+      "widthFt": 91.184,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-9",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R9",
+      "SurveyNumber": "21/3",
+      "AreaSqFt": 7078.5,
+      "AreaSqMt": 657.605,
+      "AreaGuntas": 6.5,
+      "facing": "S",
+      "coconutTree": 0,
+      "lengthFt": 75.768,
+      "widthFt": 92.496,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-10",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R10",
+      "SurveyNumber": "21/3",
+      "AreaSqFt": 8712.0,
+      "AreaSqMt": 809.36,
+      "AreaGuntas": 8.0,
+      "facing": "S&E",
+      "coconutTree": 0,
+      "lengthFt": 87.248,
+      "widthFt": 95.12,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-11",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R11",
+      "SurveyNumber": "21/2",
+      "AreaSqFt": 7623.0,
+      "AreaSqMt": 708.19,
+      "AreaGuntas": 7.0,
+      "facing": "S&W",
+      "coconutTree": 0,
+      "lengthFt": 73.8,
+      "widthFt": 99.056,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-12",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R12",
+      "SurveyNumber": "21/2",
+      "AreaSqFt": 7623.0,
+      "AreaSqMt": 708.19,
+      "AreaGuntas": 7.0,
+      "facing": "S",
+      "coconutTree": 0,
+      "lengthFt": 75.44,
+      "widthFt": 100.696,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-13",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R13",
+      "SurveyNumber": "21/2",
+      "AreaSqFt": 7623.0,
+      "AreaSqMt": 708.19,
+      "AreaGuntas": 7.0,
+      "facing": "S",
+      "coconutTree": 0,
+      "lengthFt": 73.472,
+      "widthFt": 102.008,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-14",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R14",
+      "SurveyNumber": "21/2",
+      "AreaSqFt": 7623.0,
+      "AreaSqMt": 708.19,
+      "AreaGuntas": 7.0,
+      "facing": "S&E",
+      "coconutTree": 0,
+      "lengthFt": 77.08,
+      "widthFt": 103.32,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-15",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R15",
+      "SurveyNumber": "21/3",
+      "AreaSqFt": 7078.5,
+      "AreaSqMt": 657.605,
+      "AreaGuntas": 6.5,
+      "facing": "N&W",
+      "coconutTree": 0,
+      "lengthFt": 77.08,
+      "widthFt": 94.136,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-16",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R16",
+      "SurveyNumber": "21/3",
+      "AreaSqFt": 7078.5,
+      "AreaSqMt": 657.605,
+      "AreaGuntas": 6.5,
+      "facing": "N",
+      "coconutTree": 0,
+      "lengthFt": 74.784,
+      "widthFt": 97.088,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-17",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R17",
+      "SurveyNumber": "21/3",
+      "AreaSqFt": 9801.0,
+      "AreaSqMt": 910.53,
+      "AreaGuntas": 9.0,
+      "facing": "N&E",
+      "coconutTree": 0,
+      "lengthFt": 96.104,
+      "widthFt": 101.68,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-18",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R18",
+      "SurveyNumber": "21/3",
+      "AreaSqFt": 7078.5,
+      "AreaSqMt": 657.605,
+      "AreaGuntas": 6.5,
+      "facing": "S&E",
+      "coconutTree": 0,
+      "lengthFt": 75.44,
+      "widthFt": 94.136,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-19",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R19",
+      "SurveyNumber": "21/3",
+      "AreaSqFt": 7078.5,
+      "AreaSqMt": 657.605,
+      "AreaGuntas": 6.5,
+      "facing": "S",
+      "coconutTree": 0,
+      "lengthFt": 73.144,
+      "widthFt": 97.088,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-20",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R20",
+      "SurveyNumber": "21/3",
+      "AreaSqFt": 10890.0,
+      "AreaSqMt": 1011.7,
+      "AreaGuntas": 10.0,
+      "facing": "S&E",
+      "coconutTree": 0,
+      "lengthFt": 107.584,
+      "widthFt": 101.68,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-21",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R21",
+      "SurveyNumber": "21/2",
+      "AreaSqFt": 10345.5,
+      "AreaSqMt": 961.115,
+      "AreaGuntas": 9.5,
+      "facing": "S&W",
+      "coconutTree": 0,
+      "lengthFt": 70.192,
+      "widthFt": 136.776,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-22",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R22",
+      "SurveyNumber": "21/2",
+      "AreaSqFt": 10345.5,
+      "AreaSqMt": 961.115,
+      "AreaGuntas": 9.5,
+      "facing": "S",
+      "coconutTree": 0,
+      "lengthFt": 73.472,
+      "widthFt": 141.368,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-23",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R23",
+      "SurveyNumber": "21/2",
+      "AreaSqFt": 10345.5,
+      "AreaSqMt": 961.115,
+      "AreaGuntas": 9.5,
+      "facing": "S",
+      "coconutTree": 0,
+      "lengthFt": 78.72,
+      "widthFt": 147.272,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-24",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R24",
+      "SurveyNumber": "21/2",
+      "AreaSqFt": 10345.5,
+      "AreaSqMt": 961.115,
+      "AreaGuntas": 9.5,
+      "facing": "S&E",
+      "coconutTree": 0,
+      "lengthFt": 72.16,
+      "widthFt": 152.848,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-25",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R25",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "W",
+      "coconutTree": 0,
+      "lengthFt": 108.896,
+      "widthFt": 66.912,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-26",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R26",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "W",
+      "coconutTree": 0,
+      "lengthFt": 109.88,
+      "widthFt": 59.696,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-27",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R27",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "W",
+      "coconutTree": 0,
+      "lengthFt": 110,
+      "widthFt": 59.368,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-28",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R28",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "W",
+      "coconutTree": 0,
+      "lengthFt": 111.192,
+      "widthFt": 58.712,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-29",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R29",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "W",
+      "coconutTree": 0,
+      "lengthFt": 112.176,
+      "widthFt": 58.384,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-30",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R30",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "W",
+      "coconutTree": 0,
+      "lengthFt": 112.832,
+      "widthFt": 58.056,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-31",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R31",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "W",
+      "coconutTree": 0,
+      "lengthFt": 113.816,
+      "widthFt": 57.728,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-32",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R32",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "E",
+      "coconutTree": 0,
+      "lengthFt": 113.816,
+      "widthFt": 57.728,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-33",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R33",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "E",
+      "coconutTree": 0,
+      "lengthFt": 112.832,
+      "widthFt": 58.056,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-34",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R34",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "E",
+      "coconutTree": 0,
+      "lengthFt": 112.176,
+      "widthFt": 58.384,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-35",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R35",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "E",
+      "coconutTree": 0,
+      "lengthFt": 111.192,
+      "widthFt": 58.712,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-36",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R36",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "E",
+      "coconutTree": 0,
+      "lengthFt": 110.864,
+      "widthFt": 59.368,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-37",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R37",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "E",
+      "coconutTree": 0,
+      "lengthFt": 109.88,
+      "widthFt": 59.696,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-38",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R38",
+      "SurveyNumber": "22/4",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "E",
+      "coconutTree": 0,
+      "lengthFt": 108.896,
+      "widthFt": 66.912,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-39",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R39",
+      "SurveyNumber": "22/2",
+      "AreaSqFt": 7623.0,
+      "AreaSqMt": 708.19,
+      "AreaGuntas": 7.0,
+      "facing": "E&W",
+      "coconutTree": 0,
+      "lengthFt": 136.448,
+      "widthFt": 57.728,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-40",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R40",
+      "SurveyNumber": "22/2",
+      "AreaSqFt": 8712.0,
+      "AreaSqMt": 809.36,
+      "AreaGuntas": 8.0,
+      "facing": "E&W",
+      "coconutTree": 0,
+      "lengthFt": 138.744,
+      "widthFt": 59.696,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-41",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R41",
+      "SurveyNumber": "22/2",
+      "AreaSqFt": 8712.0,
+      "AreaSqMt": 809.36,
+      "AreaGuntas": 8.0,
+      "facing": "E&W",
+      "coconutTree": 0,
+      "lengthFt": 140.712,
+      "widthFt": 62.976,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-42",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R42",
+      "SurveyNumber": "22/2",
+      "AreaSqFt": 8712.0,
+      "AreaSqMt": 809.36,
+      "AreaGuntas": 8.0,
+      "facing": "E&W",
+      "coconutTree": 0,
+      "lengthFt": 143.992,
+      "widthFt": 54.776,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-43",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R43",
+      "SurveyNumber": "22/2",
+      "AreaSqFt": 7078.5,
+      "AreaSqMt": 657.605,
+      "AreaGuntas": 6.5,
+      "facing": "E&W",
+      "coconutTree": 0,
+      "lengthFt": 145.632,
+      "widthFt": 47.56,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-44",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R44",
+      "SurveyNumber": "22/2",
+      "AreaSqFt": 8494.2,
+      "AreaSqMt": 789.126,
+      "AreaGuntas": 7.8,
+      "facing": "E&W",
+      "coconutTree": 0,
+      "lengthFt": 136.448,
+      "widthFt": 57.728,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-45",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R45",
+      "SurveyNumber": "22/2",
+      "AreaSqFt": 8712.0,
+      "AreaSqMt": 809.36,
+      "AreaGuntas": 8.0,
+      "facing": "E&W",
+      "coconutTree": 0,
+      "lengthFt": 159.408,
+      "widthFt": 59.696,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-46",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R46",
+      "SurveyNumber": "22/2",
+      "AreaSqFt": 8712.0,
+      "AreaSqMt": 809.36,
+      "AreaGuntas": 8.0,
+      "facing": "E&W",
+      "coconutTree": 0,
+      "lengthFt": 155.8,
+      "widthFt": 62.976,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-47",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R47",
+      "SurveyNumber": "22/2",
+      "AreaSqFt": 8712.0,
+      "AreaSqMt": 809.36,
+      "AreaGuntas": 8.0,
+      "facing": "E&W",
+      "coconutTree": 0,
+      "lengthFt": 152.52,
+      "widthFt": 54.776,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-48",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R48",
+      "SurveyNumber": "22/2",
+      "AreaSqFt": 6534.0,
+      "AreaSqMt": 607.02,
+      "AreaGuntas": 6.0,
+      "facing": "E&W",
+      "coconutTree": 0,
+      "lengthFt": 149.896,
+      "widthFt": 47.56,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-49",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R49",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 103.976,
+      "widthFt": 105.288,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-50",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R50",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 103.648,
+      "widthFt": 105.944,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-51",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R51",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 97.416,
+      "widthFt": 112.832,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-52",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R52",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 98.072,
+      "widthFt": 86.264,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-53",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R53",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 103.32,
+      "widthFt": 105.288,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-54",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R54",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 102.008,
+      "widthFt": 106.6,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-55",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R55",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 100.04,
+      "widthFt": 111.848,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-56",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R56",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 127.592,
+      "widthFt": 76.752,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-57",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R57",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 151.208,
+      "widthFt": 87.576,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-58",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R58",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 95.448,
+      "widthFt": 117.096,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-59",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R59",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 94.792,
+      "widthFt": 120.704,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-60",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R60",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 95.448,
+      "widthFt": 124.64,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-61",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R61",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 96.76,
+      "widthFt": 89.216,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-62",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R62",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 127.92,
+      "widthFt": 97.416,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-63",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R63",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 95.448,
+      "widthFt": 113.816,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-64",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R64",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 94.792,
+      "widthFt": 108.24,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-65",
+      "blockName": "Raaga",
+      "plotNumber": "Plot-R65",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 95.448,
+      "widthFt": 102.992,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+      "Status": "Available"
+    },
+    {
+      "projectId": "plot-66",
+      "plotNumber": "Plot-R66",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 96.76,
+      "widthFt": 104.304,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+    "Status": "Available"
+      
+    },
+    {
+      "projectId": "plot-67",
+      "plotNumber": "Plot-R67",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 96.76,
+      "widthFt": 104.304,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+    "Status": "Available"
+    },
+    {
+      "projectId": "plot-68",
+      "plotNumber": "Plot-R68",
+      "SurveyNumber": "TBD",
+      "AreaSqFt": "TBD",
+      "AreaSqMt": "TBD",
+      "AreaGuntas": "TBD",
+      "facing": "TBD",
+      "coconutTree": 0,
+      "lengthFt": 96.76,
+      "widthFt": 104.304,
+      "NumberOfFruitTrees": {
+        "Lemon": 0,
+        "Cashew": 0,
+        "Amla": 0,
+        "ArecaNut": 0,
+        "Jamoon": 0,
+        "Guava": 0,
+        "Pomegranate": 0,
+        "CustardApple": 0,
+        "Chikku": 0,
+        "Mango": 0
+      },
+      "NumberOfForestTrees": {
+        "GFGB": 0,
+        "NeemTree": 0
+      },
+    "Status": "Available"
+    }
+  ]
+}

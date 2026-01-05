@@ -1,0 +1,245 @@
+/* src/Login.css – COMPACT & CLEAN */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('./assets/map-raaga-bg.png') center/cover no-repeat fixed;
+  padding: 1rem;
+  font-family: system-ui, sans-serif;
+}
+
+/* SMALLER CARD */
+.login-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1.8rem 1.4rem;
+  width: 100%;
+  max-width: 340px;           /* ← SMALLER */
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+
+/* SMALLER LOGO */
+.login-logo {
+  width: 100px;
+  margin: 0 auto 1rem;
+  display: block;
+}
+
+/* SMALLER TEXT */
+.login-card h2 {
+  text-align: center;
+  color: #fff;
+  margin: 0 0 1.2rem;
+  font-size: 1.5rem;         /* ← SMALLER */
+  font-weight: 600;
+}
+
+/* INPUTS – NO OVERFLOW */
+.login-group {
+  position: relative;
+  margin-bottom: 1.1rem;
+}
+.login-group input {
+  width: 100%;
+  padding: 0.75rem 0.9rem;   /* ← TIGHTER */
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 0.95rem;
+  box-sizing: border-box;    /* ← FIX OVERFLOW */
+}
+.login-group input::placeholder { color: transparent; }
+.login-group label {
+  position: absolute;
+  top: 50%; left: 0.9rem;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.8);
+  font-size: 0.95rem;
+  pointer-events: none;
+  transition: 0.25s ease;
+  padding: 0 3px;
+}
+.login-group input:focus + label,
+.login-group input:valid + label {
+  top: -0.5rem;
+  left: 0.7rem;
+  font-size: 0.75rem;
+  background: rgba(0,0,0,0.4);
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* PASSWORD TOGGLE */
+.password-toggle {
+  position: absolute;
+  right: 0.8rem; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* ERROR */
+.login-error {
+  color: #ffb3b3;
+  font-size: 0.8rem;
+  text-align: center;
+  margin: 0.4rem 0;
+}
+
+/* BUTTONS */
+.login-btn, .contact-btn, .lead-submit {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.2rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+.login-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+}
+.login-btn:hover:not(:disabled) { transform: translateY(-2px); }
+
+.contact-btn {
+  background: transparent;
+  border: 1px dashed rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.85rem;
+}
+.contact-btn:hover { background: rgba(255,255,255,0.1); }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.modal-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.6rem;
+  width: 90%;
+  max-width: 320px;
+  position: relative;
+}
+.modal-close {
+  position: absolute;
+  top: 8px; right: 12px;
+  background: none; border: none;
+  font-size: 1.4rem;
+  color: #999;
+  cursor: pointer;
+}
+.modal-card h3 {
+  margin: 0 0 0.5rem;
+  text-align: center;
+  font-size: 1.3rem;
+  color: #222;
+}
+.lead-form input {
+  width: 100%;
+  padding: 0.7rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+.lead-status {
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0.5rem 0;
+  color: #2255aa;
+}
+.lead-submit {
+  background: #667eea;
+  color: white;
+  border: none;
+}
+
+/* MOBILE */
+@media (max-width: 380px) {
+  .login-card { padding: 1.5rem 1.2rem; max-width: 300px; }
+  .login-logo { width: 70px; height: 70px; }
+}
+/* ==== NEW HERO TEXT – LUXURY VILLA VIBE ==== */
+.hero-text {
+  text-align: center;
+  margin: 0 0 1.4rem;
+  padding: 0 0.5rem;
+}
+.hero-text h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #fff;
+  margin: 0 0 0.6rem;
+}
+.hero-text p {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: rgba(255,255,255,0.92);
+  margin: 0;
+  opacity: 0.95;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+/* Remove old h2 styles */
+.login-card h2 { display: none; }
+
+/* ==== TIGHTER PARAGRAPH ==== */
+.hero-text p {
+  font-size: 0.78rem !important;   /* ← SMALLER */
+  line-height: 1.38;
+  margin-top: 0.4rem;
+}
+
+/* ==== SUPPORT SECTION ==== */
+.support-section {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* ==== MAGIC FINGERTIP LINE ==== */
+.fingertip-line {
+  margin: 0.8rem 0 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.3px;
+  opacity: 0.95;
+}
+
+.footertext{
+  margin: 0.2rem 0 0;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #bdbdbd;
+  letter-spacing: 0.3px;
+  opacity: 0.95;
+}
+
+.lead-note {
+  margin: 0.10rem 0 0;
+  padding: 0.3rem 0 0;
+  text-align: center;
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: gray;
+  opacity: 0.95;
+}
