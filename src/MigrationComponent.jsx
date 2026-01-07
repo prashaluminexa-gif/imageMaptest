@@ -16,7 +16,7 @@ const MigrationComponent = () => {
       console.log('Imported plotDetails:', plotDetails);
 
       // Extract the plots array
-      const dataToUpload = plotDetails.plots;
+      const dataToUpload = plotDetails.mapplots;
       if (!Array.isArray(dataToUpload)) {
         throw new Error('plotDetails.plots is not an array');
       }
@@ -37,7 +37,7 @@ const MigrationComponent = () => {
         }
 
         // Use projectId as the document ID
-        const docRef = doc(collection(db, 'plots'), plot.projectId);
+        const docRef = doc(collection(db, 'mapplots'), plot.projectId);
         batch.set(docRef, plot);
       });
 

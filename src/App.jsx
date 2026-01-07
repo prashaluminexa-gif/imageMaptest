@@ -10,13 +10,18 @@ import {
 import {
   collection,
   getDocs,
+  addDoc,
+  query,
+  where,
+  serverTimestamp,
 } from "firebase/firestore";
 import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  signInWithPopup,
 } from "firebase/auth";
-import { db, auth } from "./firebase";
+import { db, auth, googleProvider } from "./firebase";
 import Map from "./Map";
 import ProjectDetails from "./ProjectDetails";
 import LoginPage from "./LoginPage";
@@ -24,12 +29,12 @@ import "./App.css";
 import Logo from "./assets/logo.png";
 
 /* --------------------------------------------------------------
-   1. Auth Context – Reliable persistence with Firebase
+   1. Auth Context
    -------------------------------------------------------------- */
 const AuthContext = createContext();
 const useAuth = () => useContext(AuthContext);
 
-const ONE_DAY_MS = 24 * 60 * 60 * 1000; // 24 hours
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const LAST_LOGIN_KEY = "raaga_last_login";
 
 function AuthProvider({ children }) {
@@ -38,10 +43,34 @@ function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     const cred = await signInWithEmailAndPassword(auth, email, password);
-    // Record login time for 24-hour forced expiry
     localStorage.setItem(LAST_LOGIN_KEY, Date.now().toString());
     setUser(cred.user);
     return cred.user;
+  };
+
+  const loginWithGoogle = async () => {
+    const result = await signInWithPopup(auth, googleProvider);
+    const user = result.user;
+
+    localStorage.setItem(LAST_LOGIN_KEY, Date.now().toString());
+
+    // Auto-add Google user to viewers collection if not exists
+    const viewersRef = collection(db, "viewers");
+    const q = query(viewersRef, where("email", "==", user.email));
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      await addDoc(viewersRef, {
+        email: user.email,
+        name: user.displayName || "Google User",
+        photoURL: user.photoURL || null,
+        createdAt: serverTimestamp(),
+        loginMethod: "google",
+      });
+    }
+
+    setUser(user);
+    return user;
   };
 
   const logout = async () => {
@@ -51,15 +80,12 @@ function AuthProvider({ children }) {
   };
 
   useEffect(() => {
-    // Listen to Firebase auth state changes
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
-        // Check if login is older than 24 hours
         const lastLogin = localStorage.getItem(LAST_LOGIN_KEY);
         const loginTime = lastLogin ? parseInt(lastLogin, 10) : Date.now();
 
         if (Date.now() - loginTime > ONE_DAY_MS) {
-          // Force logout after 24 hours
           logout();
           setAuthLoading(false);
           return;
@@ -77,7 +103,7 @@ function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, authLoading }}>
+    <AuthContext.Provider value={{ user, login, loginWithGoogle, logout, authLoading }}>
       {children}
     </AuthContext.Provider>
   );
@@ -134,11 +160,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [plots, setPlots] = useState([]);
 
-  // Fetch plots from Firestore
   useEffect(() => {
     const fetchPlots = async () => {
       try {
-        const snap = await getDocs(collection(db, "plots"));
+        const snap = await getDocs(collection(db, "mapplots"));
         const data = snap.docs.map((d) => ({ projectId: d.id, ...d.data() }));
         setPlots(data);
       } catch (e) {
@@ -168,10 +193,8 @@ function App() {
       <div className="app-container">
         <Router>
           <Routes>
-            {/* Public Route */}
             <Route path="/login" element={<LoginPage />} />
 
-            {/* Protected Routes */}
             <Route
               path="/"
               element={
@@ -197,7 +220,6 @@ function App() {
               }
             />
 
-            {/* Fallback */}
             <Route path="*" element={<Navigate to="/map" replace />} />
           </Routes>
         </Router>

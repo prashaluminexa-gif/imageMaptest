@@ -1,0 +1,29 @@
+mutation CreateUser($displayName: String!, $email: String!) @auth(level: USER) {
+  user_insert(data: {displayName: $displayName, email: $email, createdAt_expr: "request.time"})
+}
+
+query GetTransactionsForUser @auth(level: USER) {
+  transactions(where: {userId_expr: "auth.uid"}) {
+    id
+    amount
+    date
+    description
+    type
+    category {
+      name
+    }
+  }
+}
+
+mutation CreateBudget($categoryId: UUID!, $amount: Float!, $period: String!, $startDate: Date!, $endDate: Date) @auth(level: USER) {
+  budget_insert(data: {categoryId: $categoryId, userId_expr: "auth.uid", amount: $amount, period: $period, startDate: $startDate, endDate: $endDate, createdAt_expr: "request.time"})
+}
+
+query ListCategories @auth(level: USER) {
+  categories(where: {userId_expr: "auth.uid"}) {
+    id
+    name
+    description
+    type
+  }
+}

@@ -23,7 +23,7 @@ const ProjectDetails = () => {
   useEffect(() => {
     const fetchPlotData = async () => {
       try {
-        const plotRef = doc(db, "plots", projectId);
+        const plotRef = doc(db, "mapplots", projectId);
         const plotSnap = await getDoc(plotRef);
 
         if (plotSnap.exists()) {

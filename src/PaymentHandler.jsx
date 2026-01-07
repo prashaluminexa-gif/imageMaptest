@@ -3,6 +3,7 @@ import { collection, addDoc, updateDoc, doc, getDoc, runTransaction, serverTimes
 import { db, auth } from "./firebase";
 import jsPDF from "jspdf";
 
+
 const PaymentHandler = ({ plotData, plotStatus, projectId, setPlotStatus, closeParentPopup }) => {
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
   const [showBookingPopup, setShowBookingPopup] = useState(false);
@@ -162,7 +163,7 @@ const PaymentHandler = ({ plotData, plotStatus, projectId, setPlotStatus, closeP
 
   const revertPlotStatus = async () => {
     try {
-      await updateDoc(doc(db, "plots", projectId), {
+      await updateDoc(doc(db, "mapplots", projectId), {
         Status: "Available",
       });
       setPlotStatus("Available");
@@ -180,7 +181,7 @@ const PaymentHandler = ({ plotData, plotStatus, projectId, setPlotStatus, closeP
       let canProceed = false;
       let userDocRef;
       await runTransaction(db, async (transaction) => {
-        const plotRef = doc(db, "plots", projectId);
+        const plotRef = doc(db, "mapplots", projectId);
         const plotSnap = await transaction.get(plotRef);
 
         if (!plotSnap.exists()) {
@@ -261,7 +262,7 @@ const PaymentHandler = ({ plotData, plotStatus, projectId, setPlotStatus, closeP
             razorpaySignature: response.razorpay_signature,
             });
 
-            await updateDoc(doc(db, "plots", projectId), {
+            await updateDoc(doc(db, "mapplots", projectId), {
               Status: "Booked",
             });
 
@@ -449,7 +450,7 @@ const PaymentHandler = ({ plotData, plotStatus, projectId, setPlotStatus, closeP
 
   const handleRetryBooking = async () => {
     try {
-      const plotRef = doc(db, "plots", projectId);
+      const plotRef = doc(db, "mapplots", projectId);
       const plotSnap = await getDoc(plotRef);
       if (!plotSnap.exists() || plotSnap.data().Status?.toLowerCase() !== "available") {
         setErrorMessage("Plot is not available for booking.");
@@ -698,10 +699,10 @@ The agreed sale price of the land is Rs.${formData.dealClosedAmount}/-, excludin
             <div className="booking-popup-columns">
               <div className="booking-column booking-info">
                 <img
-                  src="https://cdn.glitch.global/62dd5357-cabd-4363-bf7a-61c739629aa4/Untitled%20design%20(18).png?v=1745953614525"
+                  src="./logo36.png"
                   alt="Hasiru Farms Logo"
                   className="company-logo"
-                  style={{ maxWidth: "270px", marginBottom: "10px", alignItems: 'flex-start' }}
+                  style={{ maxWidth: "180px", marginBottom: "20px", alignItems: 'flex-start' }}
                 />
                 <h4 className="booking info-item"><i className="fas fa-check-circle"></i> Plot Details, Please Ensure.</h4>
                 <div className="info-item">Project Name: <strong>{plotData.blockName}</strong></div>
@@ -918,7 +919,7 @@ The agreed sale price of the land is Rs.${formData.dealClosedAmount}/-, excludin
                           rows="4"
                         />
                       </div>
-                      <div className="form-group checkbox-group">
+                      <div className=" checkbox-group">
                         <label>
                           <input
                             type="checkbox"
@@ -929,7 +930,7 @@ The agreed sale price of the land is Rs.${formData.dealClosedAmount}/-, excludin
                           I agree to the Terms and Conditions
                         </label>
                       </div>
-                      <div className="form-group checkbox-group">
+                      <div className="checkbox-group">
                         <label>
                           <input
                             type="checkbox"

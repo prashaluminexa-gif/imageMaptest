@@ -1,0 +1,74 @@
+mutation CreateDemoData @transaction @auth(level: USER, insecureReason: "This mutation is safe to expose to all logged in users.") {
+  user_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      displayName: "demouser1",
+      email: "demouser1@example.com",
+      createdAt: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      displayName: "demouser2",
+      email: "demouser2@example.com",
+      createdAt: "2024-01-01T00:00:00Z"
+    }
+  ])
+  category_insertMany(data: [
+    {
+      id: "650e8400-e29b-41d4-a716-446655440000",
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      name: "Food",
+      type: "Expense",
+      createdAt: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: "650e8400-e29b-41d4-a716-446655440001",
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      name: "Salary",
+      type: "Income",
+      createdAt: "2024-01-01T00:00:00Z"
+    }
+  ])
+  transaction_insertMany(data: [
+    {
+      id: "750e8400-e29b-41d4-a716-446655440000",
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      categoryId: "650e8400-e29b-41d4-a716-446655440000",
+      amount: 50.00,
+      date: "2024-01-05",
+      type: "Expense",
+      createdAt: "2024-01-05T00:00:00Z"
+    },
+    {
+      id: "750e8400-e29b-41d4-a716-446655440001",
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      categoryId: "650e8400-e29b-41d4-a716-446655440001",
+      amount: 1000.00,
+      date: "2024-01-10",
+      type: "Income",
+      createdAt: "2024-01-10T00:00:00Z"
+    }
+  ])
+   budget_insertMany(data: [
+    {
+      id: "850e8400-e29b-41d4-a716-446655440000",
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      categoryId: "650e8400-e29b-41d4-a716-446655440000",
+      amount: 500.00,
+      startDate: "2024-01-01",
+      endDate: "2024-01-31",
+      period: "Monthly",
+      createdAt: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: "850e8400-e29b-41d4-a716-446655440001",
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      categoryId: "650e8400-e29b-41d4-a716-446655440001",
+      amount: 2000.00,
+      startDate: "2024-01-01",
+      endDate: "2024-01-31",
+      period: "Monthly",
+      createdAt: "2024-01-01T00:00:00Z"
+    }
+  ])
+}

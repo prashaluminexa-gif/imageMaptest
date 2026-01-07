@@ -173,7 +173,7 @@ const LocationLabels = ({ labelStyle, getResponsivePosition, coords, onC5Click, 
   useEffect(() => {
     const fetchPlotStatuses = async () => {
       try {
-        const plotsCollection = collection(db, "plots");
+        const plotsCollection = collection(db, "mapplots");
         const plotsSnapshot = await getDocs(plotsCollection);
         const statusMap = plotsSnapshot.docs.reduce((acc, doc) => {
           const data = doc.data();
