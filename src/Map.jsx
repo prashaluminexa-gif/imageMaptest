@@ -677,7 +677,6 @@ const Map = () => {
       overflow: "hidden",
       position: "relative",
       cursor: isDragging ? "grabbing" : "grab",
-      touchAction: "pan-x pan-y pinch-zoom",
       WebkitTapHighlightColor: "transparent",
       width: "100%",
       height: "100vh",

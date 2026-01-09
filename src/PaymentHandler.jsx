@@ -227,19 +227,7 @@ const PaymentHandler = ({ plotData, plotStatus, projectId, setPlotStatus, closeP
         });
       }, 10 * 60 * 1000);
 
-      const createOrderResponse = await fetch('/.netlify/functions/create-razorpay-order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        amount: parseFloat(formData.advanceAmount),
-      }),
-    });
-
-    if (!createOrderResponse.ok) {
-      throw new Error('Failed to create Razorpay order');
-    }
-
-    const { order_id } = await createOrderResponse.json();
+    
 
       const options = {
         key : process.env.REACT_APP_RAZORPAY_KEY,
@@ -247,7 +235,7 @@ const PaymentHandler = ({ plotData, plotStatus, projectId, setPlotStatus, closeP
         currency: "INR",
         name: "Hasiru Farms Enterprises Pvt Ltd",
         description: `Advance payment for Plot ${plotData?.plotName || projectId}`,
-        order_id: order_id,
+      
         handler: async (response) => {
           setIsPaymentProcessing(false);
           if (timeoutIdRef.current) {
@@ -257,9 +245,6 @@ const PaymentHandler = ({ plotData, plotStatus, projectId, setPlotStatus, closeP
           try {
             await updateDoc(doc(db, "users", userDocRef.id), {
               paymentStatus: "success",
-            razorpayPaymentId: response.razorpay_payment_id,
-            razorpayOrderId: response.razorpay_order_id,
-            razorpaySignature: response.razorpay_signature,
             });
 
             await updateDoc(doc(db, "mapplots", projectId), {
@@ -277,6 +262,7 @@ const PaymentHandler = ({ plotData, plotStatus, projectId, setPlotStatus, closeP
               name: formData.name,
               email: formData.email,
               plotNo: plotData.plotName,
+
               projectName: plotData.blockName,
               status: "success",
               BookingStatus: "Booking Successful",
@@ -965,7 +951,8 @@ The agreed sale price of the land is Rs.${formData.dealClosedAmount}/-, excludin
       {showConfirmation && (
         <div className="confirmation-popup" onClick={closeParentPopup}>
           <div className="confirmation-popup-content" onClick={(e) => e.stopPropagation()}>
-            <h3><i className="fas fa-check-circle"></i> Booking Confirmed!</h3>
+            <i className="fas fa-check-circle" style={{fontSize: "60px", color: "#024837"}}></i>
+            <h3> Booking Confirmed!</h3>
             <div className="confirmation-details">
               <p style={{ padding: '6px', fontWeight: '600', fontSize: '18px' }}>
                 Booking Number: <strong>{bookingDetails.bookingNumber}</strong>
@@ -976,12 +963,10 @@ The agreed sale price of the land is Rs.${formData.dealClosedAmount}/-, excludin
               <p>
                 <strong>{formData.name}</strong> | <strong>{formData.email}</strong>
               </p>
-              <p style={{ padding: '6px', fontWeight: '400', border: '2px dotted green', borderRadius: '15px', color: 'green' }}>
-                The document has been sent to <strong>{formData.email}</strong> <br /> Please check your inbox.
+              <p style={{ padding: '20px 9px', fontWeight: '400', color: "#024837", borderRadius: "20px", background:"white" }}>
+                <i className="fas fa-check-circle" ></i> The document has been sent to <br/>mail Please check your inbox.
               </p>
-              <p>
-                Support: <a href="mailto:booking@hasirufarms.com">booking@hasirufarms.com</a> 
-              </p>
+             
             </div>
             <button className="download-receipt-button" onClick={generateReceiptPDF}>
               <i className="fas fa-download"></i> Download Receipt

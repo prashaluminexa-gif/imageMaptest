@@ -1,30 +1,50 @@
 // src/components/PlotPanel.jsx
 
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faRulerCombined,
+  faArrowsAltH,
+  faArrowsAltV,
+  faCompass,
+  faHashtag,
+  faFileAlt,
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
+
 import forestTreeIcon from "./assets/forest-tree-icon.svg";
 import fruitTreeIcon from "./assets/fruit-tree-icon.svg";
-import PaymentHandler from "./PaymentHandler";  // Add this import (adjust path if needed)
+import PaymentHandler from "./PaymentHandler";
 
 const PlotPanel = ({
   selectedPlotId,
   selectedPlotData,
   panelLoading,
   closePlotPanel,
-  windowWidth
+  windowWidth,
 }) => {
-  // Helper for status badge colors
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const carouselRef = useRef(null);
+
+  const isMobile = windowWidth <= 768;
+
+  // Lock body scroll when panel is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
+
   const getStatusStyle = (status) => {
     const lowerStatus = status?.toLowerCase() || "";
-    if (lowerStatus === "available") {
-      return { backgroundColor: "#e8f5e9", color: "#024837" };
-    }
-    if (lowerStatus === "sold") {
-      return { backgroundColor: "#ffebee", color: "#c62828" };
-    }
+    if (lowerStatus === "available") return { backgroundColor: "#e8f5e9", color: "#024837" };
+    if (lowerStatus === "sold") return { backgroundColor: "#ffebee", color: "#c62828" };
     return { backgroundColor: "#fff3e0", color: "#e65100" };
   };
 
-  // Extract plot number for restriction logic (like in your ProjectDetails)
   const getPlotNumber = () => {
     if (!selectedPlotData?.plotName) return null;
     return parseInt(selectedPlotData.plotName.replace(/\D/g, ""), 10);
@@ -33,20 +53,105 @@ const PlotPanel = ({
   const plotNumber = getPlotNumber();
   const isRestricted = plotNumber >= 49 && plotNumber <= 71;
 
+  const plotPrice = selectedPlotData?.price || 4500000; // Fallback price
+
+  // Prioritize actual plot image, then fallback to curated generics
+  const plotImages = selectedPlotData?.plotImage
+    ? [
+        selectedPlotData.plotImage,
+        "https://hasirufarms.com/wp-content/uploads/2025/10/Brindavan-copy-3.webp",
+        "https://framerusercontent.com/images/2e9f1g4OdXgYmGbBMGWNmjagdxg.webp?width=1024&height=576",
+        "https://media-cdn.tripadvisor.com/media/photo-s/1c/c2/dd/e9/farm-of-happiness-agro.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/59/f7/64/view-of-the-property.jpg?w=900&h=500&s=1",
+        "https://treehousemap.com/wp-content/uploads/2020/06/Treehouse-Resort-Jaipur-1.jpg",
+      ]
+    : [
+        "https://hasirufarms.com/wp-content/uploads/2025/10/Brindavan-copy-3.webp",
+        "https://framerusercontent.com/images/2e9f1g4OdXgYmGbBMGWNmjagdxg.webp?width=1024&height=576",
+        "https://media-cdn.tripadvisor.com/media/photo-s/1c/c2/dd/e9/farm-of-happiness-agro.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/59/f7/64/view-of-the-property.jpg?w=900&h=500&s=1",
+      ];
+
+  // Sync carousel index with actual scroll position
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel || plotImages.length <= 1) return;
+
+    const handleScroll = () => {
+      const scrollLeft = carousel.scrollLeft;
+      const width = carousel.clientWidth;
+      const newIndex = Math.round(scrollLeft / width);
+      setCurrentIndex(newIndex);
+    };
+
+    carousel.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initial
+
+    return () => carousel.removeEventListener("scroll", handleScroll);
+  }, [plotImages.length]);
+
+  // Auto-advance carousel
+  useEffect(() => {
+    if (plotImages.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => {
+        const next = (prev + 1) % plotImages.length;
+        if (carouselRef.current) {
+          carouselRef.current.scrollTo({
+            left: next * carouselRef.current.clientWidth,
+            behavior: "smooth",
+          });
+        }
+        return next;
+      });
+    }, 8500);
+
+    return () => clearInterval(interval);
+  }, [plotImages.length]);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => {
+      const next = (prev - 1 + plotImages.length) % plotImages.length;
+      carouselRef.current?.scrollTo({
+        left: next * carouselRef.current.clientWidth,
+        behavior: "smooth",
+      });
+      return next;
+    });
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => {
+      const next = (prev + 1) % plotImages.length;
+      carouselRef.current?.scrollTo({
+        left: next * carouselRef.current.clientWidth,
+        behavior: "smooth",
+      });
+      return next;
+    });
+  };
+
+  // Extract tree details (exclude coconut entirely)
+  const forestTrees = selectedPlotData?.forestTrees || {};
+  const fruitTrees = selectedPlotData?.fruitTrees || {};
+
+  const forestTreeEntries = Object.entries(forestTrees).filter(([_, count]) => count > 0);
+  const fruitTreeEntries = Object.entries(fruitTrees).filter(([_, count]) => count > 0);
+
+  const hasForestTrees = forestTreeEntries.length > 0;
+  const hasFruitTrees = fruitTreeEntries.length > 0;
+  const hasAnyTrees = hasForestTrees || hasFruitTrees;
+
   return (
     <>
       {/* Dark Overlay */}
       <div
         style={{
           position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          inset: 0,
+          backgroundColor: "rgba(0, 0, 0, 0.55)",
           zIndex: 1999,
-          animation: "fadeIn 0.4s ease-out",
-          pointerEvents: "auto",
         }}
         onClick={closePlotPanel}
       />
@@ -57,162 +162,357 @@ const PlotPanel = ({
           position: "fixed",
           top: 0,
           right: 0,
-          width: windowWidth <= 768 ? "100%" : "420px",
+          width: isMobile ? "100%" : "460px",
           height: "100vh",
-          backgroundColor: "#ffffffff",
-          boxShadow: "-10px 0 30px rgba(0, 0, 0, 0.3)",
+          backgroundColor: "#ffffff",
+          boxShadow: "-12px 0 40px rgba(0,0,0,0.35)",
           zIndex: 2000,
           overflowY: "auto",
-          animation: "slideIn 0.5s ease-out",
           fontFamily: "'Montserrat', sans-serif",
-          pointerEvents: "auto", // ← ADD THIS
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
+        {/* Close Button - Top Right on Mobile */}
         <button
           onClick={closePlotPanel}
           style={{
             position: "absolute",
-            top: "20px",
-            left: windowWidth <= 768 ? "20px" : "-50px",
+            top: "16px",
+            left: isMobile ? "auto" : "-50px",
+            right: isMobile ? "16px" : "auto",
             width: "40px",
             height: "40px",
             backgroundColor: "#024837",
             border: "none",
             borderRadius: "50%",
             color: "#ffffff",
-            fontSize: "24px",
+            fontSize: "26px",
             fontWeight: "bold",
             cursor: "pointer",
-            boxShadow: "0 4px 10px rgba(0,0,0,0.3)"
+            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+            zIndex: 10,
           }}
         >
           ×
         </button>
 
-        {/* Panel Content */}
-        <div style={{ padding: "40px 30px" }}>
-          {panelLoading ? (
-            <div style={{ textAlign: "center", padding: "100px 0" }}>
+        {panelLoading ? (
+          <div style={{ textAlign: "center", padding: "80px 0" }}>
+            <div
+              style={{
+                border: "5px solid #f3f3f3",
+                borderTop: "5px solid #024837",
+                borderRadius: "50%",
+                width: "36px",
+                height: "36px",
+                animation: "spin 1s linear infinite",
+                margin: "0 auto 16px",
+              }}
+            />
+            <p style={{ fontSize: "15px", color: "#333" }}>Loading plot details...</p>
+          </div>
+        ) : selectedPlotData ? (
+          <>
+            {/* Carousel */}
+            <div
+              style={{
+                position: "relative",
+                height: isMobile ? "260px" : "300px",
+                overflow: "hidden",
+                background: "#f0f4f3",
+              }}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <button onClick={handlePrev} style={{
+                position: "absolute", top: "50%", left: "12px", transform: "translateY(-50%)",
+                backgroundColor: "rgba(0,0,0,0.5)", color: "white", border: "none", borderRadius: "50%",
+                width: "38px", height: "38px", display: "flex", alignItems: "center", justifyContent: "center",
+                cursor: "pointer", zIndex: 15, opacity: isMobile || isHovered ? 1 : 0, transition: "opacity 0.3s ease"
+              }}>
+                <FontAwesomeIcon icon={faChevronLeft} size="lg" />
+              </button>
+
+              <button onClick={handleNext} style={{
+                position: "absolute", top: "50%", right: "12px", transform: "translateY(-50%)",
+                backgroundColor: "rgba(0,0,0,0.5)", color: "white", border: "none", borderRadius: "50%",
+                width: "38px", height: "38px", display: "flex", alignItems: "center", justifyContent: "center",
+                cursor: "pointer", zIndex: 15, opacity: isMobile || isHovered ? 1 : 0, transition: "opacity 0.3s ease"
+              }}>
+                <FontAwesomeIcon icon={faChevronRight} size="lg" />
+              </button>
+
               <div
+                ref={carouselRef}
                 style={{
-                  border: "5px solid #f3f3f3",
-                  borderTop: "5px solid #024837",
-                  borderRadius: "50%",
-                  width: "40px",
-                  height: "40px",
-                  animation: "spin 1s linear infinite",
-                  margin: "0 auto 20px"
+                  display: "flex",
+                  overflowX: "auto",
+                  scrollSnapType: "x mandatory",
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                  WebkitOverflowScrolling: "touch",
+                  height: "100%",
                 }}
-              />
-              <p style={{ fontSize: "16px", color: "#333" }}>
-                Loading plot details...
-              </p>
-            </div>
-          ) : selectedPlotData ? (
-            <>
-              <h1 style={{ fontSize: "32px", fontWeight: "700", color: "#024837", margin: "0 0 8px 0" }}>
-                Vinyas
-              </h1>
-              <p style={{ fontSize: "14px", color: "#555555", margin: "0 0 30px 0" }}>
-                A 10 acre managed Farmland
-              </p>
-
-              {/* Plot Header Card */}
-              <div style={{ backgroundColor: "#024837", color: "#ffffff", borderRadius: "20px", padding: "20px", marginBottom: "30px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "15px", marginBottom: "15px" }}>
+              >
+                {plotImages.map((img, index) => (
                   <img
-                    src="https://img.staticmb.com/mbcontent/images/crop/uploads/2023/1/square_Vastu_for_Plot_Selection_0_1200.jpg"
-                    alt="Plot View"
-                    style={{ width: "100px", height: "80px", borderRadius: "12px", objectFit: "cover" }}
+                    key={index}
+                    src={img}
+                    alt={`View ${index + 1}`}
+                    loading="lazy"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      flexShrink: 0,
+                      scrollSnapAlign: "start",
+                    }}
                   />
-                  <div>
-                    <h2 style={{ fontSize: "28px", margin: "0", fontWeight: "700" }}>
-                    {selectedPlotData.plotName}
-                    </h2>
-                    <p style={{ margin: "5px 0 0", fontSize: "14px" }}>
-                      Phase - 1 • {selectedPlotData.facing} Facing
-                    </p>
-                  </div>
-                </div>
+                ))}
+              </div>
 
+              {/* Overlay Text */}
+              <div style={{ position: "absolute", top: "24px", left: "24px", zIndex: 10, pointerEvents: "none" }}>
+                <h1 style={{ fontSize: isMobile ? "26px" : "32px", fontWeight: "900", color: "#fff", margin: 0, textShadow: "0 2px 10px rgba(0,0,0,0.8)" }}>
+                  Vinyas
+                </h1>
+                <p style={{ fontSize: "14px", color: "#f0f0f0", margin: "6px 0 0", textShadow: "0 1px 6px rgba(0,0,0,0.7)" }}>
+                  10 Acre Managed Farmland
+                </p>
+                <p style={{ fontSize: "14px", color: "#f0f0f0", margin: "6px 0 0", textShadow: "0 1px 6px rgba(0,0,0,0.7)" }}>
+                  Enjoy peaceful weekends at your own private farmland. Fully managed with seasonal crops, regular 
+                </p>
+              </div>
+
+
+              {/* Dots Indicator */}
+              <div style={{ position: "absolute", bottom: "16px", left: "50%", transform: "translateX(-50%)", display: "flex", gap: "8px", zIndex: 10 }}>
+                {plotImages.map((_, index) => (
+                  <div key={index} style={{
+                    width: "7px", height: "7px", borderRadius: "50%",
+                    backgroundColor: index === currentIndex ? "#ffffff" : "rgba(255,255,255,0.6)",
+                    transition: "all 0.3s ease"
+                  }} />
+                ))}
+              </div>
+            </div>
+
+            {/* Main Content */}
+            <div style={{ padding: "20px 24px 32px" }}>
+              {/* Plot Header */}
+              <div style={{
+                marginBottom: "20px", padding: "16px 20px", backgroundColor: "#f9fafb",
+                borderRadius: "16px", border: "1px solid #e5e7eb", display: "flex",
+                justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px"
+              }}>
+                <div>
+                  <h2 style={{ fontSize: isMobile ? "22px" : "27px", margin: "0 0 6px 0", fontWeight: "800", color: "#024837" }}>
+                    {selectedPlotData.plotName}
+                  </h2>
+                  <p style={{ margin: 0, fontSize: "14px", color: "#444", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <FontAwesomeIcon icon={faCompass} style={{ color: "#024837" }} />
+                    Phase - 1 • {selectedPlotData.facing} Facing
+                  </p>
+                </div>
                 <span style={{
-                  display: "inline-block",
                   ...getStatusStyle(selectedPlotData.status),
-                  padding: "8px 20px",
-                  borderRadius: "30px",
-                  fontWeight: "600",
-                  fontSize: "14px"
+                  padding: "8px 16px", borderRadius: "30px", fontWeight: "700", fontSize: "14px",  letterSpacing: "0.5px"
                 }}>
-                  {selectedPlotData.status}
+                  <i class="fa fa-leaf" aria-hidden="true"></i> {selectedPlotData.status}
                 </span>
               </div>
 
               {/* Plot Details Grid */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px", fontSize: "14px", marginBottom: "30px" }}>
-                <div><strong>Plot Number</strong><p style={{ margin: "5px 0", color: "#024837", fontWeight: "600" }}>{selectedPlotData.plotName}</p></div>
-                <div><strong>Survey Number</strong><p style={{ margin: "5px 0", color: "#024837", fontWeight: "600" }}>{selectedPlotData.surveyNumber}</p></div>
-                <div><strong>Area in Sqft</strong><p style={{ margin: "5px 0", color: "#024837", fontWeight: "600" }}>{selectedPlotData.areaSqFt}</p></div>
-                <div><strong>Width</strong><p style={{ margin: "5px 0", color: "#024837", fontWeight: "600" }}>{selectedPlotData.widthFt} ft</p></div>
-                <div><strong>Length</strong><p style={{ margin: "5px 0", color: "#024837", fontWeight: "600" }}>{selectedPlotData.lengthFt} ft</p></div>
-                <div><strong>Area in Sqmt</strong><p style={{ margin: "5px 0", color: "#024837", fontWeight: "600" }}>{selectedPlotData.areaSqMt}</p></div>
-              </div>
-
-              {/* Trees Section */}
-              {(selectedPlotData.numberOfForestTrees > 0 || selectedPlotData.numberOfFruitTrees > 0) && (
-                <div style={{ marginBottom: "40px" }}>
-                  <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "15px" }}>Trees Planted</h3>
-                  <div style={{ display: "flex", justifyContent: "space-around" }}>
-                    <div style={{ textAlign: "center" }}>
-                      <img src={forestTreeIcon} alt="Forest Trees" style={{ width: "40px", marginBottom: "8px" }} />
-                      <p style={{ margin: 0 }}><strong>{selectedPlotData.numberOfForestTrees}</strong> Forest</p>
-                    </div>
-                    <div style={{ textAlign: "center" }}>
-                      <img src={fruitTreeIcon} alt="Fruit Trees" style={{ width: "40px", marginBottom: "8px" }} />
-                      <p style={{ margin: 0 }}><strong>{selectedPlotData.numberOfFruitTrees}</strong> Fruit</p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(145px, 1fr))", gap: "16px", marginBottom: "24px" }}>
+                {[
+                  { icon: faHashtag, label: "Plot Number", value: selectedPlotData.plotName },
+                  { icon: faFileAlt, label: "Survey No.", value: selectedPlotData.surveyNumber },
+                  { icon: faRulerCombined, label: "Area (Sqft)", value: selectedPlotData.areaSqFt },
+                  { icon: faArrowsAltH, label: "Width", value: `${selectedPlotData.widthFt} ft` },
+                  { icon: faArrowsAltV, label: "Length", value: `${selectedPlotData.lengthFt} ft` },
+                  { icon: faRulerCombined, label: "Area (Sqmt)", value: selectedPlotData.areaSqMt },
+                ].map((item, i) => (
+                  <div key={i} style={{
+                    display: "flex", alignItems: "center", gap: "12px", padding: "12px 14px",
+                    backgroundColor: "#f9fafb", borderRadius: "12px", border: "1px solid #e5e7eb"
+                  }}>
+                    <FontAwesomeIcon icon={item.icon} style={{ color: "#024837", fontSize: "20px" }} />
+                    <div>
+                      <div style={{ fontSize: "12px", color: "#666", fontWeight: "500" }}>{item.label}</div>
+                      <div style={{ fontSize: "15px", color: "#024837", fontWeight: "700", marginTop: "2px" }}>
+                        {item.value || "—"}
+                      </div>
                     </div>
                   </div>
+                ))}
+              </div>
+
+              {/* Trees Section - Detailed Breakdown */}
+              {hasAnyTrees && (
+                <div style={{ marginBottom: "24px" }}>
+                  <h3 style={{ fontSize: "18px", fontWeight: "700", marginBottom: "16px", color: "#024837" }}>
+                    Trees Planted
+                  </h3>
+
+                  {hasForestTrees && (
+                    <div style={{ marginBottom: "20px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                        <img src={forestTreeIcon} alt="Forest Trees" style={{ width: "36px" }} />
+                        <h4 style={{ margin: 0, fontSize: "15px", fontWeight: "600", color: "#024837" }}>
+                          Forest Trees ({forestTreeEntries.length} species)
+                        </h4>
+                      </div>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "10px" }}>
+                        {forestTreeEntries.map(([tree, count]) => (
+                          <div key={tree} style={{
+                            padding: "10px 12px", backgroundColor: "#f9fafb", borderRadius: "10px",
+                            border: "1px solid #e5e7eb", textAlign: "center"
+                          }}>
+                            <div style={{ fontSize: "14px", color: "#444", textTransform: "capitalize" }}>{tree}</div>
+                            <div style={{ fontSize: "18px", fontWeight: "700", color: "#024837", marginTop: "4px" }}>
+                              {count}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {hasFruitTrees && (
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+                        <img src={fruitTreeIcon} alt="Fruit Trees" style={{ width: "36px" }} />
+                        <h4 style={{ margin: 0, fontSize: "15px", fontWeight: "600", color: "#024837" }}>
+                          Fruit Trees ({fruitTreeEntries.length} species)
+                        </h4>
+                      </div>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "10px" }}>
+                        {fruitTreeEntries.map(([tree, count]) => (
+                          <div key={tree} style={{
+                            padding: "10px 12px", backgroundColor: "#f9fafb", borderRadius: "10px",
+                            border: "1px solid #e5e7eb", textAlign: "center"
+                          }}>
+                            <div style={{ fontSize: "14px", color: "#444", textTransform: "capitalize" }}>{tree}</div>
+                            <div style={{ fontSize: "18px", fontWeight: "700", color: "#024837", marginTop: "4px" }}>
+                              {count}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
-              {/* PAYMENT HANDLER - Only show if not restricted */}
-              {!isRestricted && selectedPlotData.status?.toLowerCase() === "available" && (
+              {/* Description Note */}
+              <div style={{
+                backgroundColor: "#e8f5e9",
+                padding: "16px 18px",
+                borderRadius: "12px",
+                marginBottom: "24px",
+                borderLeft: "4px solid #024837"
+              }}>
+                <p style={{ margin: 0, fontSize: "14px", color: "#024837", lineHeight: "1.5", fontWeight: "500" }}>
+                  Enjoy peaceful weekends at your own private farmland. Fully managed with seasonal crops, regular maintenance, and 24/7 security. A perfect nature retreat just 2 hours from the city.
+                </p>
+              </div>
+
+              {/* Pricing Details */}
+              <div style={{ marginBottom: "28px" }}>
+                <h3 style={{ fontSize: "18px", fontWeight: "700", marginBottom: "16px", color: "#024837" }}>
+                  Pricing Details
+                </h3>
+                <div style={{
+                  backgroundColor: "#f9fafb",
+                  borderRadius: "16px",
+                  border: "1px solid #e5e7eb",
+                  overflow: "hidden"
+                }}>
+                  <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                    <tbody>
+                      <tr>
+                        <td style={{ padding: "14px 18px", fontSize: "14px", color: "#555", borderBottom: "1px solid #e5e7eb" }}>
+                          Plot Cost
+                        </td>
+                        <td style={{ padding: "14px 18px", fontSize: "16px", fontWeight: "700", color: "#024837", textAlign: "right", borderBottom: "1px solid #e5e7eb" }}>
+                          ₹{plotPrice.toLocaleString('en-IN')}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: "14px 18px", fontSize: "14px", color: "#555", borderBottom: "1px solid #e5e7eb" }}>
+                          Registration & Legal Charges
+                        </td>
+                        <td style={{ padding: "14px 18px", fontSize: "15px", color: "#444", textAlign: "right", borderBottom: "1px solid #e5e7eb" }}>
+                          Included
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: "14px 18px", fontSize: "14px", color: "#555", borderBottom: "1px solid #e5e7eb" }}>
+                          Maintenance (First 3 Years)
+                        </td>
+                        <td style={{ padding: "14px 18px", fontSize: "15px", color: "#444", textAlign: "right", borderBottom: "1px solid #e5e7eb" }}>
+                          Free
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style={{ padding: "14px 18px", fontSize: "15px", fontWeight: "600", color: "#024837" }}>
+                          Total Amount
+                        </td>
+                        <td style={{ padding: "14px 18px", fontSize: "18px", fontWeight: "800", color: "#024837", textAlign: "right" }}>
+                          ₹{plotPrice.toLocaleString('en-IN')}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p style={{ fontSize: "12px", color: "#777", textAlign: "center", marginTop: "12px", fontStyle: "italic" }}>
+                  *Prices are inclusive of all charges. Limited period offer.
+                </p>
+              </div>
+
+              {/* Booking / Restricted */}
+              {!isRestricted && selectedPlotData.status?.toLowerCase() === "available" ? (
                 <PaymentHandler
                   plotData={selectedPlotData}
                   plotStatus={selectedPlotData.status}
-                  projectId={selectedPlotId}  // this is the Firestore doc ID
-                  setPlotStatus={(newStatus) => {
-                    // Optional: update local status if needed
-                    // You could add a callback from Map.jsx if you want live update
-                  }}
+                  projectId={selectedPlotId}
+                  setPlotStatus={() => {}}
                   closeParentPopup={closePlotPanel}
                 />
-              )}
-
-              {/* Fallback message if restricted or not available */}
-              {isRestricted || selectedPlotData.status?.toLowerCase() !== "available" ? (
-                <div style={{ textAlign: "center", padding: "20px", backgroundColor: "#f5f5f5", borderRadius: "12px", marginTop: "20px" }}>
-                  <p style={{ color: "#666", fontSize: "14px" }}>
-                    {isRestricted 
-                      ? "This plot is part of a special allocation and not available for individual booking." 
-                      : "This plot is currently not available for booking."
-                    }
+              ) : (
+                <div style={{
+                  textAlign: "center", padding: "20px", backgroundColor: "#f9f9f9",
+                  borderRadius: "14px", margin: "8px 0 20px", border: "1px dashed #ddd"
+                }}>
+                  <p style={{ color: "#555", fontSize: "14px", margin: 0, lineHeight: "1.5" }}>
+                    {isRestricted
+                      ? "Special allocation plot – not available for individual booking."
+                      : "This plot is currently not available."}
                   </p>
                 </div>
-              ) : null}
+              )}
 
-              <p style={{ textAlign: "center", fontSize: "12px", color: "#888888", marginTop: "30px" }}>
-                Secure your farmland plot today
+              <p style={{
+                textAlign: "center", fontSize: "12px", color: "#999",
+                marginTop: "20px", fontStyle: "italic", marginBottom: "100px"
+              }}>
+                Secure your piece of nature today
               </p>
-            </>
-          ) : (
-            <p style={{ textAlign: "center", padding: "100px 0", color: "#666" }}>
-              No data available for this plot.
-            </p>
-          )}
-        </div>
+            </div>
+          </>
+        ) : (
+          <p style={{ textAlign: "center", padding: "80px 0", color: "#666" }}>
+            No data available for this plot.
+          </p>
+        )}
       </div>
+
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </>
   );
 };
