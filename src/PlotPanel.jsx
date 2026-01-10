@@ -498,7 +498,7 @@ const PlotPanel = ({
           e.currentTarget.style.transform = "translateY(0)";
         }}
       >
-        ◀ Go Back & Explore More Plots 
+        ◀  Explore More Plots 
       </button>
     </div>
 
