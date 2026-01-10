@@ -62,8 +62,7 @@ const PlotPanel = ({
         "https://hasirufarms.com/wp-content/uploads/2025/10/Brindavan-copy-3.webp",
         "https://framerusercontent.com/images/2e9f1g4OdXgYmGbBMGWNmjagdxg.webp?width=1024&height=576",
         "https://media-cdn.tripadvisor.com/media/photo-s/1c/c2/dd/e9/farm-of-happiness-agro.jpg",
-        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/59/f7/64/view-of-the-property.jpg?w=900&h=500&s=1",
-        "https://treehousemap.com/wp-content/uploads/2020/06/Treehouse-Resort-Jaipur-1.jpg",
+        "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/59/f7/64/view-of-the-property.jpg?w=900&h=500&s=1"
       ]
     : [
         "https://hasirufarms.com/wp-content/uploads/2025/10/Brindavan-copy-3.webp",
@@ -173,28 +172,7 @@ const PlotPanel = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button - Top Right on Mobile */}
-        <button
-          onClick={closePlotPanel}
-          style={{
-            position: "absolute",
-            top: "16px",
-            left: isMobile ? "auto" : "-50px",
-            right: isMobile ? "16px" : "auto",
-            width: "40px",
-            height: "40px",
-            backgroundColor: "#024837",
-            border: "none",
-            borderRadius: "50%",
-            color: "#ffffff",
-            fontSize: "26px",
-            fontWeight: "bold",
-            cursor: "pointer",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-            zIndex: 10,
-          }}
-        >
-          ×
-        </button>
+        
 
         {panelLoading ? (
           <div style={{ textAlign: "center", padding: "80px 0" }}>
@@ -491,6 +469,38 @@ const PlotPanel = ({
                   </p>
                 </div>
               )}
+              <div style={{ 
+      marginTop: "24px", 
+      textAlign: "center" 
+    }}>
+      <button
+        onClick={closePlotPanel}
+        style={{
+          padding: "18px 60px",
+          fontSize: "16px",
+          fontWeight: "600",
+          color: "#024837",
+          backgroundColor: "transparent",
+          border: "2px solid #024837",
+          borderRadius: "16px",
+          cursor: "pointer",
+          transition: "all 0.25s ease",
+          boxShadow: "0 2px 8px rgba(2,72,55,0.12)",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = "#024837";
+          e.currentTarget.style.color = "#ffffff";
+          e.currentTarget.style.transform = "translateY(-2px)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = "transparent";
+          e.currentTarget.style.color = "#024837";
+          e.currentTarget.style.transform = "translateY(0)";
+        }}
+      >
+        ◀ Go Back & Explore More Plots 
+      </button>
+    </div>
 
               <p style={{
                 textAlign: "center", fontSize: "12px", color: "#999",

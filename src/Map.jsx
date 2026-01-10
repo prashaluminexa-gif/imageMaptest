@@ -16,6 +16,7 @@ import { db } from "./firebase";
 import Logo from './assets/logo.png';
 import PlotPanel from './PlotPanel';  // adjust path if needed
 
+
 // Icons for panel
 
 
@@ -67,7 +68,7 @@ const Map = () => {
       }));
 
       const projectNews = newsData
-        .filter((news) => news.plotnews === "Raaga")
+        .filter((news) => news.plotnews === "Map")
         .map((news) => news.content?.trim() || "")
         .filter((content) => content !== "");
 
@@ -82,7 +83,7 @@ const Map = () => {
   // Fetch available units
   const fetchPlotsData = useCallback(async () => {
     try {
-      const plotsCollection = collection(db, "plots");
+      const plotsCollection = collection(db, "mapplots");
       const plotsSnapshot = await getDocs(plotsCollection);
       const plots = plotsSnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -137,7 +138,7 @@ const Map = () => {
         status: data.Status || "Available",
         plotImage:
           data.plotImage ||
-          "https://via.placeholder.com/300x200?text=Plot+View",
+          "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/59/f7/64/view-of-the-property.jpg?w=900&h=500&s=1",
       });
     } else {
       setSelectedPlotData(null);
@@ -331,6 +332,7 @@ const Map = () => {
   fillOpacity: "60%",
   stroke: false,
   singleSelect: true,
+  
   mapKey: "data-key",
   onClick: (data) => {
     if (!wasDragged && dragDistance < 5) {
@@ -810,7 +812,7 @@ const Map = () => {
       style={{
         position: "fixed",
         top: "40px",
-        right: "35px",
+        left: "35px",
         width: getLogoWidth(),
         height: "auto",
         zIndex: 1500,
@@ -825,7 +827,7 @@ const Map = () => {
       style={{
         position: "fixed",
         top: `calc(20px + ${getLogoWidth()} + 10px)`,
-        right: "40px",
+        left: "40px",
         fontFamily: "'Montserrat', sans-serif",
         fontSize: windowWidth <= 768 ? "12px" : "14px",
         color: "black",
@@ -907,16 +909,18 @@ const Map = () => {
         transform: "translateX(-50%)",
         fontFamily: "'Montserrat', sans-serif",
         fontSize: windowWidth <= 768 ? "10px" : "10px",
-        color: "black",
+        color: "white",
         padding: "5px 10px",
         borderRadius: "5px",
         width: "200px",
         textAlign: "center",
+        alignItems:"center",
         zIndex: 1500,
         pointerEvents: "none",
       }}
     >
-      <strong>Plot Map</strong> <br /> Powered by <br /> Luminexa Technologies
+     
+      <strong>Plot Map V26.1</strong> Powered by <br /> Luminexa
     </div>
 
     {/* RIGHT-SIDE PLOT DETAILS PANEL POPUP */}
