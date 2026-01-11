@@ -15,6 +15,7 @@ import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
 import Logo from './assets/logo.png';
 import PlotPanel from './PlotPanel';  // adjust path if needed
+import LeftControlBar from './LeftControlBar';
 
 
 // Icons for panel
@@ -328,20 +329,19 @@ const Map = () => {
       if (imgElement && isMounted) {
         setImageDimensions({ width: imgElement.naturalWidth, height: imgElement.naturalHeight });
         $(imgElement).mapster({
-  fillColor: "4dff00",
-  fillOpacity: "60%",
-  stroke: false,
-  singleSelect: true,
-  
-  mapKey: "data-key",
-  onClick: (data) => {
-    if (!wasDragged && dragDistance < 5) {
-      openPlotPanel(data.key); // ← NEW: Open panel instead of navigate
-      $(imgElement).mapster("set", true, data.key);
-    }
-  },
-  showToolTip: true,
-});
+          fillColor: "4dff00",
+          fillOpacity: "60%",
+          stroke: false,
+          singleSelect: true,
+          mapKey: "data-key",
+          onClick: (data) => {
+            if (!wasDragged && dragDistance < 5) {
+              openPlotPanel(data.key); // ← NEW: Open panel instead of navigate
+              $(imgElement).mapster("set", true, data.key);
+            }
+          },
+          showToolTip: true,
+    });
         if (isIOS()) {
           $(imgElement).mapster("resize", imgElement.clientWidth, imgElement.clientHeight, 0);
         }
@@ -355,7 +355,10 @@ const Map = () => {
     }
 
     const container = containerRef.current;
+    if (!container) return;
     const handleWheel = (e) => {
+
+      if (selectedPlotId) return;  // ← Add this line
       e.preventDefault();
       const zoomFactor = e.deltaY > 0 ? -zoomStep : zoomStep;
       setZoom((prevZoom) => {
@@ -370,9 +373,14 @@ const Map = () => {
         }
         return newZoom;
       });
+      
     };
 
+    
+
     const handleResize = () => {
+
+
       const newWidth = window.innerWidth;
       setWindowWidth(newWidth);
       if (newWidth <= 1024) {
@@ -402,7 +410,14 @@ const Map = () => {
     fetchNewsData();
     fetchPlotsData();
 
+    if (selectedPlotId) {
+    container.removeEventListener("wheel", handleWheel);
+  } else {
+    container.addEventListener("wheel", handleWheel, { passive: false });
+  }
+
     return () => {
+      container.removeEventListener("wheel", handleWheel);
       isMounted = false;
       if (imgElement) {
         $(imgElement).mapster("unbind");
@@ -420,6 +435,7 @@ const Map = () => {
     minZoom,
     isImageLoaded,
     adjustPositionToBounds,
+    selectedPlotId,
     maxZoom,
     fetchNewsData,
     fetchPlotsData,
@@ -804,15 +820,15 @@ const Map = () => {
       <button onClick={zoomIn}>+</button>
       <button onClick={zoomOut}>-</button>
     </div>
-
+    <LeftControlBar windowWidth={windowWidth} />
     {/* Right Logo */}
     <img
       src={logoRight}
       alt="Right Logo"
       style={{
         position: "fixed",
-        top: "40px",
-        left: "35px",
+        top: "20px",
+        left: "20px",
         width: getLogoWidth(),
         height: "auto",
         zIndex: 1500,
@@ -826,8 +842,8 @@ const Map = () => {
     <div
       style={{
         position: "fixed",
-        top: `calc(20px + ${getLogoWidth()} + 10px)`,
-        left: "40px",
+        top: `calc( ${getLogoWidth()})`,
+        left: "20px",
         fontFamily: "'Montserrat', sans-serif",
         fontSize: windowWidth <= 768 ? "12px" : "14px",
         color: "black",
@@ -868,8 +884,8 @@ const Map = () => {
       alt="Contact"
       style={{
         position: "fixed",
-        bottom: windowWidth <= 768 ? "60px" : "60px",
-        right: "40px",
+        bottom: windowWidth <= 768 ? "10px" : "20px",
+        right: "20px",
         width: windowWidth <= 768 ? "100px" : "150px",
         height: "auto",
         zIndex: 1500,
@@ -887,8 +903,8 @@ const Map = () => {
       alt="compass"
       style={{
         position: "fixed",
-        bottom: windowWidth <= 768 ? "60px" : "60px",
-        left: "40px",
+        bottom: windowWidth <= 768 ? "10px" : "20px",
+        left: "20px",
         width: windowWidth <= 768 ? "60px" : "100px",
         height: "auto",
         zIndex: 1500,
@@ -902,26 +918,36 @@ const Map = () => {
 
     {/* Footer Credit */}
     <div
-      style={{
-        position: "fixed",
-        bottom: windowWidth <= 768 ? "120px" : "50px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        fontFamily: "'Montserrat', sans-serif",
-        fontSize: windowWidth <= 768 ? "10px" : "10px",
-        color: "white",
-        padding: "5px 10px",
-        borderRadius: "5px",
-        width: "200px",
-        textAlign: "center",
-        alignItems:"center",
-        zIndex: 1500,
-        pointerEvents: "none",
-      }}
-    >
-     
-      <strong>Plot Map V26.1</strong> Powered by <br /> Luminexa
-    </div>
+  style={{
+    position: "fixed",
+    bottom: windowWidth <= 768 ? "10px" : "20px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    fontFamily: "'Montserrat', sans-serif",
+    fontSize: "10px",
+    color: "white",
+    padding: "8px 10px",
+    borderRadius: "5px",
+    width: "200px",
+    textAlign: "center",
+    zIndex: 1500,
+    pointerEvents: "none",
+
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <strong>Plot Map V26.1</strong>
+  <span>Powered by</span>
+  <img
+    src="./luminexaLogo.png"
+    alt="logo"
+    style={{ width: "50%", marginTop: "4px" }}
+  />
+</div>
+
 
     {/* RIGHT-SIDE PLOT DETAILS PANEL POPUP */}
     {selectedPlotId && (

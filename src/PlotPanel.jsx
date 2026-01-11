@@ -171,7 +171,39 @@ const PlotPanel = ({
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button - Top Right on Mobile */}
+       
+
+  {/* ── Mobile Close Button ── */}
+  {isMobile && (
+    <button
+      onClick={closePlotPanel}
+      style={{
+        position: "fixed",
+        bottom: "24px",
+        right: "24px",
+        zIndex: 1000,
+        width: "66px",
+        height: "66px",
+        borderRadius: "16px",
+        backgroundColor: "#024837",
+        color: "white",
+        border: "none",
+        fontSize: "36px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        boxShadow: "0 6px 20px rgba(2, 72, 55, 0.28)",
+        cursor: "pointer",
+        transition: "all 0.2s ease",
+      }}
+      aria-label="Close panel"
+    >
+      ↩
+     
+    </button>
+  )}
+
+  {/* Rest of your content: carousel, main content, etc... */}
         
 
         {panelLoading ? (
@@ -478,6 +510,7 @@ const PlotPanel = ({
         style={{
           padding: "18px 60px",
           fontSize: "16px",
+          width:"98%",
           fontWeight: "600",
           color: "#024837",
           backgroundColor: "transparent",
@@ -498,7 +531,7 @@ const PlotPanel = ({
           e.currentTarget.style.transform = "translateY(0)";
         }}
       >
-        ◀  Explore More Plots 
+        🗺️  Explore More Plots ⮜
       </button>
     </div>
 
