@@ -16,6 +16,7 @@ import { db } from "./firebase";
 import Logo from './assets/logo.png';
 import PlotPanel from './PlotPanel';  // adjust path if needed
 import LeftControlBar from './LeftControlBar';
+import UserProfile from './UserProfile'; // or wherever you placed it
 
 
 // Icons for panel
@@ -580,7 +581,7 @@ const Map = () => {
     if (windowWidth <= 480) return "110px";
     if (windowWidth <= 768) return "130px";
     if (windowWidth <= 1024) return "150px";
-    return "180px";
+    return "150px";
   };
 
   const zoomIn = () => {
@@ -821,6 +822,7 @@ const Map = () => {
       <button onClick={zoomOut}>-</button>
     </div>
     <LeftControlBar windowWidth={windowWidth} />
+    <UserProfile windowWidth={windowWidth} />
     {/* Right Logo */}
     <img
       src={logoRight}
@@ -853,7 +855,7 @@ const Map = () => {
         borderRadius: "16px",
         zIndex: 1500,
         textAlign: "center",
-        width: "150px",
+        width: "130px",
         height: "40px",
         display: "flex",
         flexDirection: "column",
@@ -861,14 +863,14 @@ const Map = () => {
         overflow: "hidden",
       }}
     >
-      <span>
+      <span style={{fontSize: "12px"}}>
         <strong>Available Units:</strong> {availableUnits}
       </span>
       <div style={{ width: "100%", overflow: "hidden", whiteSpace: "nowrap", marginTop: "3px", height: "20px" }}>
         <span
           style={{
             display: "inline-block",
-            fontSize: windowWidth <= 768 ? "10px" : "12px",
+            fontSize: windowWidth <= 768 ? "12px" : "12px",
             fontWeight: "600",
             animation: newsItems.length > 0 && newsItems[0] !== "Error fetching news" ? "scroll 30s linear infinite" : "none",
           }}
@@ -886,7 +888,7 @@ const Map = () => {
         position: "fixed",
         bottom: windowWidth <= 768 ? "10px" : "20px",
         right: "20px",
-        width: windowWidth <= 768 ? "100px" : "150px",
+        width: windowWidth <= 768 ? "100px" : "100px",
         height: "auto",
         zIndex: 1500,
         pointerEvents: "auto",
@@ -905,7 +907,7 @@ const Map = () => {
         position: "fixed",
         bottom: windowWidth <= 768 ? "10px" : "20px",
         left: "20px",
-        width: windowWidth <= 768 ? "60px" : "100px",
+        width: windowWidth <= 768 ? "60px" : "80px",
         height: "auto",
         zIndex: 1500,
         pointerEvents: "auto",
@@ -939,8 +941,8 @@ const Map = () => {
     justifyContent: "center",
   }}
 >
-  <strong>Plot Map V26.1</strong>
-  <span>Powered by</span>
+  Plot Map V26.1
+ 
   <img
     src="./luminexaLogo.png"
     alt="logo"

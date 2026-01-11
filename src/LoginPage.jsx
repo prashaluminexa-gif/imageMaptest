@@ -23,7 +23,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
-  // Mobile prompt for new viewers
+  // Mobile prompt for new users
   const [showMobilePrompt, setShowMobilePrompt] = useState(false);
   const [mobile, setMobile] = useState("");
   const [mobileError, setMobileError] = useState("");
@@ -67,9 +67,9 @@ export default function LoginPage() {
   };
 
   // Check if user is already a viewer AND has mobile
-  const checkViewerStatus = async (userEmail) => {
-    const viewersRef = collection(db, "viewers");
-    const q = query(viewersRef, where("email", "==", userEmail.trim()));
+  const checkuserstatus = async (userEmail) => {
+    const usersRef = collection(db, "users");
+    const q = query(usersRef, where("email", "==", userEmail.trim()));
     const snapshot = await getDocs(q);
     if (!snapshot.empty) {
       const viewerData = snapshot.docs[0].data();
@@ -89,8 +89,8 @@ export default function LoginPage() {
 
     setSavingMobile(true);
     try {
-      const viewersRef = collection(db, "viewers");
-      const q = query(viewersRef, where("email", "==", currentUser.email));
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("email", "==", currentUser.email));
       const snapshot = await getDocs(q);
 
       if (!snapshot.empty) {
@@ -99,7 +99,7 @@ export default function LoginPage() {
         await setDoc(viewerDoc.ref, { mobile: mobile.replace(/\D/g, "") }, { merge: true });
       } else {
         // Create new
-        await addDoc(viewersRef, {
+        await addDoc(usersRef, {
           email: currentUser.email,
           name: currentUser.displayName || "User",
           photoURL: currentUser.photoURL || null,
@@ -125,7 +125,7 @@ export default function LoginPage() {
 
     try {
       const userCred = await login(email, password);
-      const { exists, hasMobile } = await checkViewerStatus(email);
+      const { exists, hasMobile } = await checkuserstatus(email);
 
       if (!exists || !hasMobile) {
         setCurrentUser(userCred);
@@ -153,7 +153,7 @@ export default function LoginPage() {
 
     try {
       const userCred = await loginWithGoogle();
-      const { exists, hasMobile } = await checkViewerStatus(userCred.email);
+      const { exists, hasMobile } = await checkuserstatus(userCred.email);
 
       if (!exists || !hasMobile) {
         setCurrentUser(userCred);

@@ -286,10 +286,10 @@ const PlotPanel = ({
                 <h1 style={{ fontSize: isMobile ? "26px" : "32px", fontWeight: "900", color: "#fff", margin: 0, textShadow: "0 2px 10px rgba(0,0,0,0.8)" }}>
                   Vinyas
                 </h1>
-                <p style={{ fontSize: "14px", color: "#f0f0f0", margin: "6px 0 0", textShadow: "0 1px 6px rgba(0,0,0,0.7)" }}>
+                <p style={{ fontSize: "12px", color: "#f0f0f0", margin: "6px 0 0", textShadow: "0 1px 6px rgba(0,0,0,0.7)" }}>
                   10 Acre Managed Farmland
                 </p>
-                <p style={{ fontSize: "14px", color: "#f0f0f0", margin: "6px 0 0", textShadow: "0 1px 6px rgba(0,0,0,0.7)" }}>
+                <p style={{ fontSize: "12px", color: "#f0f0f0", margin: "6px 0 0", textShadow: "0 1px 6px rgba(0,0,0,0.7)" }}>
                   Enjoy peaceful weekends at your own private farmland. Fully managed with seasonal crops, regular 
                 </p>
               </div>
@@ -319,14 +319,14 @@ const PlotPanel = ({
                   <h2 style={{ fontSize: isMobile ? "22px" : "27px", margin: "0 0 6px 0", fontWeight: "800", color: "#024837" }}>
                     {selectedPlotData.plotName}
                   </h2>
-                  <p style={{ margin: 0, fontSize: "14px", color: "#444", display: "flex", alignItems: "center", gap: "8px" }}>
+                  <p style={{ margin: 0, fontSize: "12px", color: "#444", display: "flex", alignItems: "center", gap: "8px" }}>
                     <FontAwesomeIcon icon={faCompass} style={{ color: "#024837" }} />
                     Phase - 1 • {selectedPlotData.facing} Facing
                   </p>
                 </div>
                 <span style={{
                   ...getStatusStyle(selectedPlotData.status),
-                  padding: "8px 16px", borderRadius: "30px", fontWeight: "700", fontSize: "14px",  letterSpacing: "0.5px"
+                  padding: "8px 16px", borderRadius: "30px", fontWeight: "700", fontSize: "12px",  letterSpacing: "0.5px"
                 }}>
                   <i class="fa fa-leaf" aria-hidden="true"></i> {selectedPlotData.status}
                 </span>
@@ -343,7 +343,7 @@ const PlotPanel = ({
                   { icon: faRulerCombined, label: "Area (Sqmt)", value: selectedPlotData.areaSqMt },
                 ].map((item, i) => (
                   <div key={i} style={{
-                    display: "flex", alignItems: "center", gap: "12px", padding: "12px 14px",
+                    display: "flex", alignItems: "center", gap: "12px", padding: "12px 12px",
                     backgroundColor: "#f9fafb", borderRadius: "12px", border: "1px solid #e5e7eb"
                   }}>
                     <FontAwesomeIcon icon={item.icon} style={{ color: "#024837", fontSize: "20px" }} />
@@ -378,7 +378,7 @@ const PlotPanel = ({
                             padding: "10px 12px", backgroundColor: "#f9fafb", borderRadius: "10px",
                             border: "1px solid #e5e7eb", textAlign: "center"
                           }}>
-                            <div style={{ fontSize: "14px", color: "#444", textTransform: "capitalize" }}>{tree}</div>
+                            <div style={{ fontSize: "12px", color: "#444", textTransform: "capitalize" }}>{tree}</div>
                             <div style={{ fontSize: "18px", fontWeight: "700", color: "#024837", marginTop: "4px" }}>
                               {count}
                             </div>
@@ -402,7 +402,7 @@ const PlotPanel = ({
                             padding: "10px 12px", backgroundColor: "#f9fafb", borderRadius: "10px",
                             border: "1px solid #e5e7eb", textAlign: "center"
                           }}>
-                            <div style={{ fontSize: "14px", color: "#444", textTransform: "capitalize" }}>{tree}</div>
+                            <div style={{ fontSize: "12px", color: "#444", textTransform: "capitalize" }}>{tree}</div>
                             <div style={{ fontSize: "18px", fontWeight: "700", color: "#024837", marginTop: "4px" }}>
                               {count}
                             </div>
@@ -422,7 +422,7 @@ const PlotPanel = ({
                 marginBottom: "24px",
                 borderLeft: "4px solid #024837"
               }}>
-                <p style={{ margin: 0, fontSize: "14px", color: "#024837", lineHeight: "1.5", fontWeight: "500" }}>
+                <p style={{ margin: 0, fontSize: "12px", color: "#024837", lineHeight: "1.5", fontWeight: "500" }}>
                   Enjoy peaceful weekends at your own private farmland. Fully managed with seasonal crops, regular maintenance, and 24/7 security. A perfect nature retreat just 2 hours from the city.
                 </p>
               </div>
@@ -441,34 +441,34 @@ const PlotPanel = ({
                   <table style={{ width: "100%", borderCollapse: "collapse" }}>
                     <tbody>
                       <tr>
-                        <td style={{ padding: "14px 18px", fontSize: "14px", color: "#555", borderBottom: "1px solid #e5e7eb" }}>
+                        <td style={{ padding: "12px 18px", fontSize: "12px", color: "#555", borderBottom: "1px solid #e5e7eb" }}>
                           Plot Cost
                         </td>
-                        <td style={{ padding: "14px 18px", fontSize: "16px", fontWeight: "700", color: "#024837", textAlign: "right", borderBottom: "1px solid #e5e7eb" }}>
+                        <td style={{ padding: "12px 18px", fontSize: "16px", fontWeight: "700", color: "#024837", textAlign: "right", borderBottom: "1px solid #e5e7eb" }}>
                           ₹{plotPrice.toLocaleString('en-IN')}
                         </td>
                       </tr>
                       <tr>
-                        <td style={{ padding: "14px 18px", fontSize: "14px", color: "#555", borderBottom: "1px solid #e5e7eb" }}>
+                        <td style={{ padding: "12px 18px", fontSize: "12px", color: "#555", borderBottom: "1px solid #e5e7eb" }}>
                           Registration & Legal Charges
                         </td>
-                        <td style={{ padding: "14px 18px", fontSize: "15px", color: "#444", textAlign: "right", borderBottom: "1px solid #e5e7eb" }}>
+                        <td style={{ padding: "12px 18px", fontSize: "15px", color: "#444", textAlign: "right", borderBottom: "1px solid #e5e7eb" }}>
                           Included
                         </td>
                       </tr>
                       <tr>
-                        <td style={{ padding: "14px 18px", fontSize: "14px", color: "#555", borderBottom: "1px solid #e5e7eb" }}>
+                        <td style={{ padding: "12px 18px", fontSize: "12px", color: "#555", borderBottom: "1px solid #e5e7eb" }}>
                           Maintenance (First 3 Years)
                         </td>
-                        <td style={{ padding: "14px 18px", fontSize: "15px", color: "#444", textAlign: "right", borderBottom: "1px solid #e5e7eb" }}>
+                        <td style={{ padding: "12px 18px", fontSize: "15px", color: "#444", textAlign: "right", borderBottom: "1px solid #e5e7eb" }}>
                           Free
                         </td>
                       </tr>
                       <tr>
-                        <td style={{ padding: "14px 18px", fontSize: "15px", fontWeight: "600", color: "#024837" }}>
+                        <td style={{ padding: "12px 18px", fontSize: "15px", fontWeight: "600", color: "#024837" }}>
                           Total Amount
                         </td>
-                        <td style={{ padding: "14px 18px", fontSize: "18px", fontWeight: "800", color: "#024837", textAlign: "right" }}>
+                        <td style={{ padding: "12px 18px", fontSize: "18px", fontWeight: "800", color: "#024837", textAlign: "right" }}>
                           ₹{plotPrice.toLocaleString('en-IN')}
                         </td>
                       </tr>
@@ -492,9 +492,9 @@ const PlotPanel = ({
               ) : (
                 <div style={{
                   textAlign: "center", padding: "20px", backgroundColor: "#f9f9f9",
-                  borderRadius: "14px", margin: "8px 0 20px", border: "1px dashed #ddd"
+                  borderRadius: "12px", margin: "8px 0 20px", border: "1px dashed #ddd"
                 }}>
-                  <p style={{ color: "#555", fontSize: "14px", margin: 0, lineHeight: "1.5" }}>
+                  <p style={{ color: "#555", fontSize: "12px", margin: 0, lineHeight: "1.5" }}>
                     {isRestricted
                       ? "Special allocation plot – not available for individual booking."
                       : "This plot is currently not available."}
