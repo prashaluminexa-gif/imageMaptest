@@ -1395,6 +1395,6 @@ const pendingPill = {
   fontSize: 11,
   fontWeight: 900,
   background: "#fffbeb",
-  border: "1px solid #fde68a",
+  border: "1px solid #fde68af1",
   color: "#b45309",
 };
