@@ -1,27 +1,51 @@
 // src/components/UserProfile.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { auth } from './firebase'; // your firebase config file
+import { auth, db } from './firebase'; // Adjust path if your firebase config is elsewhere
+import { doc, getDoc } from 'firebase/firestore';
+
+// Import the separate centered modal component
+import ProfileDashboard from './ProfileDashboard';
 
 const UserProfile = ({ windowWidth }) => {
   const [user, setUser] = useState(null);
+  const [mobile, setMobile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
-  
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+
   const dashboardRef = useRef(null);
   const triggerRef = useRef(null);
 
-  // Listen to auth state
+  // Auth state listener + fetch mobile from Firestore
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
+      setMobile(null); // reset
+
+      if (currentUser) {
+        try {
+          const userRef = doc(db, 'users', currentUser.uid);
+          const userSnap = await getDoc(userRef);
+
+          if (userSnap.exists()) {
+            const data = userSnap.data();
+            setMobile(data.mobile || null);
+          } else {
+            console.log('No user document found for UID:', currentUser.uid);
+          }
+        } catch (err) {
+          console.error('Error fetching user mobile:', err);
+        }
+      }
+
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
-  // Close dashboard when clicking outside
+  // Close mini-dashboard when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -56,6 +80,11 @@ const UserProfile = ({ windowWidth }) => {
     }
   };
 
+  const openProfileModal = () => {
+    setIsDashboardOpen(false);
+    setIsProfileModalOpen(true);
+  };
+
   if (loading) {
     return (
       <div
@@ -73,7 +102,7 @@ const UserProfile = ({ windowWidth }) => {
     );
   }
 
-  // Guest mode (not logged in)
+  // Guest view
   if (!user) {
     return (
       <div
@@ -113,14 +142,13 @@ const UserProfile = ({ windowWidth }) => {
     );
   }
 
-  // Logged in user
+  // Logged-in user
   const displayName = user.displayName || user.email?.split('@')[0] || 'User';
   const photoURL = user.photoURL || 'https://via.placeholder.com/44?text=U';
 
-
   return (
     <div style={{ position: 'relative' }}>
-      {/* Profile trigger area */}
+      {/* Profile trigger (floating pill on right edge) */}
       <div
         ref={triggerRef}
         onClick={toggleDashboard}
@@ -160,7 +188,7 @@ const UserProfile = ({ windowWidth }) => {
             fontFamily: "'Montserrat', sans-serif",
             fontWeight: '600',
             color: '#1a3c34',
-            fontSize: windowWidth <= 768 ? '13px' : '13px',
+            fontSize: windowWidth <= 768 ? '12px' : '12px',
             maxWidth: '140px',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
@@ -171,7 +199,7 @@ const UserProfile = ({ windowWidth }) => {
         </div>
       </div>
 
-      {/* Dashboard Popover */}
+      {/* Mini dashboard popover */}
       {isDashboardOpen && (
         <div
           ref={dashboardRef}
@@ -195,10 +223,13 @@ const UserProfile = ({ windowWidth }) => {
             <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#666' }}>
               {user.email}
             </p>
+            <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#666' }}>
+              {mobile ? `+91 ${mobile}` : 'Mobile number not provided'}
+            </p>
           </div>
 
           <div style={{ padding: '8px 0' }}>
-            <DashboardItem label="Profile" onClick={() => alert('Open Profile Edit (to be implemented)')} />
+            <DashboardItem label="Profile" onClick={openProfileModal} />
             <DashboardItem label="My Investments" onClick={() => alert('My Investments (to be implemented)')} />
             <DashboardItem label="Payment History" onClick={() => alert('Payment History (to be implemented)')} />
             <DashboardItem
@@ -216,11 +247,20 @@ const UserProfile = ({ windowWidth }) => {
           </div>
         </div>
       )}
+
+      {/* Centered Profile Modal */}
+      {isProfileModalOpen && (
+        <ProfileDashboard
+          user={user}
+          onClose={() => setIsProfileModalOpen(false)}
+          onUpdateMobile={(newMobile) => setMobile(newMobile)}
+        />
+      )}
     </div>
   );
 };
 
-// Reusable menu item component
+// Mini dashboard item (can be extracted later if desired)
 const DashboardItem = ({ label, onClick, style = {} }) => (
   <button
     onClick={onClick}
@@ -231,7 +271,7 @@ const DashboardItem = ({ label, onClick, style = {} }) => (
       background: 'none',
       textAlign: 'left',
       fontFamily: "'Montserrat', sans-serif",
-      fontSize: '14px',
+      fontSize: '13px',
       color: '#333',
       cursor: 'pointer',
       transition: 'background-color 0.15s',

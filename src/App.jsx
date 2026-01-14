@@ -10,10 +10,7 @@ import {
 import {
   collection,
   getDocs,
-  addDoc,
-  query,
-  where,
-  serverTimestamp,
+
 } from "firebase/firestore";
 import {
   signInWithEmailAndPassword,
@@ -54,20 +51,8 @@ function AuthProvider({ children }) {
 
     localStorage.setItem(LAST_LOGIN_KEY, Date.now().toString());
 
-    // Auto-add Google user to viewers collection if not exists
-    const viewersRef = collection(db, "viewers");
-    const q = query(viewersRef, where("email", "==", user.email));
-    const snapshot = await getDocs(q);
-
-    if (snapshot.empty) {
-      await addDoc(viewersRef, {
-        email: user.email,
-        name: user.displayName || "Google User",
-        photoURL: user.photoURL || null,
-        createdAt: serverTimestamp(),
-        loginMethod: "google",
-      });
-    }
+    // Auto-add Google user to users collection if not exists
+    
 
     setUser(user);
     return user;

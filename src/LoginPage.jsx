@@ -6,6 +6,7 @@ import {
   collection,
   query,
   where,
+  doc,
   getDocs,
   addDoc,
   setDoc,
@@ -80,42 +81,38 @@ export default function LoginPage() {
 
   // Save mobile to viewer document
   const saveMobileToViewer = async () => {
-    if (!currentUser) return;
-    const mobErr = validateMobile(mobile);
-    if (mobErr) {
-      setMobileError(mobErr);
-      return;
-    }
+  if (!currentUser) return;
+  const mobErr = validateMobile(mobile);
+  if (mobErr) {
+    setMobileError(mobErr);
+    return;
+  }
 
-    setSavingMobile(true);
-    try {
-      const usersRef = collection(db, "users");
-      const q = query(usersRef, where("email", "==", currentUser.email));
-      const snapshot = await getDocs(q);
+  setSavingMobile(true);
+  try {
+    const userId = currentUser.uid;
+    const userRef = doc(db, "users", userId);
 
-      if (!snapshot.empty) {
-        // Update existing
-        const viewerDoc = snapshot.docs[0];
-        await setDoc(viewerDoc.ref, { mobile: mobile.replace(/\D/g, "") }, { merge: true });
-      } else {
-        // Create new
-        await addDoc(usersRef, {
-          email: currentUser.email,
-          name: currentUser.displayName || "User",
-          photoURL: currentUser.photoURL || null,
-          mobile: mobile.replace(/\D/g, ""),
-          createdAt: serverTimestamp(),
-          loginMethod: currentUser.providerData[0]?.providerId || "unknown",
-        });
-      }
+    await setDoc(userRef, {
+      email: currentUser.email || "",
+    name: currentUser.displayName || "User",
+    photoURL: currentUser.photoURL || null,
+    mobile: mobile.replace(/\D/g, ""),
+    mobileNumber: mobile.replace(/\D/g, ""),
+    loginMethod: currentUser.providerData?.[0]?.providerId || "unknown",
+    bookings: [],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    }, { merge: true });
 
-      setTimeout(() => navigate(from, { replace: true }), 300);
-    } catch (err) {
-      setError("Failed to save mobile. Try again.");
-    } finally {
-      setSavingMobile(false);
-    }
-  };
+    setTimeout(() => navigate(from, { replace: true }), 300);
+  } catch (err) {
+    console.error(err);
+    setError("Failed to save mobile. Try again.");
+  } finally {
+    setSavingMobile(false);
+  }
+};
 
   // Email/Password Login
   const handleLogin = async (e) => {
@@ -303,15 +300,27 @@ export default function LoginPage() {
 
             <div className="input-wrapper">
               <input
-                type="tel"
-                placeholder="Mobile Number"
-                value={mobile}
-                onChange={(e) => {
-                  setMobile(e.target.value);
-                  setMobileError("");
-                }}
-                required
-              />
+        type="tel"
+        placeholder="Mobile Number"
+        value={mobile}
+        onChange={(e) => {
+          setMobile(e.target.value);
+          setMobileError("");
+        }}
+        required
+        style={{
+          width: "100%",
+          padding: "10px 14px",
+          fontSize: "14px",
+          borderRadius: "8px",
+          marginBottom: "10px",
+          border: mobileError ? "1px solid #ff4d4f" : "1px solid #ccc",
+          outline: "none",
+          fontFamily: "'Montserrat', sans-serif",
+          boxSizing: "border-box",
+          transition: "border 0.2s ease",
+        }}
+      />
               {mobileError && <span className="field-error">{mobileError}</span>}
             </div>
 
