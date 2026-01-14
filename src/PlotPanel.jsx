@@ -283,7 +283,7 @@ const PlotPanel = ({
 
               {/* Overlay Text */}
               <div style={{ position: "absolute", top: "24px", left: "24px", zIndex: 10, pointerEvents: "none" }}>
-                <h1 style={{ fontSize: isMobile ? "26px" : "32px", fontWeight: "900", color: "#fff", margin: 0, textShadow: "0 2px 10px rgba(0,0,0,0.8)" }}>
+                <h1 style={{ fontSize: isMobile ? "26px" : "26px", fontWeight: "900", color: "#fff", margin: 0, textShadow: "0 2px 10px rgba(0,0,0,0.8)" }}>
                   Vinyas
                 </h1>
                 <p style={{ fontSize: "12px", color: "#f0f0f0", margin: "6px 0 0", textShadow: "0 1px 6px rgba(0,0,0,0.7)" }}>
@@ -316,7 +316,7 @@ const PlotPanel = ({
                 justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px"
               }}>
                 <div>
-                  <h2 style={{ fontSize: isMobile ? "22px" : "27px", margin: "0 0 6px 0", fontWeight: "800", color: "#024837" }}>
+                  <h2 style={{ fontSize: isMobile ? "20px" : "25px", margin: "0 0 6px 0", fontWeight: "800", color: "#024837" }}>
                     {selectedPlotData.plotName}
                   </h2>
                   <p style={{ margin: 0, fontSize: "12px", color: "#444", display: "flex", alignItems: "center", gap: "8px" }}>
@@ -361,7 +361,7 @@ const PlotPanel = ({
               {hasAnyTrees && (
                 <div style={{ marginBottom: "24px" }}>
                   <h3 style={{ fontSize: "18px", fontWeight: "700", marginBottom: "16px", color: "#024837" }}>
-                    Trees Planted
+                    Trees Planted 
                   </h3>
 
                   {hasForestTrees && (
