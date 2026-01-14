@@ -6,16 +6,28 @@ import { doc, getDoc } from 'firebase/firestore';
 
 // Import the separate centered modal component
 import ProfileDashboard from './ProfileDashboard';
+import MyInvestmentsDashboard from "./MyInvestmentsDashboard";
+import PaymentHistoryDashboard from "./PaymentHistoryDashboard";
 
-const UserProfile = ({ windowWidth }) => {
+
+
+const UserProfile = ({ windowWidth, onModalOpenChange  }) => {
   const [user, setUser] = useState(null);
   const [mobile, setMobile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [isInvestmentsOpen, setIsInvestmentsOpen] = useState(false);
+  const [isPaymentHistoryOpen, setIsPaymentHistoryOpen] = useState(false);
+
+
+
 
   const dashboardRef = useRef(null);
   const triggerRef = useRef(null);
+
+  
+
 
   // Auth state listener + fetch mobile from Firestore
   useEffect(() => {
@@ -81,9 +93,15 @@ const UserProfile = ({ windowWidth }) => {
   };
 
   const openProfileModal = () => {
-    setIsDashboardOpen(false);
-    setIsProfileModalOpen(true);
-  };
+  setIsDashboardOpen(false);
+  setIsProfileModalOpen(true);
+  onModalOpenChange?.(true);
+};
+
+const closeProfileModal = () => {
+  setIsProfileModalOpen(false);
+  onModalOpenChange?.(false);
+};
 
   if (loading) {
     return (
@@ -230,8 +248,24 @@ const UserProfile = ({ windowWidth }) => {
 
           <div style={{ padding: '8px 0' }}>
             <DashboardItem label="Profile" onClick={openProfileModal} />
-            <DashboardItem label="My Investments" onClick={() => alert('My Investments (to be implemented)')} />
-            <DashboardItem label="Payment History" onClick={() => alert('Payment History (to be implemented)')} />
+            <DashboardItem
+  label="My Investments"
+  onClick={() => {
+    setIsDashboardOpen(false);
+    setIsInvestmentsOpen(true);
+    onModalOpenChange?.(true);
+  }}
+/>
+
+            <DashboardItem
+  label="Payment History"
+  onClick={() => {
+    setIsDashboardOpen(false);
+    setIsPaymentHistoryOpen(true);
+    onModalOpenChange?.(true);
+  }}
+/>
+
             <DashboardItem
               label="Query / Report / Complaint"
               onClick={() => alert('Raise Query/Complaint (to be implemented)')}
@@ -249,13 +283,35 @@ const UserProfile = ({ windowWidth }) => {
       )}
 
       {/* Centered Profile Modal */}
-      {isProfileModalOpen && (
-        <ProfileDashboard
-          user={user}
-          onClose={() => setIsProfileModalOpen(false)}
-          onUpdateMobile={(newMobile) => setMobile(newMobile)}
-        />
-      )}
+     {isProfileModalOpen && (
+  <ProfileDashboard
+    user={user}
+    onClose={closeProfileModal}
+    onUpdateMobile={(newMobile) => setMobile(newMobile)}
+  />
+)}
+
+{isInvestmentsOpen && (
+  <MyInvestmentsDashboard
+    user={user}
+    onClose={() => {
+      setIsInvestmentsOpen(false);
+      onModalOpenChange?.(false);
+    }}
+  />
+)}
+{isPaymentHistoryOpen && (
+  <PaymentHistoryDashboard
+    user={user}
+    onClose={() => {
+      setIsPaymentHistoryOpen(false);
+      onModalOpenChange?.(false);
+    }}
+  />
+)}
+
+
+
     </div>
   );
 };

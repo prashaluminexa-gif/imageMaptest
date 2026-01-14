@@ -47,6 +47,9 @@ const Map = () => {
   const [selectedPlotData, setSelectedPlotData] = useState(null);
   const [panelLoading, setPanelLoading] = useState(false);
 
+  const [uiLocked, setUiLocked] = useState(false);
+
+
   // Handle image loading
   useEffect(() => {
     const img = new Image();
@@ -193,6 +196,7 @@ const Map = () => {
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
   const [touchDistance, setTouchDistance] = useState(null);
   const [lastTouch, setLastTouch] = useState(null);
+
 
   const coords = useMemo(
     () => ({
@@ -358,6 +362,7 @@ const Map = () => {
     const container = containerRef.current;
     if (!container) return;
     const handleWheel = (e) => {
+      if (uiLocked) return;  
 
       if (selectedPlotId) return;  // ← Add this line
       e.preventDefault();
@@ -438,22 +443,34 @@ const Map = () => {
     adjustPositionToBounds,
     selectedPlotId,
     maxZoom,
+    uiLocked,
     fetchNewsData,
     fetchPlotsData,
     openPlotPanel
   ]);
 
   const handleMouseDown = (e) => {
-    if (selectedPlotId) return;
-    e.preventDefault();
-    setIsDragging(true);
-    setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
-    setDragDistance(0);
-    setWasDragged(false);
-  };
+    if (uiLocked) return;  
+  const clickedInsideModal = e.target.closest?.('[data-modal="true"]');
+  if (clickedInsideModal) return;
+  if (selectedPlotId) return;
+  const isMapClick =
+    e.target === mapRef.current ||
+    e.target.closest?.(".map-container") ||
+    e.target.closest?.("img[usemap]");
+
+  if (isMapClick) e.preventDefault();
+
+  setIsDragging(true);
+  setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+  setDragDistance(0);
+  setWasDragged(false);
+};
+
 
   const handleMouseMove = useCallback(
     (e) => {
+      if (uiLocked) return;  
       if (!isDragging) return;
       const { minX, maxX, minY, maxY } = calculateBoundaries(zoom);
       let newX = e.clientX - dragStart.x;
@@ -476,10 +493,11 @@ const Map = () => {
         setWasDragged(true);
       }
     },
-    [isDragging, dragStart, position, zoom, calculateBoundaries]
+    [isDragging, dragStart, position, zoom, calculateBoundaries, uiLocked]
   );
 
   const handleMouseUp = (e) => {
+    if (uiLocked) return;  
     setIsDragging(false);
     if (dragDistance >= 5) {
       e.preventDefault();
@@ -491,6 +509,7 @@ const Map = () => {
   };
 
   const handleTouchStart = (e) => {
+    if (uiLocked) return;  
     if (selectedPlotId) return;
     if (e.touches.length === 1) {
       const touch = e.touches[0];
@@ -508,6 +527,7 @@ const Map = () => {
 
   const handleTouchMove = useCallback(
     (e) => {
+      if (uiLocked) return;  
       const { minX, maxX, minY, maxY } = calculateBoundaries(zoom);
 
       if (e.touches.length === 1 && isDragging) {
@@ -547,10 +567,11 @@ const Map = () => {
         e.preventDefault();
       }
     },
-    [isDragging, dragStart, touchDistance, zoom, minZoom, maxZoom, refreshMapster, adjustPositionToBounds, calculateBoundaries]
+    [isDragging, dragStart, touchDistance, zoom, minZoom, maxZoom, refreshMapster, adjustPositionToBounds, calculateBoundaries, uiLocked]
   );
 
   const handleTouchEnd = (e) => {
+    if (uiLocked) return;  
     if (e.touches.length < 2) setTouchDistance(null);
     if (e.touches.length === 0 && isDragging && lastTouch) {
       const touch = e.changedTouches[0];
@@ -822,7 +843,11 @@ const Map = () => {
       <button onClick={zoomOut}>-</button>
     </div>
     <LeftControlBar windowWidth={windowWidth} />
-    <UserProfile windowWidth={windowWidth} />
+    <UserProfile
+  windowWidth={windowWidth}
+  onModalOpenChange={setUiLocked}
+/>
+
     {/* Right Logo */}
     <img
       src={logoRight}
