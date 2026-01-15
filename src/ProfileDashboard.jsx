@@ -37,6 +37,17 @@ export default function ProfileDashboard({ user, onClose, onUpdateMobile }) {
   const contentMeasureRef = useRef(null);
   const [modalHeight, setModalHeight] = useState(null);
 
+  // ✅ mobile detection (responsive layout)
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 720px)");
+    const apply = () => setIsMobile(mq.matches);
+
+    apply();
+    mq.addEventListener?.("change", apply);
+    return () => mq.removeEventListener?.("change", apply);
+  }, []);
+
   useEffect(() => {
     if (!user?.uid) return;
 
@@ -82,7 +93,7 @@ export default function ProfileDashboard({ user, onClose, onUpdateMobile }) {
 
     const HEADER_HEIGHT = 128;
     const MIN = 420;
-    const MAX = Math.round(window.innerHeight * 0.86);
+    const MAX = Math.round(window.innerHeight * 0.92); // little larger for mobile
 
     const compute = () => {
       const contentHeight = el.scrollHeight;
@@ -96,7 +107,7 @@ export default function ProfileDashboard({ user, onClose, onUpdateMobile }) {
     ro.observe(el);
 
     return () => ro.disconnect();
-  }, [selectedSection, loading, error, success]);
+  }, [selectedSection, loading, error, success, isMobile]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -108,7 +119,7 @@ export default function ProfileDashboard({ user, onClose, onUpdateMobile }) {
   if (loading) {
     return (
       <div style={overlayStyle}>
-        <div style={{ ...modalStyle, height: "420px" }}>
+        <div style={{ ...modalStyle, ...(isMobile ? modalStyleMobile : null), height: "420px" }}>
           <div style={{ padding: "44px 28px", textAlign: "center" }}>Loading profile...</div>
         </div>
       </div>
@@ -137,6 +148,7 @@ export default function ProfileDashboard({ user, onClose, onUpdateMobile }) {
       <div
         style={{
           ...modalStyle,
+          ...(isMobile ? modalStyleMobile : null),
           height: modalHeight ? `${modalHeight}px` : "auto",
           transition: "height 180ms ease",
         }}
@@ -147,48 +159,51 @@ export default function ProfileDashboard({ user, onClose, onUpdateMobile }) {
           ×
         </button>
 
-        {/* Header (with small details + icons) */}
-        <div style={headerStyle}>
-  <img
-    src={photoURL}
-    alt="Profile"
-    style={profileImgStyle}
-    onError={(e) => {
-      e.currentTarget.src = "https://via.placeholder.com/80?text=U";
-    }}
-  />
-  <div style={userInfoStyle}>
-    <h2 style={nameStyle}>{displayName}</h2>
-    <p style={detailStyle}>{email}</p>
-    <p style={detailStyle}>{mobileDisplay}</p>
-  </div>
-</div>
+        {/* Header */}
+        <div style={{ ...headerStyle, ...(isMobile ? headerStyleMobile : null) }}>
+          <img
+            src={photoURL}
+            alt="Profile"
+            style={profileImgStyle}
+            onError={(e) => {
+              e.currentTarget.src = "https://via.placeholder.com/80?text=U";
+            }}
+          />
+          <div style={userInfoStyle}>
+            <h2 style={nameStyle}>{displayName}</h2>
+            <p style={detailStyle}>{email}</p>
+            <p style={detailStyle}>{mobileDisplay}</p>
+          </div>
+        </div>
 
-        <div style={bodyStyle}>
-          {/* Sidebar (icons added) */}
-          <div style={sidebarStyle}>
+        <div style={{ ...bodyStyle, ...(isMobile ? bodyStyleMobile : null) }}>
+          {/* Sidebar */}
+          <div style={{ ...sidebarStyle, ...(isMobile ? sidebarStyleMobile : null) }}>
             <SidebarItem
+              isMobile={isMobile}
               icon="👤"
-              label="Personal Information"
+              label="Personal"
               active={selectedSection === "personal"}
               onClick={() => setSelectedSection("personal")}
             />
             <SidebarItem
+              isMobile={isMobile}
               icon="🔒"
-              label="Change Password"
+              label="Password"
               active={selectedSection === "password"}
               onClick={() => setSelectedSection("password")}
             />
             <SidebarItem
+              isMobile={isMobile}
               icon="🪪"
-              label="KYC Update"
+              label="KYC"
               active={selectedSection === "kyc"}
               onClick={() => setSelectedSection("kyc")}
               rightBadge={kycMeta.badgeText}
             />
           </div>
 
-          <div style={contentStyle}>
+          <div style={{ ...contentStyle, ...(isMobile ? contentStyleMobile : null) }}>
             <div ref={contentMeasureRef}>
               {error && <div style={messageErrorStyle}>⚠️ {error}</div>}
               {success && <div style={messageSuccessStyle}>✅ {success}</div>}
@@ -218,7 +233,7 @@ export default function ProfileDashboard({ user, onClose, onUpdateMobile }) {
                 />
               )}
 
-              {/* Footer support inside content (so it fits modal height nicely) */}
+              {/* Footer support */}
               <div style={supportBox}>
                 <div style={{ fontWeight: 800, color: "#1a3c34", marginBottom: 6 }}>
                   Need help?
@@ -235,6 +250,9 @@ export default function ProfileDashboard({ user, onClose, onUpdateMobile }) {
                   </a>
                 </div>
               </div>
+
+              {/* mobile bottom spacing so last button isn't tight */}
+              {isMobile ? <div style={{ height: 18 }} /> : null}
             </div>
           </div>
         </div>
@@ -243,20 +261,34 @@ export default function ProfileDashboard({ user, onClose, onUpdateMobile }) {
   );
 }
 
-function SidebarItem({ icon, label, active, onClick, rightBadge }) {
+function SidebarItem({ icon, label, active, onClick, rightBadge, isMobile }) {
   return (
     <button
       onClick={onClick}
       style={{
         ...sidebarItemBase,
-        backgroundColor: active ? "#e8f0ef" : "transparent",
-        fontWeight: active ? 700 : 600,
+        ...(isMobile
+          ? {
+              width: "auto",
+              whiteSpace: "nowrap",
+              borderRadius: 12,
+              border: active ? "1px solid #cfe7e1" : "1px solid #e5e7eb",
+              backgroundColor: active ? "#e8f0ef" : "#fff",
+              padding: "10px 12px",
+              margin: "0 2px",
+            }
+          : {
+              width: "100%",
+              backgroundColor: active ? "#e8f0ef" : "transparent",
+              padding: "10px 16px",
+            }),
+        fontWeight: active ? 800 : 700,
       }}
       type="button"
     >
-      <span style={{ display: "flex", alignItems: "center", gap: 10, width: "100%" }}>
+      <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <span style={{ width: 22, textAlign: "center" }}>{icon}</span>
-        <span style={{ flex: 1 }}>{label}</span>
+        <span>{label}</span>
         {rightBadge ? <span style={rightBadgeStyle}>{rightBadge}</span> : null}
       </span>
     </button>
@@ -310,7 +342,7 @@ function PersonalInfoSection({ userData, handleInputChange, user, setError, setS
       <Input value={userData.email} disabled style={{ backgroundColor: "#f5f5f5" }} />
 
       <Label>Mobile Number</Label>
-      <Input name="mobile" value={userData.mobile} onChange={handleInputChange} />
+      <Input name="mobile" value={userData.mobile} onChange={handleInputChange} inputMode="numeric" />
 
       <Label>Address Line 1</Label>
       <Input name="addressLine1" value={userData.addressLine1} onChange={handleInputChange} />
@@ -325,7 +357,7 @@ function PersonalInfoSection({ userData, handleInputChange, user, setError, setS
       <Input name="state" value={userData.state} onChange={handleInputChange} />
 
       <Label>Pincode</Label>
-      <Input name="pincode" value={userData.pincode} onChange={handleInputChange} />
+      <Input name="pincode" value={userData.pincode} onChange={handleInputChange} inputMode="numeric" />
 
       <Button onClick={handleSave} disabled={saving}>
         {saving ? "Saving…" : "Save Changes"}
@@ -549,11 +581,12 @@ const Input = (props) => (
     {...props}
     style={{
       width: "100%",
-      padding: "8px 12px",
+      boxSizing: "border-box",
+      padding: "10px 12px",
       marginBottom: 14,
       border: "1px solid #d0d5dd",
-      borderRadius: "8px",
-      fontSize: "13px",
+      borderRadius: "10px",
+      fontSize: "14px",
       outline: "none",
       ...props.style,
     }}
@@ -647,6 +680,14 @@ const modalStyle = {
   flexDirection: "column",
 };
 
+const modalStyleMobile = {
+  width: "100%",
+  height: "92vh",
+  maxHeight: "92vh",
+  maxWidth: "100%",
+  borderRadius: "14px",
+};
+
 const closeBtnStyle = {
   position: "absolute",
   top: 12,
@@ -667,6 +708,13 @@ const headerStyle = {
   borderBottom: "1px solid #e5e7eb",
   backgroundColor: "#f9fafb",
   gap: "14px",
+};
+
+const headerStyleMobile = {
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: 10,
+  padding: "14px 14px",
 };
 
 const profileImgStyle = {
@@ -699,6 +747,10 @@ const bodyStyle = {
   minHeight: 0,
 };
 
+const bodyStyleMobile = {
+  flexDirection: "column",
+};
+
 const sidebarStyle = {
   width: "220px",
   backgroundColor: "#f8f9fa",
@@ -706,9 +758,18 @@ const sidebarStyle = {
   padding: "10px 0",
 };
 
-const sidebarItemBase = {
+const sidebarStyleMobile = {
   width: "100%",
-  padding: "10px 16px",
+  borderRight: "none",
+  borderBottom: "1px solid #e5e7eb",
+  padding: "8px 8px",
+  display: "flex",
+  gap: 8,
+  overflowX: "auto",
+  WebkitOverflowScrolling: "touch",
+};
+
+const sidebarItemBase = {
   border: "none",
   background: "none",
   textAlign: "left",
@@ -733,6 +794,10 @@ const contentStyle = {
   padding: "18px 18px",
   overflowY: "auto",
   overscrollBehavior: "contain",
+};
+
+const contentStyleMobile = {
+  padding: "14px 14px",
 };
 
 const messageErrorStyle = {
