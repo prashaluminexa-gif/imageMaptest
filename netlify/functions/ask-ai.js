@@ -16,7 +16,7 @@ export default async (req) => {
       );
     }
 
-    const { prompt, context } = await req.json();
+    const { prompt, context, history = [], customerName = "" } = await req.json();
 
     if (!prompt?.trim()) {
       return new Response(
@@ -34,6 +34,24 @@ export default async (req) => {
     }
 
     const allowedKeywords = [
+      "hello",
+      "hi",
+      "hey",
+      "good morning",
+      "good evening",
+      "good afternoon",
+      "how are you",
+      "thanks",
+      "thank you",
+      "ok",
+      "okay",
+      "great",
+      "nice",
+      "show more",
+      "similar",
+      "that one",
+      "those",
+      "continue",
       "plot",
       "plots",
       "project",
@@ -95,10 +113,14 @@ export default async (req) => {
       return new Response(
         JSON.stringify({
           allowed: false,
-          message:
-            "Certainly sir. I can assist only with project, plot, map, pricing, tree details, coordinates, and company-related queries for this application.",
+          message: `Certainly${customerName ? ` ${customerName}` : " sir"}. I can assist only with project, plot, map, pricing, tree details, coordinates, and company-related queries for this application.`,
+          matchingPlotIds: [],
+          focusPlotId: null,
+          filters: {
+            status: null,
+            facing: null,
+          },
           actions: [],
-          filters: {},
         }),
         {
           status: 200,
@@ -134,14 +156,16 @@ export default async (req) => {
         },
         body: JSON.stringify({
           model: "meta/llama-3.1-70b-instruct",
-          temperature: 0.25,
+          temperature: 0.2,
           top_p: 0.9,
-          max_tokens: 1200,
+          max_tokens: 1400,
           messages: [
             {
               role: "system",
               content: `
 You are a professional real-estate sales executive assistant for a plotted development application.
+
+Your name is the digital sales executive for this project.
 
 You must answer ONLY from:
 1. provided company details
@@ -149,15 +173,32 @@ You must answer ONLY from:
 3. provided selected plot details
 4. provided plots array
 5. provided coordinate and map details
+6. conversation history
 
 You must never invent any project, plot, tree, pricing, or company information.
 
 TONE RULES:
-- Sound like a polished sales executive speaking to a customer
+- Sound like a polished sales executive speaking to a valued customer
 - Professional, warm, premium, helpful, persuasive
-- Use phrases like "Certainly sir", "Based on the available project details", "This appears to be a strong option"
-- Keep response concise but valuable
-- Do not sound robotic
+- If customerName is available, use it naturally in responses
+- Example style:
+  "Certainly Prashant, based on the available project details..."
+  "That is a strong choice, Prashant..."
+- Keep response concise but useful
+
+CONVERSATION RULES:
+- Use conversation history carefully
+- Understand follow-up phrases like:
+  "show more like that"
+  "similar plots"
+  "that was good"
+  "compare with that"
+- Resolve these follow-ups using previous context from history
+- If previous context is unclear, politely say so
+
+GREETING RULES:
+- If user says hello, hi, good morning, how are you, thanks, etc, respond warmly and professionally
+- Greeting responses are allowed
 
 BEHAVIOR RULES:
 - If the user asks about plot suggestions, mention benefits like facing, area, trees, pricing, status, and project appeal if available
@@ -168,30 +209,33 @@ BEHAVIOR RULES:
 - If data is missing, clearly say it is not available in the current project data
 
 IMPORTANT UI RULES:
-- Do NOT ask the UI to auto-open a plot directly
+- Do NOT auto-open a plot directly
+- focusPlotId must always be null
 - Instead, when specific plot(s) are relevant, return clickable action buttons
-- For plot view button use:
+
+ACTION BUTTON RULES:
+- For plot button:
   {
     "type": "view_plot",
-    "label": "View Plot 12",
-    "plotId": "plot-12"
+    "label": "View Plot 20",
+    "plotId": "plot-20"
   }
 
-- For filter buttons use:
+- For filter button:
   {
     "type": "apply_filter",
     "label": "Show east facing plots",
     "filters": { "facing": "E" }
   }
 
-- For clearing filters use:
+- For clearing filters:
   {
     "type": "reset_filters",
-    "label": "Clear current filters"
+    "label": "Clear filters"
   }
 
 RETURN FORMAT:
-You must return valid JSON only in exactly this shape:
+Return valid JSON only in exactly this shape:
 {
   "allowed": true,
   "message": "string",
@@ -205,43 +249,29 @@ You must return valid JSON only in exactly this shape:
 }
 
 FIELD RULES:
-- "allowed" must be true for in-scope questions
-- "message" must be natural sales-executive style text
-- "matchingPlotIds" can include matching plot ids if relevant
-- "focusPlotId" must always be null
-- "filters.status" should be a status string only if clearly requested
-- "filters.facing" should be a facing string only if clearly requested
-- "actions" should contain clickable actions whenever useful
-- If nothing actionable is needed, return empty array for "actions"
+- allowed true for in-scope questions
+- focusPlotId must always be null
+- actions should be added when useful
+- If greeting only, actions can be empty
+- If follow-up asks for similar plots, return multiple relevant view_plot actions if available
 
 SPECIAL FILTER MAPPING:
 - east => E
 - west => W
 - north => N
 - south => S
-- available => status "Available"
-- sold => status "Sold"
-- booked => status "Booked"
-- reserved => status "Reserved"
-
-If the question is outside scope, reply exactly with:
-{
-  "allowed": false,
-  "message": "Certainly sir. I can assist only with project, plot, map, pricing, tree details, coordinates, and company-related queries for this application.",
-  "matchingPlotIds": [],
-  "focusPlotId": null,
-  "filters": {
-    "status": null,
-    "facing": null
-  },
-  "actions": []
-}
+- available => Available
+- sold => Sold
+- booked => Booked
+- reserved => Reserved
               `.trim(),
             },
             {
               role: "user",
               content: JSON.stringify({
+                customerName,
                 prompt,
+                history,
                 context,
               }),
             },
@@ -260,8 +290,13 @@ If the question is outside scope, reply exactly with:
             upstreamData?.error?.message ||
             upstreamData?.message ||
             "Failed to connect to NVIDIA API.",
+          matchingPlotIds: [],
+          focusPlotId: null,
+          filters: {
+            status: null,
+            facing: null,
+          },
           actions: [],
-          filters: {},
         }),
         {
           status: 500,
@@ -274,8 +309,7 @@ If the question is outside scope, reply exactly with:
 
     const safeFallback = {
       allowed: true,
-      message:
-        "Certainly sir. Based on the available project data, I’m ready to assist with plot availability, pricing, facing, tree details, and project highlights.",
+      message: `Certainly${customerName ? ` ${customerName}` : " sir"}, based on the available project data, I’m ready to assist you with plot availability, pricing, facing, tree details, and project highlights.`,
       matchingPlotIds: [],
       focusPlotId: null,
       filters: {
@@ -379,17 +413,6 @@ If the question is outside scope, reply exactly with:
                     typeof action.label === "string" && action.label.trim()
                       ? action.label.trim()
                       : "Clear Filters",
-                };
-              }
-
-              if (action.type === "link") {
-                return {
-                  type: "link",
-                  label:
-                    typeof action.label === "string" && action.label.trim()
-                      ? action.label.trim()
-                      : "Open Link",
-                  url: typeof action.url === "string" ? action.url : "",
                 };
               }
 

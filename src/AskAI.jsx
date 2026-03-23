@@ -4,8 +4,17 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
   const [open, setOpen] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    {
+      role: "assistant",
+      content:
+        "Hello sir, welcome. May I know your name so I can assist you better with the project and plot details?",
+      actions: [],
+    },
+  ]);
   const [inputRows, setInputRows] = useState(1);
+  const [customerName, setCustomerName] = useState("");
+  const [nameAsked, setNameAsked] = useState(true);
 
   const messagesRef = useRef(null);
 
@@ -30,6 +39,42 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
     ]);
   };
 
+  const buildHistoryForApi = (nextUserPrompt) => {
+    const history = messages.map((msg) => ({
+      role: msg.role,
+      content: msg.content,
+    }));
+
+    history.push({
+      role: "user",
+      content: nextUserPrompt,
+    });
+
+    return history.slice(-12);
+  };
+
+  const detectNameFromPrompt = (text) => {
+    const cleaned = String(text || "").trim();
+
+    const patterns = [
+      /^i am\s+([a-zA-Z ]{2,40})$/i,
+      /^i'm\s+([a-zA-Z ]{2,40})$/i,
+      /^my name is\s+([a-zA-Z ]{2,40})$/i,
+      /^this is\s+([a-zA-Z ]{2,40})$/i,
+      /^it'?s\s+([a-zA-Z ]{2,40})$/i,
+      /^([a-zA-Z]{2,30})$/i,
+    ];
+
+    for (const pattern of patterns) {
+      const match = cleaned.match(pattern);
+      if (match?.[1]) {
+        return match[1].trim();
+      }
+    }
+
+    return "";
+  };
+
   const handleSend = async (manualPrompt) => {
     const finalPrompt = typeof manualPrompt === "string" ? manualPrompt : prompt;
     const trimmedPrompt = finalPrompt.trim();
@@ -40,9 +85,26 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
     setMessages((prev) => [...prev, userMessage]);
     setPrompt("");
     setInputRows(1);
+
+    if (!customerName) {
+      const extractedName = detectNameFromPrompt(trimmedPrompt);
+
+      if (extractedName) {
+        setCustomerName(extractedName);
+        setNameAsked(false);
+
+        appendAssistantMessage(
+          `Wonderful, ${extractedName}. I’m pleased to assist you. You can now ask me about available plots, pricing, facing, tree details, project highlights, or comparisons.`
+        );
+        return;
+      }
+    }
+
     setLoading(true);
 
     try {
+      const history = buildHistoryForApi(trimmedPrompt);
+
       const res = await fetch("/.netlify/functions/ask-ai", {
         method: "POST",
         headers: {
@@ -51,6 +113,8 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
         body: JSON.stringify({
           prompt: trimmedPrompt,
           context: contextData,
+          history,
+          customerName,
         }),
       });
 
@@ -67,7 +131,7 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
 
       appendAssistantMessage(
         data.message ||
-          "Certainly sir, I’m here to assist you with project details, plot availability, pricing and tree information.",
+          `Certainly${customerName ? ` ${customerName}` : " sir"}, I’m here to assist you with project details, plot availability, pricing and tree information.`,
         Array.isArray(data.actions) ? data.actions : []
       );
 
@@ -87,9 +151,18 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
   };
 
   const handleClearChat = () => {
-    setMessages([]);
+    setMessages([
+      {
+        role: "assistant",
+        content:
+          "Hello sir, welcome. May I know your name so I can assist you better with the project and plot details?",
+        actions: [],
+      },
+    ]);
     setPrompt("");
     setInputRows(1);
+    setCustomerName("");
+    setNameAsked(true);
   };
 
   const handleKeyDown = (e) => {
@@ -107,12 +180,14 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
     setInputRows(Math.min(3, Math.max(1, lineBreaks)));
   };
 
-  const quickPrompts = [
-    "Show available premium plots",
-    "Which plots have more trees?",
-    "Show east facing plots",
-    "Give me project highlights",
-  ];
+  const quickPrompts = customerName
+    ? [
+        "Show available premium plots",
+        "Which plots have more trees?",
+        "Show east facing plots",
+        "Give me project highlights",
+      ]
+    : ["My name is Prashant", "My name is Rahul", "My name is Suresh"];
 
   const LeafIcon = ({ size = 12 }) => (
     <svg
@@ -175,22 +250,18 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
         .askai-scroll::-webkit-scrollbar {
           width: 5px;
         }
-
         .askai-scroll::-webkit-scrollbar-track {
           background: transparent;
         }
-
         .askai-scroll::-webkit-scrollbar-thumb {
           background: rgba(0, 0, 0, 0.18);
           border-radius: 999px;
         }
-
         .askai-dots {
           display: inline-flex;
           align-items: center;
           gap: 3px;
         }
-
         .askai-dots span {
           width: 5px;
           height: 5px;
@@ -199,15 +270,12 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
           display: inline-block;
           animation: askaiBounce 1.2s infinite ease-in-out;
         }
-
         .askai-dots span:nth-child(2) {
           animation-delay: 0.15s;
         }
-
         .askai-dots span:nth-child(3) {
           animation-delay: 0.3s;
         }
-
         @keyframes askaiBounce {
           0%, 80%, 100% {
             transform: scale(0.7);
@@ -218,7 +286,6 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
             opacity: 1;
           }
         }
-
         @keyframes askaiGlow {
           0% {
             box-shadow:
@@ -236,7 +303,6 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
               0 0 0 0 rgba(255,255,255,0.08);
           }
         }
-
         .askai-glow-btn {
           animation: askaiGlow 2s infinite ease-in-out;
         }
@@ -264,7 +330,7 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
             onWheel={stopEvent}
             style={{
               width: "285px",
-              height: "410px",
+              height: "420px",
               background: "#ffffff",
               borderRadius: "18px",
               boxShadow: "0 12px 28px rgba(0,0,0,0.14)",
@@ -311,7 +377,7 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                 <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.2 }}>
                   <span>Ask AI</span>
                   <span style={{ fontSize: "9px", opacity: 0.72 }}>
-                    Sales Executive
+                    {customerName ? `Sales Executive • ${customerName}` : "Sales Executive"}
                   </span>
                 </div>
               </div>
@@ -379,62 +445,6 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                 position: "relative",
               }}
             >
-              {messages.length === 0 && !loading && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    textAlign: "center",
-                    pointerEvents: "none",
-                    opacity: 0.86,
-                    width: "84%",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "20px",
-                      color: "#111111",
-                      marginBottom: "7px",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <LeafIcon size={20} />
-                  </div>
-
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: 700,
-                      color: "#111111",
-                      marginBottom: "4px",
-                    }}
-                  >
-                    Ask about plots and project details
-                  </div>
-
-                  <div
-                    style={{
-                      fontSize: "10px",
-                      color: "#7a7a7a",
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    Try:
-                    <br />
-                    • Show premium available plots
-                    <br />
-                    • Which plots have more trees?
-                    <br />
-                    • Compare east and north facing plots
-                    <br />
-                    • Give project highlights
-                  </div>
-                </div>
-              )}
-
               {messages.map((msg, index) => {
                 const isUser = msg.role === "user";
 
@@ -551,12 +561,16 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                                 );
                               }
 
-                              if (action.type === "link") {
+                              if (action.type === "reset_filters") {
                                 return (
                                   <button
                                     key={`${action.type}-${actionIndex}`}
                                     type="button"
-                                    onClick={() => action.url && window.open(action.url, "_blank")}
+                                    onClick={() =>
+                                      onApplyAiResult?.({
+                                        resetFilters: true,
+                                      })
+                                    }
                                     style={{
                                       border: "1px solid #d1d5db",
                                       background: "#ffffff",
@@ -569,7 +583,7 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                                       textAlign: "left",
                                     }}
                                   >
-                                    {action.label || "Open link"}
+                                    {action.label || "Clear filters"}
                                   </button>
                                 );
                               }
@@ -585,19 +599,8 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
               })}
 
               {loading && (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-end",
-                      gap: "5px",
-                    }}
-                  >
+                <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                  <div style={{ display: "flex", alignItems: "flex-end", gap: "5px" }}>
                     <div
                       style={{
                         width: "20px",
@@ -696,7 +699,11 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                   value={prompt}
                   onChange={handleTextareaChange}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask about plots, prices, trees, project..."
+                  placeholder={
+                    customerName
+                      ? "Ask about plots, prices, trees, project..."
+                      : "Please enter your name first..."
+                  }
                   rows={inputRows}
                   style={{
                     flex: 1,
