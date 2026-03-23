@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const AskAI = ({ onApplyAiResult, contextData }) => {
+const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
   const [open, setOpen] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [inputRows, setInputRows] = useState(1);
 
   const messagesRef = useRef(null);
 
@@ -18,13 +19,27 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
     e.stopPropagation();
   };
 
-  const handleSend = async () => {
-    const trimmedPrompt = prompt.trim();
+  const appendAssistantError = (message) => {
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "assistant",
+        content: message,
+        actions: [],
+      },
+    ]);
+  };
+
+  const handleSend = async (manualPrompt) => {
+    const finalPrompt = typeof manualPrompt === "string" ? manualPrompt : prompt;
+    const trimmedPrompt = finalPrompt.trim();
+
     if (!trimmedPrompt || loading) return;
 
     const userMessage = { role: "user", content: trimmedPrompt };
     setMessages((prev) => [...prev, userMessage]);
     setPrompt("");
+    setInputRows(1);
     setLoading(true);
 
     try {
@@ -52,7 +67,10 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
 
       const assistantMessage = {
         role: "assistant",
-        content: data.message || "No response received.",
+        content:
+          data.message ||
+          "Certainly. I’m here to assist you with the plot details, availability, pricing and project highlights.",
+        actions: Array.isArray(data.actions) ? data.actions : [],
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
@@ -63,15 +81,10 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
     } catch (error) {
       console.error("AskAI error:", error);
 
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content:
-            error.message ||
-            "Unable to connect to AI. Please check the Netlify function.",
-        },
-      ]);
+      appendAssistantError(
+        error.message ||
+          "Unable to connect to AI. Please check the Netlify function."
+      );
     } finally {
       setLoading(false);
     }
@@ -80,6 +93,7 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
   const handleClearChat = () => {
     setMessages([]);
     setPrompt("");
+    setInputRows(1);
   };
 
   const handleKeyDown = (e) => {
@@ -88,6 +102,22 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
       handleSend();
     }
   };
+
+  const handleTextareaChange = (e) => {
+    const value = e.target.value;
+    setPrompt(value);
+
+    const lineBreaks = value.split("\n").length;
+    const estimatedRows = Math.min(3, Math.max(1, lineBreaks));
+    setInputRows(estimatedRows);
+  };
+
+  const quickPrompts = [
+    "Show available premium plots",
+    "Which plots have more trees?",
+    "Show east facing plots",
+    "Give project highlights and location details",
+  ];
 
   const LeafIcon = ({ size = 12 }) => (
     <svg
@@ -124,6 +154,23 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
   const SendIcon = ({ size = 12 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
       <path d="M3.4 20.4 21 12 3.4 3.6l.1 6.5 11.5 1.9L3.5 14z" />
+    </svg>
+  );
+
+  const SparkleIcon = ({ size = 12 }) => (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8L12 3z" />
+      <path d="M19 15l.8 1.9L22 18l-2.2 1.1L19 21l-.8-1.9L16 18l2.2-1.1L19 15z" />
+      <path d="M5 14l1 2.4L8.5 17 6 18.2 5 20.5 4 18.2 1.5 17 4 16.4 5 14z" />
     </svg>
   );
 
@@ -176,6 +223,28 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
             opacity: 1;
           }
         }
+
+        @keyframes askaiGlow {
+          0% {
+            box-shadow:
+              0 0 0 0 rgba(255,255,255,0.10),
+              0 0 0 0 rgba(255,255,255,0.08);
+          }
+          50% {
+            box-shadow:
+              0 0 0 3px rgba(255,255,255,0.08),
+              0 0 14px 2px rgba(255,255,255,0.18);
+          }
+          100% {
+            box-shadow:
+              0 0 0 0 rgba(255,255,255,0.10),
+              0 0 0 0 rgba(255,255,255,0.08);
+          }
+        }
+
+        .askai-glow-btn {
+          animation: askaiGlow 2s infinite ease-in-out;
+        }
       `}</style>
 
       <div
@@ -197,11 +266,12 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
         {open ? (
           <div
             onMouseDown={stopEvent}
+            onWheel={stopEvent}
             style={{
-              width: "255px",
-              height: "345px",
+              width: "275px",
+              height: "395px",
               background: "#ffffff",
-              borderRadius: "16px",
+              borderRadius: "18px",
               boxShadow: "0 12px 28px rgba(0,0,0,0.14)",
               display: "flex",
               flexDirection: "column",
@@ -211,7 +281,7 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
           >
             <div
               style={{
-                padding: "9px 10px",
+                padding: "10px 11px",
                 borderBottom: "1px solid #efefef",
                 display: "flex",
                 justifyContent: "space-between",
@@ -224,15 +294,15 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "6px",
+                  gap: "7px",
                   fontSize: "11px",
                   fontWeight: 600,
                 }}
               >
                 <div
                   style={{
-                    width: "22px",
-                    height: "22px",
+                    width: "23px",
+                    height: "23px",
                     borderRadius: "999px",
                     background: "rgba(255,255,255,0.12)",
                     display: "flex",
@@ -243,7 +313,12 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
                 >
                   <LeafIcon size={12} />
                 </div>
-                <span>Ask AI</span>
+                <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.2 }}>
+                  <span>Ask AI</span>
+                  <span style={{ fontSize: "9px", opacity: 0.72 }}>
+                    Sales Assistant
+                  </span>
+                </div>
               </div>
 
               <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
@@ -292,15 +367,19 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
               ref={messagesRef}
               className="askai-scroll"
               onMouseDown={stopEvent}
+              onTouchStart={stopEvent}
+              onTouchMove={stopEvent}
+              onWheel={stopEvent}
               style={{
                 flex: 1,
-                padding: "8px",
+                padding: "9px",
                 display: "flex",
                 flexDirection: "column",
-                gap: "7px",
+                gap: "8px",
                 overflowY: "auto",
                 overflowX: "hidden",
-                background: "#ffffff",
+                background:
+                  "linear-gradient(to bottom, #ffffff 0%, #fbfbfb 100%)",
                 WebkitOverflowScrolling: "touch",
                 overscrollBehavior: "contain",
                 touchAction: "pan-y",
@@ -316,15 +395,15 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
                     transform: "translate(-50%, -50%)",
                     textAlign: "center",
                     pointerEvents: "none",
-                    opacity: 0.75,
-                    width: "80%",
+                    opacity: 0.86,
+                    width: "84%",
                   }}
                 >
                   <div
                     style={{
                       fontSize: "20px",
                       color: "#111111",
-                      marginBottom: "6px",
+                      marginBottom: "7px",
                       display: "flex",
                       justifyContent: "center",
                     }}
@@ -335,24 +414,30 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
                   <div
                     style={{
                       fontSize: "11px",
-                      fontWeight: 600,
+                      fontWeight: 700,
                       color: "#111111",
                       marginBottom: "4px",
                     }}
                   >
-                    Ask anything
+                    Ask about plots or project details
                   </div>
 
                   <div
                     style={{
                       fontSize: "10px",
-                      color: "#8a8a8a",
-                      lineHeight: 1.45,
+                      color: "#7a7a7a",
+                      lineHeight: 1.5,
                     }}
                   >
-                    Try: Available plots, facing filter,
+                    Try:
                     <br />
-                    plot details, coordinates
+                    • Show available premium plots
+                    <br />
+                    • Which plots have more trees?
+                    <br />
+                    • Show east facing plots
+                    <br />
+                    • Give project highlights and location details
                   </div>
                 </div>
               )}
@@ -374,7 +459,7 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
                         flexDirection: isUser ? "row-reverse" : "row",
                         alignItems: "flex-end",
                         gap: "5px",
-                        maxWidth: "92%",
+                        maxWidth: "94%",
                       }}
                     >
                       <div
@@ -397,12 +482,12 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
                       <div
                         style={{
                           maxWidth: "100%",
-                          padding: "6px 8px",
+                          padding: "7px 9px",
                           borderRadius: isUser
                             ? "10px 10px 3px 10px"
                             : "10px 10px 10px 3px",
                           fontSize: "10px",
-                          lineHeight: 1.45,
+                          lineHeight: 1.52,
                           background: isUser ? "#111111" : "#ffffff",
                           color: isUser ? "#ffffff" : "#111111",
                           whiteSpace: "pre-wrap",
@@ -411,7 +496,101 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
                           boxShadow: "0 3px 8px rgba(0,0,0,0.04)",
                         }}
                       >
-                        {msg.content}
+                        <div>{msg.content}</div>
+
+                        {!isUser &&
+                          Array.isArray(msg.actions) &&
+                          msg.actions.length > 0 && (
+                            <div
+                              style={{
+                                marginTop: "8px",
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "6px",
+                              }}
+                            >
+                              {msg.actions.map((action, actionIndex) => {
+                                if (action.type === "view_plot") {
+                                  return (
+                                    <button
+                                      key={`${action.type}-${actionIndex}`}
+                                      type="button"
+                                      onClick={() => onViewPlot?.(action.plotId)}
+                                      style={{
+                                        border: "none",
+                                        background: "#111111",
+                                        color: "#ffffff",
+                                        padding: "8px 10px",
+                                        borderRadius: "8px",
+                                        fontSize: "10px",
+                                        fontWeight: 600,
+                                        cursor: "pointer",
+                                        textAlign: "left",
+                                      }}
+                                    >
+                                      {action.label || "Click here to view plot"}
+                                    </button>
+                                  );
+                                }
+
+                                if (action.type === "apply_filter") {
+                                  return (
+                                    <button
+                                      key={`${action.type}-${actionIndex}`}
+                                      type="button"
+                                      onClick={() =>
+                                        onApplyAiResult?.({
+                                          filters: action.filters || {},
+                                        })
+                                      }
+                                      style={{
+                                        border: "1px solid #d1d5db",
+                                        background: "#ffffff",
+                                        color: "#111111",
+                                        padding: "8px 10px",
+                                        borderRadius: "8px",
+                                        fontSize: "10px",
+                                        fontWeight: 600,
+                                        cursor: "pointer",
+                                        textAlign: "left",
+                                      }}
+                                    >
+                                      {action.label || "Apply filter"}
+                                    </button>
+                                  );
+                                }
+
+                                if (action.type === "reset_filters") {
+                                  return (
+                                    <button
+                                      key={`${action.type}-${actionIndex}`}
+                                      type="button"
+                                      onClick={() =>
+                                        onApplyAiResult?.({
+                                          resetFilters: true,
+                                        })
+                                      }
+                                      style={{
+                                        border: "1px solid #d1d5db",
+                                        background: "#ffffff",
+                                        color: "#111111",
+                                        padding: "8px 10px",
+                                        borderRadius: "8px",
+                                        fontSize: "10px",
+                                        fontWeight: 600,
+                                        cursor: "pointer",
+                                        textAlign: "left",
+                                      }}
+                                    >
+                                      {action.label || "Clear filters"}
+                                    </button>
+                                  );
+                                }
+
+                                return null;
+                              })}
+                            </div>
+                          )}
                       </div>
                     </div>
                   </div>
@@ -478,55 +657,100 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
                 background: "#ffffff",
                 padding: "8px",
                 display: "flex",
-                gap: "6px",
-                alignItems: "flex-end",
+                flexDirection: "column",
+                gap: "8px",
               }}
             >
-              <textarea
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Ask..."
-                rows={1}
+              <div
                 style={{
-                  flex: 1,
-                  resize: "none",
-                  padding: "7px 8px",
-                  border: "1px solid #d9d9d9",
-                  borderRadius: "9px",
-                  outline: "none",
-                  fontFamily: "inherit",
-                  fontSize: "10px",
-                  lineHeight: 1.4,
-                  minHeight: "32px",
-                  maxHeight: "64px",
-                  color: "#111111",
-                  background: "#ffffff",
-                }}
-              />
-
-              <button
-                onClick={handleSend}
-                disabled={loading || !prompt.trim()}
-                type="button"
-                title="Send"
-                style={{
-                  width: "32px",
-                  height: "32px",
-                  border: "none",
-                  borderRadius: "9px",
-                  background: loading || !prompt.trim() ? "#d6d6d6" : "#111111",
-                  color: "#ffffff",
-                  cursor: loading || !prompt.trim() ? "not-allowed" : "pointer",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                  padding: 0,
+                  gap: "6px",
+                  overflowX: "auto",
+                  paddingBottom: "1px",
+                }}
+                className="askai-scroll"
+              >
+                {quickPrompts.map((item, idx) => (
+                  <button
+                    key={`${item}-${idx}`}
+                    type="button"
+                    onClick={() => handleSend(item)}
+                    disabled={loading}
+                    style={{
+                      whiteSpace: "nowrap",
+                      border: "1px solid #e5e5e5",
+                      background: "#ffffff",
+                      color: "#111111",
+                      borderRadius: "999px",
+                      padding: "6px 9px",
+                      fontSize: "9px",
+                      fontWeight: 600,
+                      cursor: loading ? "not-allowed" : "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <SparkleIcon size={10} />
+                    {item}
+                  </button>
+                ))}
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: "6px",
+                  alignItems: "flex-end",
                 }}
               >
-                <SendIcon size={12} />
-              </button>
+                <textarea
+                  value={prompt}
+                  onChange={handleTextareaChange}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask about plots, pricing, trees, facing..."
+                  rows={inputRows}
+                  style={{
+                    flex: 1,
+                    resize: "none",
+                    padding: "8px 9px",
+                    border: "1px solid #d9d9d9",
+                    borderRadius: "10px",
+                    outline: "none",
+                    fontFamily: "inherit",
+                    fontSize: "10px",
+                    lineHeight: 1.45,
+                    minHeight: "34px",
+                    maxHeight: "72px",
+                    color: "#111111",
+                    background: "#ffffff",
+                  }}
+                />
+
+                <button
+                  onClick={() => handleSend()}
+                  disabled={loading || !prompt.trim()}
+                  type="button"
+                  title="Send"
+                  style={{
+                    width: "34px",
+                    height: "34px",
+                    border: "none",
+                    borderRadius: "10px",
+                    background: loading || !prompt.trim() ? "#d6d6d6" : "#111111",
+                    color: "#ffffff",
+                    cursor: loading || !prompt.trim() ? "not-allowed" : "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                    padding: 0,
+                  }}
+                >
+                  <SendIcon size={12} />
+                </button>
+              </div>
             </div>
           </div>
         ) : (
@@ -534,18 +758,18 @@ const AskAI = ({ onApplyAiResult, contextData }) => {
             type="button"
             onClick={() => setOpen(true)}
             className="askai-glow-btn"
-  style={{
-    background: "#111111",
-    color: "#ffffff",
-    border: "none",
-    borderRadius: "999px",
-    padding: "8px 11px",
-    cursor: "pointer",
-    fontWeight: 600,
-    fontSize: "11px",
-    display: "flex",
-    alignItems: "center",
-    gap: "6px",
+            style={{
+              background: "#111111",
+              color: "#ffffff",
+              border: "none",
+              borderRadius: "999px",
+              padding: "8px 11px",
+              cursor: "pointer",
+              fontWeight: 600,
+              fontSize: "11px",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
             }}
           >
             <span

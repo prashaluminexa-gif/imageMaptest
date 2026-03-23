@@ -21,7 +21,6 @@ import AskAI from "./AskAI";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
-
 const isIOS = () => {
   return (
     /iPad|iPhone|iPod/.test(navigator.userAgent) ||
@@ -79,6 +78,45 @@ const FACING_COLORS = {
   TBD: "rgba(107, 114, 128, 0.22)",
 };
 
+const sumTreeValues = (treeObject) => {
+  if (!treeObject || typeof treeObject !== "object") return 0;
+  return Object.values(treeObject).reduce((sum, value) => sum + (Number(value) || 0), 0);
+};
+
+const buildTreeSummary = (fruitTrees = {}, forestTrees = {}, coconutTree = 0) => {
+  const allTrees = [];
+
+  Object.entries(fruitTrees || {}).forEach(([name, count]) => {
+    if ((Number(count) || 0) > 0) {
+      allTrees.push({
+        name,
+        count: Number(count) || 0,
+        category: "Fruit",
+      });
+    }
+  });
+
+  Object.entries(forestTrees || {}).forEach(([name, count]) => {
+    if ((Number(count) || 0) > 0) {
+      allTrees.push({
+        name,
+        count: Number(count) || 0,
+        category: "Forest",
+      });
+    }
+  });
+
+  if ((Number(coconutTree) || 0) > 0) {
+    allTrees.push({
+      name: "Coconut",
+      count: Number(coconutTree) || 0,
+      category: "Fruit",
+    });
+  }
+
+  return allTrees;
+};
+
 // -------------------- Component --------------------
 
 const Map = () => {
@@ -104,7 +142,7 @@ const Map = () => {
   const [hoveredPlotId, setHoveredPlotId] = useState(null);
 
   // --- State: Filters ---
-  const [colorMode, setColorMode] = useState("none"); // none | status | facing
+  const [colorMode, setColorMode] = useState("none");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [facingFilter, setFacingFilter] = useState("ALL");
 
@@ -119,8 +157,8 @@ const Map = () => {
   });
 
   const isInsideUi = (target) => {
-  return !!target?.closest?.('[data-ui="true"]');
-};
+    return !!target?.closest?.('[data-ui="true"]');
+  };
 
   const [position, setPosition] = useState(() => {
     const savedPosition = sessionStorage.getItem(POSITION_KEY);
@@ -220,16 +258,66 @@ const Map = () => {
       setAvailableUnits(availableCount);
 
       const metaMap = {};
+
       plots.forEach((plot) => {
         const key = plot.projectId || plot.id;
         if (!key) return;
 
+        const fruitTrees = plot.NumberOfFruitTrees || {};
+        const forestTrees = plot.NumberOfForestTrees || {};
+        const coconutTree = Number(plot.coconutTree) || 0;
+
+        const totalForestTrees = sumTreeValues(forestTrees);
+        const totalFruitTrees = sumTreeValues(fruitTrees) + coconutTree;
+        const allTrees = buildTreeSummary(fruitTrees, forestTrees, coconutTree);
+
+        const baseAmount =
+          plot.baseAmnt ||
+          plot.baseAmount ||
+          plot.dirFacingPrice ||
+          plot.pricePerSqFt ||
+          "";
+
+        const totalPrice =
+          plot.totalPrice ||
+          plot.totalAmount ||
+          (plot.AreaSqFt && baseAmount ? Number(plot.AreaSqFt) * Number(baseAmount) : "");
+
         metaMap[key] = {
           id: key,
+          docId: plot.id,
           plotNumber: plot.plotNumber || key,
           status: plot.Status || "Unknown",
           facing: plot.facing || "TBD",
           blockName: plot.blockName || "",
+          surveyNumber: plot.SurveyNumber || plot.surveyNumber || "N/A",
+          areaSqFt: plot.AreaSqFt || plot.areaSqFt || "N/A",
+          areaSqMt: plot.AreaSqMt || plot.areaSqMt || "N/A",
+          areaGuntas: plot.AreaGuntas || plot.areaGuntas || "N/A",
+          lengthFt: plot.lengthFt || "N/A",
+          widthFt: plot.widthFt || "N/A",
+          siteArea: plot.siteArea || "N/A",
+          eastWestMt: plot.eastWestMt || "N/A",
+          northSouthMt: plot.northSouthMt || "N/A",
+          parkFacing: plot.parkFacing || "No",
+          corner: plot.corner || "No",
+          roadWidth: plot.roadWidth || "N/A",
+          baseAmnt: plot.baseAmnt || "",
+          dirFacingPrice: plot.dirFacingPrice || "",
+          parkFacingPrice: plot.parkFacingPrice || "",
+          cornerFacingPrice: plot.cornerFacingPrice || "",
+          pricePerSqFt: baseAmount,
+          totalPrice: totalPrice || "",
+          surveyDocumentLink: plot.surveyDocumentLink || "N/A",
+          description: plot.description || "",
+          numberOfForestTrees: totalForestTrees,
+          numberOfFruitTrees: totalFruitTrees,
+          coconutTree,
+          fruitTrees,
+          forestTrees,
+          treeSummary: allTrees,
+          plotImage: plot.plotImage || "",
+          projectName: plot.projectName || "Raaga From Hasiru Farms",
         };
       });
 
@@ -251,19 +339,16 @@ const Map = () => {
       if (plotSnap.exists()) {
         const data = plotSnap.data();
 
-        const totalForestTrees = Object.values(data.NumberOfForestTrees || {}).reduce(
-          (a, b) => a + b,
-          0
-        );
-
-        const totalFruitTrees =
-          Object.values(data.NumberOfFruitTrees || {}).reduce((a, b) => a + b, 0) +
-          (data.coconutTree || 0);
+        const totalForestTrees = sumTreeValues(data.NumberOfForestTrees || {});
+        const coconutTree = Number(data.coconutTree) || 0;
+        const totalFruitTrees = sumTreeValues(data.NumberOfFruitTrees || {}) + coconutTree;
 
         setSelectedPlotData({
           id: plotId,
           blockName: data.blockName || "Vinyas",
           plotName: data.plotNumber || plotId.split("-").pop(),
+          plotNumber: data.plotNumber || plotId.split("-").pop(),
+          projectName: data.projectName || "Raaga From Hasiru Farms",
           facing: data.facing || "East",
           surveyNumber: data.SurveyNumber || "N/A",
           areaSqFt: data.AreaSqFt || "N/A",
@@ -271,12 +356,34 @@ const Map = () => {
           areaGuntas: data.AreaGuntas || "N/A",
           lengthFt: data.lengthFt || "N/A",
           widthFt: data.widthFt || "N/A",
+          siteArea: data.siteArea || "N/A",
+          eastWestMt: data.eastWestMt || "N/A",
+          northSouthMt: data.northSouthMt || "N/A",
           numberOfForestTrees: totalForestTrees,
           numberOfFruitTrees: totalFruitTrees,
-          coconutTree: data.coconutTree || 0,
+          coconutTree,
           fruitTrees: data.NumberOfFruitTrees || {},
           forestTrees: data.NumberOfForestTrees || {},
+          treeSummary: buildTreeSummary(
+            data.NumberOfFruitTrees || {},
+            data.NumberOfForestTrees || {},
+            coconutTree
+          ),
           status: data.Status || "Available",
+          parkFacing: data.parkFacing || "No",
+          corner: data.corner || "No",
+          roadWidth: data.roadWidth || "N/A",
+          dirFacingPrice: data.dirFacingPrice || "",
+          parkFacingPrice: data.parkFacingPrice || "",
+          cornerFacingPrice: data.cornerFacingPrice || "",
+          baseAmnt: data.baseAmnt || "",
+          totalPrice:
+            data.totalPrice ||
+            (data.AreaSqFt && data.baseAmnt
+              ? Number(data.AreaSqFt) * Number(data.baseAmnt)
+              : ""),
+          surveyDocumentLink: data.surveyDocumentLink || "N/A",
+          description: data.description || "",
           plotImage:
             data.plotImage ||
             "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/59/f7/64/view-of-the-property.jpg?w=900&h=500&s=1",
@@ -318,41 +425,70 @@ const Map = () => {
 
   // -------------------- AI Integration --------------------
 
-  const handleAiResult = useCallback(
-    (data) => {
-      if (!data) return;
+  const handleAiResult = useCallback((data) => {
+    if (!data) return;
 
-      if (data.filters?.status) {
-        setColorMode("status");
-        setStatusFilter(data.filters.status);
-      }
+    if (data.filters?.status) {
+      setColorMode("status");
+      setStatusFilter(data.filters.status);
+      setFacingFilter("ALL");
+    }
 
-      if (data.filters?.facing) {
-        setColorMode("facing");
-        setFacingFilter(data.filters.facing);
-      }
+    if (data.filters?.facing) {
+      setColorMode("facing");
+      setFacingFilter(data.filters.facing);
+      setStatusFilter("ALL");
+    }
 
-      if (data.focusPlotId) {
-        openPlotPanel(data.focusPlotId);
-        return;
-      }
-
-      if (Array.isArray(data.matchingPlotIds) && data.matchingPlotIds.length > 0) {
-        openPlotPanel(data.matchingPlotIds[0]);
-      }
-    },
-    [openPlotPanel]
-  );
+    if (!data.filters?.status && !data.filters?.facing && data.resetFilters) {
+      setColorMode("none");
+      setStatusFilter("ALL");
+      setFacingFilter("ALL");
+    }
+  }, []);
 
   const aiContext = useMemo(() => {
     const plotList = plotCoordinates.map((plot) => {
       const meta = plotMetaMap[plot.id] || {};
+      const treeSummaryText = (meta.treeSummary || [])
+        .map((tree) => `${tree.name} (${tree.count})`)
+        .join(", ");
+
       return {
         id: plot.id,
         plotNumber: meta.plotNumber || plot.id,
+        blockName: meta.blockName || "",
+        projectName: meta.projectName || "Raaga From Hasiru Farms",
         status: meta.status || "Unknown",
         facing: meta.facing || "TBD",
-        blockName: meta.blockName || "",
+        surveyNumber: meta.surveyNumber || "N/A",
+        areaSqFt: meta.areaSqFt || "N/A",
+        areaSqMt: meta.areaSqMt || "N/A",
+        areaGuntas: meta.areaGuntas || "N/A",
+        lengthFt: meta.lengthFt || "N/A",
+        widthFt: meta.widthFt || "N/A",
+        siteArea: meta.siteArea || "N/A",
+        eastWestMt: meta.eastWestMt || "N/A",
+        northSouthMt: meta.northSouthMt || "N/A",
+        parkFacing: meta.parkFacing || "No",
+        corner: meta.corner || "No",
+        roadWidth: meta.roadWidth || "N/A",
+        pricePerSqFt: meta.pricePerSqFt || "",
+        baseAmnt: meta.baseAmnt || "",
+        dirFacingPrice: meta.dirFacingPrice || "",
+        parkFacingPrice: meta.parkFacingPrice || "",
+        cornerFacingPrice: meta.cornerFacingPrice || "",
+        totalPrice: meta.totalPrice || "",
+        surveyDocumentLink: meta.surveyDocumentLink || "N/A",
+        description: meta.description || "",
+        numberOfForestTrees: meta.numberOfForestTrees || 0,
+        numberOfFruitTrees: meta.numberOfFruitTrees || 0,
+        coconutTree: meta.coconutTree || 0,
+        fruitTrees: meta.fruitTrees || {},
+        forestTrees: meta.forestTrees || {},
+        treeSummary: meta.treeSummary || [],
+        treeSummaryText,
+        plotImage: meta.plotImage || "",
         coords: plot.coords,
       };
     });
@@ -360,19 +496,67 @@ const Map = () => {
     return {
       company: {
         name: "Hasiru Farms",
+        brandTone: "Premium, warm, customer-focused, trustworthy and executive",
+        description:
+          "Hasiru Farms is focused on premium plotted developments and land experiences that combine greenery, long-term value and refined customer service.",
         services: [
           "Residential Layout Development",
           "Villa & Apartment Project",
           "Commercial Property Development",
           "Land Acquisition & Planning",
+          "Farmland Development",
+          "Premium Plot Sales",
         ],
+        salesStyle:
+          "Speak like a polished executive speaking to a customer with clarity, warmth and confidence.",
       },
+
       project: {
         name: "Raaga From Hasiru Farms",
+        location: "Add actual location here",
+        launchDate: "Add launch date here",
+        totalPlots: plotCoordinates.length,
         availableUnits,
+        description:
+          "Raaga From Hasiru Farms is a premium plotted development designed for customers looking for long-term value, greenery, and a refined project experience.",
+        highlights: [
+          "Premium plotted development",
+          "Nature-focused layout experience",
+          "Selected plots with tree value",
+          "Multiple facing options",
+          "Easy AI-assisted plot discovery",
+        ],
+        amenities: [
+          "Recreation Zone",
+          "Leisure Zone",
+          "Internal Layout Access",
+          "Customer-Friendly Plot Discovery",
+        ],
+        idealFor: [
+          "Investment buyers",
+          "Nature-focused buyers",
+          "Families planning future asset ownership",
+          "Buyers looking for premium plotted opportunities",
+        ],
+        priceNotes:
+          "Pricing may vary based on facing, location advantage, block position, plot size and special feature charges.",
       },
+
       selectedPlot: selectedPlotData,
+
       plots: plotList,
+
+      aiInstructions: {
+        responseStyle:
+          "Always respond in a marketing-friendly executive tone, like a real sales executive assisting a valued customer.",
+        behavior: [
+          "Do not auto-open plot details.",
+          "If plot details are relevant, return action buttons with type=view_plot.",
+          "If filters help the user, return filter actions.",
+          "When responding about plots, mention benefits, value, trees, area, facing, status and pricing wherever available.",
+          "Be clear, polished and customer friendly.",
+        ],
+      },
     };
   }, [availableUnits, selectedPlotData, plotMetaMap]);
 
@@ -566,8 +750,7 @@ const Map = () => {
     if (!container) return;
 
     const handleWheel = (e) => {
-
-  if (isInsideUi(e.target)) return;
+      if (isInsideUi(e.target)) return;
       if (uiLocked) return;
       if (selectedPlotId) return;
 
@@ -652,8 +835,7 @@ const Map = () => {
 
   const handleMouseDown = (e) => {
     if (uiLocked) return;
-
-  if (isInsideUi(e.target)) return;
+    if (isInsideUi(e.target)) return;
 
     const clickedInsideModal = e.target.closest?.('[data-modal="true"]');
     if (clickedInsideModal) return;
@@ -678,8 +860,7 @@ const Map = () => {
 
   const handleMouseMove = useCallback(
     (e) => {
-
-  if (isInsideUi(e.target)) return;
+      if (isInsideUi(e.target)) return;
       if (uiLocked) return;
       if (!isDragging) return;
 
@@ -710,7 +891,7 @@ const Map = () => {
 
   const handleMouseUp = (e) => {
     if (uiLocked) return;
-     if (isInsideUi(e.target)) return;
+    if (isInsideUi(e.target)) return;
     setIsDragging(false);
 
     if (dragDistance >= 5) {
@@ -752,7 +933,7 @@ const Map = () => {
   const handleTouchMove = useCallback(
     (e) => {
       if (uiLocked) return;
-       if (isInsideUi(e.target)) return;
+      if (isInsideUi(e.target)) return;
 
       const { minX, maxX, minY, maxY } = calculateBoundaries(zoom);
 
@@ -1567,7 +1748,11 @@ const Map = () => {
         </div>
       )}
 
-      <AskAI onApplyAiResult={handleAiResult} contextData={aiContext} />
+      <AskAI
+        onApplyAiResult={handleAiResult}
+        onViewPlot={openPlotPanel}
+        contextData={aiContext}
+      />
 
       <img
         src={compass}
