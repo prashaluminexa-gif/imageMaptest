@@ -13,21 +13,22 @@
       "lengthFt": 76.752,
       "widthFt": 91.184,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 3,
+        "Amla": 5,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 3,
+        "CustardApple": 4,
+        "Chikku": 3,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -43,21 +44,22 @@
       "lengthFt": 72.816,
       "widthFt": 91.184,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 4,
+        "Amla": 4,
+        "ArecaNut": 5,
+        "Jamoon": 3,
+        "Guava": 6,
+        "Pomegranate": 4,
+        "CustardApple": 3,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -73,21 +75,22 @@
       "lengthFt": 82.656,
       "widthFt": 91.184,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 3,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 4,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -103,21 +106,22 @@
       "lengthFt": 77.408,
       "widthFt": 99.056,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 3,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -133,21 +137,22 @@
       "lengthFt": 75.44,
       "widthFt": 100.368,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 4,
+        "Amla": 6,
+        "ArecaNut": 3,
+        "Jamoon": 5,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -163,21 +168,22 @@
       "lengthFt": 75.112,
       "widthFt": 102.992,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 3,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 5,
+        "Jamoon": 6,
+        "Guava": 4,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 3,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -193,21 +199,22 @@
       "lengthFt": 73.472,
       "widthFt": 104.304,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 6,
+        "Pomegranate": 3,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -223,21 +230,22 @@
       "lengthFt": 77.08,
       "widthFt": 91.184,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 6,
+        "Amla": 4,
+        "ArecaNut": 5,
+        "Jamoon": 3,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -253,21 +261,22 @@
       "lengthFt": 75.768,
       "widthFt": 92.496,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 3,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 4,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -283,21 +292,22 @@
       "lengthFt": 87.248,
       "widthFt": 95.12,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 3,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -313,21 +323,22 @@
       "lengthFt": 73.8,
       "widthFt": 99.056,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 6,
+        "Guava": 4,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 3,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -343,21 +354,22 @@
       "lengthFt": 75.44,
       "widthFt": 100.696,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 6,
+        "Pomegranate": 3,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -373,21 +385,22 @@
       "lengthFt": 73.472,
       "widthFt": 102.008,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 3,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -403,21 +416,22 @@
       "lengthFt": 77.08,
       "widthFt": 103.32,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 6,
+        "Amla": 4,
+        "ArecaNut": 5,
+        "Jamoon": 5,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 3,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -433,21 +447,22 @@
       "lengthFt": 77.08,
       "widthFt": 94.136,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 6,
+        "Guava": 5,
+        "Pomegranate": 4,
+        "CustardApple": 4,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -463,21 +478,22 @@
       "lengthFt": 74.784,
       "widthFt": 97.088,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 6,
+        "Jamoon": 3,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -493,21 +509,22 @@
       "lengthFt": 96.104,
       "widthFt": 101.68,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 4,
+        "Guava": 6,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 3,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -523,21 +540,22 @@
       "lengthFt": 75.44,
       "widthFt": 94.136,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -553,21 +571,22 @@
       "lengthFt": 73.144,
       "widthFt": 97.088,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 6,
+        "Amla": 5,
+        "ArecaNut": 3,
+        "Jamoon": 5,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -583,21 +602,22 @@
       "lengthFt": 107.584,
       "widthFt": 101.68,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 5,
+        "Amla": 5,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 7
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -613,21 +633,22 @@
       "lengthFt": 70.192,
       "widthFt": 136.776,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 4,
+        "Amla": 6,
+        "ArecaNut": 5,
+        "Jamoon": 5,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -643,21 +664,22 @@
       "lengthFt": 73.472,
       "widthFt": 141.368,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 5,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 6,
+        "Guava": 5,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -673,21 +695,22 @@
       "lengthFt": 78.72,
       "widthFt": 147.272,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 6,
+        "Amla": 4,
+        "ArecaNut": 5,
+        "Jamoon": 5,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -703,21 +726,22 @@
       "lengthFt": 72.16,
       "widthFt": 152.848,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 4,
+        "Guava": 6,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 3,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -733,21 +757,22 @@
       "lengthFt": 108.896,
       "widthFt": 66.912,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 3,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -763,21 +788,22 @@
       "lengthFt": 109.88,
       "widthFt": 59.696,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 6,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -793,21 +819,22 @@
       "lengthFt": 110,
       "widthFt": 59.368,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 4,
+        "Amla": 6,
+        "ArecaNut": 5,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -823,21 +850,22 @@
       "lengthFt": 111.192,
       "widthFt": 58.712,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 3,
+        "Amla": 5,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -853,21 +881,22 @@
       "lengthFt": 112.176,
       "widthFt": 58.384,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 5,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 5,
+        "Guava": 6,
+        "Pomegranate": 3,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -883,21 +912,22 @@
       "lengthFt": 112.832,
       "widthFt": 58.056,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 4,
+        "Amla": 6,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -913,21 +943,22 @@
       "lengthFt": 113.816,
       "widthFt": 57.728,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 5,
+        "Jamoon": 4,
+        "Guava": 6,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 3,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -943,21 +974,22 @@
       "lengthFt": 113.816,
       "widthFt": 57.728,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -973,21 +1005,22 @@
       "lengthFt": 112.832,
       "widthFt": 58.056,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 6,
+        "Amla": 4,
+        "ArecaNut": 5,
+        "Jamoon": 5,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1003,21 +1036,22 @@
       "lengthFt": 112.176,
       "widthFt": 58.384,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 6,
+        "Guava": 5,
+        "Pomegranate": 3,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1033,21 +1067,22 @@
       "lengthFt": 111.192,
       "widthFt": 58.712,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 4,
+        "Guava": 6,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 3,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1063,21 +1098,22 @@
       "lengthFt": 110.864,
       "widthFt": 59.368,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 3,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1093,21 +1129,22 @@
       "lengthFt": 109.88,
       "widthFt": 59.696,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 6,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1123,21 +1160,22 @@
       "lengthFt": 108.896,
       "widthFt": 66.912,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 5,
+        "Jamoon": 6,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1153,21 +1191,22 @@
       "lengthFt": 136.448,
       "widthFt": 57.728,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 4,
+        "Guava": 6,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 3,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1183,21 +1222,22 @@
       "lengthFt": 138.744,
       "widthFt": 59.696,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1213,21 +1253,22 @@
       "lengthFt": 140.712,
       "widthFt": 62.976,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 6,
+        "Amla": 4,
+        "ArecaNut": 5,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1243,21 +1284,22 @@
       "lengthFt": 143.992,
       "widthFt": 54.776,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 6,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1273,21 +1315,22 @@
       "lengthFt": 145.632,
       "widthFt": 47.56,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 3,
+        "Amla": 5,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1303,21 +1346,22 @@
       "lengthFt": 136.448,
       "widthFt": 57.728,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 5,
+        "Jamoon": 5,
+        "Guava": 6,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1333,21 +1377,22 @@
       "lengthFt": 159.408,
       "widthFt": 59.696,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 6,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1363,21 +1408,22 @@
       "lengthFt": 155.8,
       "widthFt": 62.976,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 6,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1393,21 +1439,22 @@
       "lengthFt": 152.52,
       "widthFt": 54.776,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 4,
+        "Guava": 6,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 3,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1423,21 +1470,22 @@
       "lengthFt": 149.896,
       "widthFt": 47.56,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 3,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1453,21 +1501,22 @@
       "lengthFt": 103.976,
       "widthFt": 105.288,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 5,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 4,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1483,21 +1532,22 @@
       "lengthFt": 103.648,
       "widthFt": 105.944,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 6,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1513,21 +1563,22 @@
       "lengthFt": 97.416,
       "widthFt": 112.832,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 4,
+        "Guava": 6,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 3,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1543,21 +1594,22 @@
       "lengthFt": 98.072,
       "widthFt": 86.264,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 3,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1573,21 +1625,22 @@
       "lengthFt": 103.32,
       "widthFt": 105.288,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 6,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1603,21 +1656,22 @@
       "lengthFt": 102.008,
       "widthFt": 106.6,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 6,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1633,21 +1687,22 @@
       "lengthFt": 100.04,
       "widthFt": 111.848,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 4,
+        "Guava": 6,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 3,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1663,21 +1718,22 @@
       "lengthFt": 127.592,
       "widthFt": 76.752,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 3,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1693,21 +1749,22 @@
       "lengthFt": 151.208,
       "widthFt": 87.576,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 6,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1723,21 +1780,22 @@
       "lengthFt": 95.448,
       "widthFt": 117.096,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 6,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1753,21 +1811,22 @@
       "lengthFt": 94.792,
       "widthFt": 120.704,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 4,
+        "Guava": 6,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 3,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1783,21 +1842,22 @@
       "lengthFt": 95.448,
       "widthFt": 124.64,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 3,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1813,21 +1873,22 @@
       "lengthFt": 96.76,
       "widthFt": 89.216,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 6,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1843,21 +1904,22 @@
       "lengthFt": 127.92,
       "widthFt": 97.416,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 6,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1873,21 +1935,22 @@
       "lengthFt": 95.448,
       "widthFt": 113.816,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 4,
+        "Guava": 6,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 3,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1903,21 +1966,22 @@
       "lengthFt": 94.792,
       "widthFt": 108.24,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 3,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
@@ -1933,25 +1997,27 @@
       "lengthFt": 95.448,
       "widthFt": 102.992,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 4,
+        "Cashew": 6,
+        "Amla": 5,
+        "ArecaNut": 4,
+        "Jamoon": 5,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
+      "pricePerSqFt": 2500,
       "Status": "Available"
     },
     {
       "projectId": "plot-66",
+      "blockName": "Raaga",
       "plotNumber": "Plot-R66",
       "SurveyNumber": "TBD",
       "AreaSqFt": "TBD",
@@ -1962,26 +2028,27 @@
       "lengthFt": 96.76,
       "widthFt": 104.304,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 6,
+        "Guava": 4,
+        "Pomegranate": 5,
+        "CustardApple": 4,
+        "Chikku": 5,
+        "Mango": 4
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
-    "Status": "Available"
-      
+      "pricePerSqFt": 2500,
+      "Status": "Available"
     },
     {
       "projectId": "plot-67",
+      "blockName": "Raaga",
       "plotNumber": "Plot-R67",
       "SurveyNumber": "TBD",
       "AreaSqFt": "TBD",
@@ -1992,25 +2059,27 @@
       "lengthFt": 96.76,
       "widthFt": 104.304,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 6,
+        "Cashew": 4,
+        "Amla": 5,
+        "ArecaNut": 5,
+        "Jamoon": 4,
+        "Guava": 6,
+        "Pomegranate": 4,
+        "CustardApple": 5,
+        "Chikku": 3,
+        "Mango": 6
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
-    "Status": "Available"
+      "pricePerSqFt": 2500,
+      "Status": "Available"
     },
     {
       "projectId": "plot-68",
+      "blockName": "Raaga",
       "plotNumber": "Plot-R68",
       "SurveyNumber": "TBD",
       "AreaSqFt": "TBD",
@@ -2021,22 +2090,23 @@
       "lengthFt": 96.76,
       "widthFt": 104.304,
       "NumberOfFruitTrees": {
-        "Lemon": 0,
-        "Cashew": 0,
-        "Amla": 0,
-        "ArecaNut": 0,
-        "Jamoon": 0,
-        "Guava": 0,
-        "Pomegranate": 0,
-        "CustardApple": 0,
-        "Chikku": 0,
-        "Mango": 0
+        "Lemon": 5,
+        "Cashew": 5,
+        "Amla": 4,
+        "ArecaNut": 6,
+        "Jamoon": 4,
+        "Guava": 5,
+        "Pomegranate": 5,
+        "CustardApple": 3,
+        "Chikku": 5,
+        "Mango": 5
       },
       "NumberOfForestTrees": {
         "GFGB": 0,
         "NeemTree": 0
       },
-    "Status": "Available"
+      "pricePerSqFt": 2500,
+      "Status": "Available"
     }
   ]
 }

@@ -500,3 +500,23 @@ area[data-key]:hover + .mapster_el,
 
 
 
+
+
+@keyframes askai-glow {
+  0% {
+    box-shadow: 0 0 0px rgba(255,255,255,0.2),
+                0 0 0px rgba(255,255,255,0.2);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(255,255,255,0.6),
+                0 0 20px rgba(255,255,255,0.3);
+  }
+  100% {
+    box-shadow: 0 0 0px rgba(255,255,255,0.2),
+                0 0 0px rgba(255,255,255,0.2);
+  }
+}
+
+.askai-glow-btn {
+  animation: askai-glow 5s ease-in-out infinite;
+}

@@ -6,7 +6,6 @@ import "./map.css";
 
 import image from "./assets/map-raaga.png";
 import logoRight from "./assets/project-logo.png";
-import contactBtn from "./assets/contact.png";
 import parkImage from "./assets/6.jpg";
 import parkImage2 from "./assets/parkiimage.jpg";
 import compass from "./assets/compass.png";
@@ -118,6 +117,10 @@ const Map = () => {
     if (savedZoom) return parseFloat(savedZoom);
     return window.innerWidth <= 768 ? 3 : 1.8;
   });
+
+  const isInsideUi = (target) => {
+  return !!target?.closest?.('[data-ui="true"]');
+};
 
   const [position, setPosition] = useState(() => {
     const savedPosition = sessionStorage.getItem(POSITION_KEY);
@@ -356,17 +359,16 @@ const Map = () => {
 
     return {
       company: {
-        name: "Luminexa Technologies",
+        name: "Hasiru Farms",
         services: [
-          "Image Mapping",
-          "360 Virtual Tour",
-          "Drone Capture",
-          "Plot Management Dashboard",
-          "WebAR Solutions",
+          "Residential Layout Development",
+          "Villa & Apartment Project",
+          "Commercial Property Development",
+          "Land Acquisition & Planning",
         ],
       },
       project: {
-        name: "SLV Gardens",
+        name: "Raaga From Hasiru Farms",
         availableUnits,
       },
       selectedPlot: selectedPlotData,
@@ -564,6 +566,8 @@ const Map = () => {
     if (!container) return;
 
     const handleWheel = (e) => {
+
+  if (isInsideUi(e.target)) return;
       if (uiLocked) return;
       if (selectedPlotId) return;
 
@@ -649,6 +653,8 @@ const Map = () => {
   const handleMouseDown = (e) => {
     if (uiLocked) return;
 
+  if (isInsideUi(e.target)) return;
+
     const clickedInsideModal = e.target.closest?.('[data-modal="true"]');
     if (clickedInsideModal) return;
 
@@ -672,6 +678,8 @@ const Map = () => {
 
   const handleMouseMove = useCallback(
     (e) => {
+
+  if (isInsideUi(e.target)) return;
       if (uiLocked) return;
       if (!isDragging) return;
 
@@ -702,7 +710,7 @@ const Map = () => {
 
   const handleMouseUp = (e) => {
     if (uiLocked) return;
-
+     if (isInsideUi(e.target)) return;
     setIsDragging(false);
 
     if (dragDistance >= 5) {
@@ -716,6 +724,7 @@ const Map = () => {
   };
 
   const handleTouchStart = (e) => {
+    if (isInsideUi(e.target)) return;
     if (uiLocked) return;
 
     const touchedInsideUi = e.target.closest?.('[data-ui="true"]');
@@ -743,6 +752,7 @@ const Map = () => {
   const handleTouchMove = useCallback(
     (e) => {
       if (uiLocked) return;
+       if (isInsideUi(e.target)) return;
 
       const { minX, maxX, minY, maxY } = calculateBoundaries(zoom);
 
@@ -807,6 +817,7 @@ const Map = () => {
   );
 
   const handleTouchEnd = (e) => {
+    if (isInsideUi(e.target)) return;
     if (uiLocked) return;
     if (e.touches.length < 2) setTouchDistance(null);
 
@@ -1287,14 +1298,14 @@ const Map = () => {
         onClick={(e) => e.stopPropagation()}
         style={{
           position: "fixed",
-          top: "16px",
-          left: "20px",
-          right: windowWidth <= 768 ? "160px" : "190px",
+          top: "10px",
+          left: "10px",
+          right: windowWidth <= 768 ? "18px" : "24px",
           zIndex: 1800,
           display: "flex",
           alignItems: "flex-start",
-          gap: "12px",
-          flexWrap: "wrap",
+          gap: windowWidth <= 768 ? "8px" : "12px",
+          flexWrap: "nowrap",
           pointerEvents: "auto",
         }}
       >
@@ -1304,50 +1315,78 @@ const Map = () => {
           style={{
             width: getLogoWidth(),
             height: "auto",
-            borderRadius: windowWidth <= 768 ? "20px" : "28px",
-            boxShadow: "0px 6px 10px rgba(0, 0, 0, 0.9)",
+            borderRadius: "6px",
             flexShrink: 0,
           }}
         />
 
         <div
           style={{
-            minWidth: windowWidth <= 768 ? "160px" : "190px",
-            maxWidth: windowWidth <= 768 ? "180px" : "220px",
+            flex: 1,
+            minWidth: 0,
+            maxWidth: windowWidth <= 768 ? "calc(100vw - 165px)" : "760px",
+            background: "rgba(255,255,255,0.92)",
+            borderRadius: "6px",
+            padding: windowWidth <= 768 ? "8px 10px" : "3px 6px",
+            boxShadow: "0 8px 20px rgba(0,0,0,0.18)",
             fontFamily: "'Montserrat', sans-serif",
-            fontSize: windowWidth <= 768 ? "12px" : "14px",
-            color: "black",
-            padding: "10px 12px",
-            backgroundColor: "rgba(255, 255, 255, 0.88)",
-            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)",
-            borderRadius: "16px",
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            overflow: "hidden",
             backdropFilter: "blur(6px)",
             WebkitBackdropFilter: "blur(6px)",
+            display: "flex",
+            alignItems: "center",
+            gap: windowWidth <= 768 ? "8px" : "12px",
+            flexWrap: windowWidth <= 768 ? "wrap" : "nowrap",
+            overflow: "hidden",
           }}
         >
-          <span style={{ fontSize: "12px" }}>
-            <strong>Available Units:</strong> {availableUnits}
-          </span>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              flexShrink: 0,
+              whiteSpace: "nowrap",
+            }}
+          >
+            <span
+              style={{
+                fontSize: windowWidth <= 768 ? "8px" : "9px",
+                fontWeight: 700,
+                color: "#111827",
+              }}
+            >
+              Available Units:
+            </span>
+            <span
+              style={{
+                fontSize: windowWidth <= 768 ? "11px" : "12px",
+                fontWeight: 700,
+                color: "#166534",
+              }}
+            >
+              {availableUnits}
+            </span>
+          </div>
 
           <div
             style={{
-              width: "100%",
+              flex: 1,
+              minWidth: windowWidth <= 768 ? "100%" : "180px",
               overflow: "hidden",
               whiteSpace: "nowrap",
-              marginTop: "4px",
-              height: "18px",
+              height: "20px",
+              borderLeft: windowWidth <= 768 ? "none" : "1px solid rgba(17,24,39,0.08)",
+              borderRight: windowWidth <= 768 ? "none" : "1px solid rgba(17,24,39,0.08)",
+              paddingLeft: windowWidth <= 768 ? "0" : "12px",
+              paddingRight: windowWidth <= 768 ? "0" : "12px",
             }}
           >
             <span
               style={{
                 display: "inline-block",
-                fontSize: "11px",
-                fontWeight: "600",
+                fontSize: windowWidth <= 768 ? "10px" : "10px",
+                fontWeight: 600,
+                color: "#111827",
                 animation:
                   newsItems.length > 0 && newsItems[0] !== "Error fetching news"
                     ? "scroll 30s linear infinite"
@@ -1357,68 +1396,37 @@ const Map = () => {
               {duplicatedNewsText}
             </span>
           </div>
-        </div>
 
-        <div
-          style={{
-            background: "rgba(255,255,255,0.92)",
-            borderRadius: "14px",
-            padding: windowWidth <= 768 ? "8px" : "10px",
-            boxShadow: "0 8px 20px rgba(0,0,0,0.18)",
-            fontFamily: "'Montserrat', sans-serif",
-            backdropFilter: "blur(6px)",
-            WebkitBackdropFilter: "blur(6px)",
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            flexWrap: "wrap",
-            minWidth: windowWidth <= 768 ? "210px" : "290px",
-            maxWidth: windowWidth <= 768 ? "260px" : "360px",
-          }}
-        >
-          <span
+          <div
             style={{
-              fontSize: windowWidth <= 768 ? "10px" : "11px",
-              fontWeight: 700,
-              color: "#111827",
-              whiteSpace: "nowrap",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              flexWrap: "wrap",
+              flexShrink: 0,
             }}
           >
-            Filter:
-          </span>
-
-          <select
-            value={colorMode}
-            onChange={(e) => {
-              setColorMode(e.target.value);
-              if (e.target.value !== "status") setStatusFilter("ALL");
-              if (e.target.value !== "facing") setFacingFilter("ALL");
-            }}
-            style={{
-              width: windowWidth <= 768 ? "92px" : "110px",
-              padding: windowWidth <= 768 ? "6px 8px" : "7px 9px",
-              borderRadius: "9px",
-              border: "1px solid #d1d5db",
-              fontSize: windowWidth <= 768 ? "10px" : "11px",
-              outline: "none",
-              background: "#fff",
-              cursor: "pointer",
-              pointerEvents: "auto",
-              height: windowWidth <= 768 ? "32px" : "34px",
-            }}
-          >
-            <option value="none">None</option>
-            <option value="status">Status</option>
-            <option value="facing">Facing</option>
-          </select>
-
-          {colorMode === "status" && (
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
+            <span
               style={{
-                width: windowWidth <= 768 ? "92px" : "110px",
-                padding: windowWidth <= 768 ? "6px 8px" : "7px 9px",
+                fontSize: windowWidth <= 768 ? "10px" : "10px",
+                fontWeight: 700,
+                color: "#111827",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Filter:
+            </span>
+
+            <select
+              value={colorMode}
+              onChange={(e) => {
+                setColorMode(e.target.value);
+                if (e.target.value !== "status") setStatusFilter("ALL");
+                if (e.target.value !== "facing") setFacingFilter("ALL");
+              }}
+              style={{
+                width: windowWidth <= 768 ? "88px" : "108px",
+                padding: windowWidth <= 768 ? "6px 8px" : "3px 3px",
                 borderRadius: "9px",
                 border: "1px solid #d1d5db",
                 fontSize: windowWidth <= 768 ? "10px" : "11px",
@@ -1426,41 +1434,64 @@ const Map = () => {
                 background: "#fff",
                 cursor: "pointer",
                 pointerEvents: "auto",
-                height: windowWidth <= 768 ? "32px" : "34px",
+                height: windowWidth <= 768 ? "26px" : "26px",
               }}
             >
-              {statusOptions.map((status) => (
-                <option key={status} value={status}>
-                  {status}
-                </option>
-              ))}
+              <option value="none">None</option>
+              <option value="status">Status</option>
+              <option value="facing">Facing</option>
             </select>
-          )}
 
-          {colorMode === "facing" && (
-            <select
-              value={facingFilter}
-              onChange={(e) => setFacingFilter(e.target.value)}
-              style={{
-                width: windowWidth <= 768 ? "92px" : "110px",
-                padding: windowWidth <= 768 ? "6px 8px" : "7px 9px",
-                borderRadius: "9px",
-                border: "1px solid #d1d5db",
-                fontSize: windowWidth <= 768 ? "10px" : "11px",
-                outline: "none",
-                background: "#fff",
-                cursor: "pointer",
-                pointerEvents: "auto",
-                height: windowWidth <= 768 ? "32px" : "34px",
-              }}
-            >
-              {facingOptions.map((facing) => (
-                <option key={facing} value={facing}>
-                  {facing}
-                </option>
-              ))}
-            </select>
-          )}
+            {colorMode === "status" && (
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                style={{
+                  width: windowWidth <= 768 ? "88px" : "108px",
+                  padding: windowWidth <= 768 ? "6px 8px" : "3px 3px",
+                  borderRadius: "9px",
+                  border: "1px solid #d1d5db",
+                  fontSize: windowWidth <= 768 ? "10px" : "11px",
+                  outline: "none",
+                  background: "#fff",
+                  cursor: "pointer",
+                  pointerEvents: "auto",
+                  height: windowWidth <= 768 ? "26px" : "26px",
+                }}
+              >
+                {statusOptions.map((status) => (
+                  <option key={status} value={status}>
+                    {status}
+                  </option>
+                ))}
+              </select>
+            )}
+
+            {colorMode === "facing" && (
+              <select
+                value={facingFilter}
+                onChange={(e) => setFacingFilter(e.target.value)}
+                style={{
+                  width: windowWidth <= 768 ? "88px" : "108px",
+                  padding: windowWidth <= 768 ? "6px 8px" : "7px 9px",
+                  borderRadius: "9px",
+                  border: "1px solid #d1d5db",
+                  fontSize: windowWidth <= 768 ? "10px" : "11px",
+                  outline: "none",
+                  background: "#fff",
+                  cursor: "pointer",
+                  pointerEvents: "auto",
+                  height: windowWidth <= 768 ? "32px" : "34px",
+                }}
+              >
+                {facingOptions.map((facing) => (
+                  <option key={facing} value={facing}>
+                    {facing}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
         </div>
       </div>
 
@@ -1539,37 +1570,18 @@ const Map = () => {
       <AskAI onApplyAiResult={handleAiResult} contextData={aiContext} />
 
       <img
-        src={contactBtn}
-        alt="Contact"
-        data-ui="true"
-        style={{
-          position: "fixed",
-          bottom: windowWidth <= 768 ? "10px" : "20px",
-          right: "20px",
-          width: "100px",
-          height: "auto",
-          zIndex: 1500,
-          pointerEvents: "auto",
-          borderRadius: windowWidth <= 768 ? "20px" : "28px",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.6)",
-          cursor: "pointer",
-        }}
-        onClick={() => (window.location.href = "https://www.hasirufarms.com/contact")}
-      />
-
-      <img
         src={compass}
         alt="compass"
         data-ui="true"
         style={{
           position: "fixed",
-          bottom: windowWidth <= 768 ? "10px" : "20px",
-          left: "20px",
-          width: windowWidth <= 768 ? "60px" : "80px",
+          bottom: windowWidth <= 768 ? "10px" : "10px",
+          left: "10px",
+          width: windowWidth <= 768 ? "30px" : "60px",
           height: "auto",
           zIndex: 1500,
           pointerEvents: "auto",
-          borderRadius: windowWidth <= 768 ? "20px" : "28px",
+          borderRadius: windowWidth <= 768 ? "16px" : "16px",
           boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.6)",
           backgroundColor: "rgba(255, 255, 255, 0.7)",
           padding: "10px",
@@ -1580,11 +1592,11 @@ const Map = () => {
         data-ui="true"
         style={{
           position: "fixed",
-          bottom: windowWidth <= 768 ? "10px" : "20px",
+          bottom: windowWidth <= 768 ? "10px" : "10px",
           left: "50%",
           transform: "translateX(-50%)",
           fontFamily: "'Montserrat', sans-serif",
-          fontSize: "10px",
+          fontSize: "8px",
           color: "white",
           padding: "8px 10px",
           borderRadius: "5px",
@@ -1602,7 +1614,7 @@ const Map = () => {
         <img
           src="./luminexaLogo.png"
           alt="logo"
-          style={{ width: "50%", marginTop: "4px" }}
+          style={{ width: "30%", marginTop: "1px" }}
         />
       </div>
 
