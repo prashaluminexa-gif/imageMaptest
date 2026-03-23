@@ -19,13 +19,13 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
     e.stopPropagation();
   };
 
-  const appendAssistantError = (message) => {
+  const appendAssistantMessage = (content, actions = []) => {
     setMessages((prev) => [
       ...prev,
       {
         role: "assistant",
-        content: message,
-        actions: [],
+        content,
+        actions,
       },
     ]);
   };
@@ -65,15 +65,11 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
         throw new Error(data.message || "Failed to connect to AI.");
       }
 
-      const assistantMessage = {
-        role: "assistant",
-        content:
-          data.message ||
-          "Certainly. I’m here to assist you with the plot details, availability, pricing and project highlights.",
-        actions: Array.isArray(data.actions) ? data.actions : [],
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
+      appendAssistantMessage(
+        data.message ||
+          "Certainly sir, I’m here to assist you with project details, plot availability, pricing and tree information.",
+        Array.isArray(data.actions) ? data.actions : []
+      );
 
       if (data.allowed && typeof onApplyAiResult === "function") {
         onApplyAiResult(data);
@@ -81,9 +77,9 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
     } catch (error) {
       console.error("AskAI error:", error);
 
-      appendAssistantError(
+      appendAssistantMessage(
         error.message ||
-          "Unable to connect to AI. Please check the Netlify function."
+          "Unable to connect to AI at the moment. Please check the Netlify function and try again."
       );
     } finally {
       setLoading(false);
@@ -108,15 +104,14 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
     setPrompt(value);
 
     const lineBreaks = value.split("\n").length;
-    const estimatedRows = Math.min(3, Math.max(1, lineBreaks));
-    setInputRows(estimatedRows);
+    setInputRows(Math.min(3, Math.max(1, lineBreaks)));
   };
 
   const quickPrompts = [
     "Show available premium plots",
     "Which plots have more trees?",
     "Show east facing plots",
-    "Give project highlights and location details",
+    "Give me project highlights",
   ];
 
   const LeafIcon = ({ size = 12 }) => (
@@ -268,8 +263,8 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
             onMouseDown={stopEvent}
             onWheel={stopEvent}
             style={{
-              width: "275px",
-              height: "395px",
+              width: "285px",
+              height: "410px",
               background: "#ffffff",
               borderRadius: "18px",
               boxShadow: "0 12px 28px rgba(0,0,0,0.14)",
@@ -316,7 +311,7 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                 <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.2 }}>
                   <span>Ask AI</span>
                   <span style={{ fontSize: "9px", opacity: 0.72 }}>
-                    Sales Assistant
+                    Sales Executive
                   </span>
                 </div>
               </div>
@@ -368,7 +363,6 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
               className="askai-scroll"
               onMouseDown={stopEvent}
               onTouchStart={stopEvent}
-              onTouchMove={stopEvent}
               onWheel={stopEvent}
               style={{
                 flex: 1,
@@ -378,8 +372,7 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                 gap: "8px",
                 overflowY: "auto",
                 overflowX: "hidden",
-                background:
-                  "linear-gradient(to bottom, #ffffff 0%, #fbfbfb 100%)",
+                background: "linear-gradient(to bottom, #ffffff 0%, #fbfbfb 100%)",
                 WebkitOverflowScrolling: "touch",
                 overscrollBehavior: "contain",
                 touchAction: "pan-y",
@@ -419,7 +412,7 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                       marginBottom: "4px",
                     }}
                   >
-                    Ask about plots or project details
+                    Ask about plots and project details
                   </div>
 
                   <div
@@ -431,13 +424,13 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                   >
                     Try:
                     <br />
-                    • Show available premium plots
+                    • Show premium available plots
                     <br />
                     • Which plots have more trees?
                     <br />
-                    • Show east facing plots
+                    • Compare east and north facing plots
                     <br />
-                    • Give project highlights and location details
+                    • Give project highlights
                   </div>
                 </div>
               )}
@@ -482,12 +475,12 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                       <div
                         style={{
                           maxWidth: "100%",
-                          padding: "7px 9px",
+                          padding: "8px 10px",
                           borderRadius: isUser
                             ? "10px 10px 3px 10px"
                             : "10px 10px 10px 3px",
                           fontSize: "10px",
-                          lineHeight: 1.52,
+                          lineHeight: 1.55,
                           background: isUser ? "#111111" : "#ffffff",
                           color: isUser ? "#ffffff" : "#111111",
                           whiteSpace: "pre-wrap",
@@ -498,99 +491,93 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                       >
                         <div>{msg.content}</div>
 
-                        {!isUser &&
-                          Array.isArray(msg.actions) &&
-                          msg.actions.length > 0 && (
-                            <div
-                              style={{
-                                marginTop: "8px",
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "6px",
-                              }}
-                            >
-                              {msg.actions.map((action, actionIndex) => {
-                                if (action.type === "view_plot") {
-                                  return (
-                                    <button
-                                      key={`${action.type}-${actionIndex}`}
-                                      type="button"
-                                      onClick={() => onViewPlot?.(action.plotId)}
-                                      style={{
-                                        border: "none",
-                                        background: "#111111",
-                                        color: "#ffffff",
-                                        padding: "8px 10px",
-                                        borderRadius: "8px",
-                                        fontSize: "10px",
-                                        fontWeight: 600,
-                                        cursor: "pointer",
-                                        textAlign: "left",
-                                      }}
-                                    >
-                                      {action.label || "Click here to view plot"}
-                                    </button>
-                                  );
-                                }
+                        {!isUser && Array.isArray(msg.actions) && msg.actions.length > 0 && (
+                          <div
+                            style={{
+                              marginTop: "9px",
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "6px",
+                            }}
+                          >
+                            {msg.actions.map((action, actionIndex) => {
+                              if (action.type === "view_plot") {
+                                return (
+                                  <button
+                                    key={`${action.type}-${actionIndex}`}
+                                    type="button"
+                                    onClick={() => onViewPlot?.(action.plotId)}
+                                    style={{
+                                      border: "none",
+                                      background: "#111111",
+                                      color: "#ffffff",
+                                      padding: "8px 10px",
+                                      borderRadius: "8px",
+                                      fontSize: "10px",
+                                      fontWeight: 600,
+                                      cursor: "pointer",
+                                      textAlign: "left",
+                                    }}
+                                  >
+                                    {action.label || "View plot"}
+                                  </button>
+                                );
+                              }
 
-                                if (action.type === "apply_filter") {
-                                  return (
-                                    <button
-                                      key={`${action.type}-${actionIndex}`}
-                                      type="button"
-                                      onClick={() =>
-                                        onApplyAiResult?.({
-                                          filters: action.filters || {},
-                                        })
-                                      }
-                                      style={{
-                                        border: "1px solid #d1d5db",
-                                        background: "#ffffff",
-                                        color: "#111111",
-                                        padding: "8px 10px",
-                                        borderRadius: "8px",
-                                        fontSize: "10px",
-                                        fontWeight: 600,
-                                        cursor: "pointer",
-                                        textAlign: "left",
-                                      }}
-                                    >
-                                      {action.label || "Apply filter"}
-                                    </button>
-                                  );
-                                }
+                              if (action.type === "apply_filter") {
+                                return (
+                                  <button
+                                    key={`${action.type}-${actionIndex}`}
+                                    type="button"
+                                    onClick={() =>
+                                      onApplyAiResult?.({
+                                        filters: action.filters || {},
+                                      })
+                                    }
+                                    style={{
+                                      border: "1px solid #d1d5db",
+                                      background: "#ffffff",
+                                      color: "#111111",
+                                      padding: "8px 10px",
+                                      borderRadius: "8px",
+                                      fontSize: "10px",
+                                      fontWeight: 600,
+                                      cursor: "pointer",
+                                      textAlign: "left",
+                                    }}
+                                  >
+                                    {action.label || "Apply filter"}
+                                  </button>
+                                );
+                              }
 
-                                if (action.type === "reset_filters") {
-                                  return (
-                                    <button
-                                      key={`${action.type}-${actionIndex}`}
-                                      type="button"
-                                      onClick={() =>
-                                        onApplyAiResult?.({
-                                          resetFilters: true,
-                                        })
-                                      }
-                                      style={{
-                                        border: "1px solid #d1d5db",
-                                        background: "#ffffff",
-                                        color: "#111111",
-                                        padding: "8px 10px",
-                                        borderRadius: "8px",
-                                        fontSize: "10px",
-                                        fontWeight: 600,
-                                        cursor: "pointer",
-                                        textAlign: "left",
-                                      }}
-                                    >
-                                      {action.label || "Clear filters"}
-                                    </button>
-                                  );
-                                }
+                              if (action.type === "link") {
+                                return (
+                                  <button
+                                    key={`${action.type}-${actionIndex}`}
+                                    type="button"
+                                    onClick={() => action.url && window.open(action.url, "_blank")}
+                                    style={{
+                                      border: "1px solid #d1d5db",
+                                      background: "#ffffff",
+                                      color: "#111111",
+                                      padding: "8px 10px",
+                                      borderRadius: "8px",
+                                      fontSize: "10px",
+                                      fontWeight: 600,
+                                      cursor: "pointer",
+                                      textAlign: "left",
+                                    }}
+                                  >
+                                    {action.label || "Open link"}
+                                  </button>
+                                );
+                              }
 
-                                return null;
-                              })}
-                            </div>
-                          )}
+                              return null;
+                            })}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -709,7 +696,7 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                   value={prompt}
                   onChange={handleTextareaChange}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask about plots, pricing, trees, facing..."
+                  placeholder="Ask about plots, prices, trees, project..."
                   rows={inputRows}
                   style={{
                     flex: 1,

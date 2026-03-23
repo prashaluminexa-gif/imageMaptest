@@ -1749,10 +1749,10 @@ const Map = () => {
       )}
 
       <AskAI
-        onApplyAiResult={handleAiResult}
-        onViewPlot={openPlotPanel}
-        contextData={aiContext}
-      />
+  onApplyAiResult={handleAiResult}
+  onViewPlot={openPlotPanel}
+  contextData={aiContext}
+/>
 
       <img
         src={compass}
