@@ -22,7 +22,6 @@ import AskAI from "./AskAI";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
-// -------------------- Utility --------------------
 
 const isIOS = () => {
   return (
