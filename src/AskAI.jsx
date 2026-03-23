@@ -14,7 +14,7 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
   ]);
   const [inputRows, setInputRows] = useState(1);
   const [customerName, setCustomerName] = useState("");
-  const [nameAsked, setNameAsked] = useState(true);
+
 
   const messagesRef = useRef(null);
 
@@ -91,7 +91,6 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
 
       if (extractedName) {
         setCustomerName(extractedName);
-        setNameAsked(false);
 
         appendAssistantMessage(
           `Wonderful, ${extractedName}. I’m pleased to assist you. You can now ask me about available plots, pricing, facing, tree details, project highlights, or comparisons.`
@@ -162,7 +161,6 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
     setPrompt("");
     setInputRows(1);
     setCustomerName("");
-    setNameAsked(true);
   };
 
   const handleKeyDown = (e) => {
