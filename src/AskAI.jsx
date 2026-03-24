@@ -8,13 +8,11 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
     {
       role: "assistant",
       content:
-        "Hello sir, welcome. May I know your name so I can assist you better with the project and plot details?",
+        "Welcome. I’m here to assist you with plot details, pricing, availability, tree details, and project insights. How may I help you?",
       actions: [],
     },
   ]);
   const [inputRows, setInputRows] = useState(1);
-  const [customerName, setCustomerName] = useState("");
-
 
   const messagesRef = useRef(null);
 
@@ -53,28 +51,6 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
     return history.slice(-12);
   };
 
-  const detectNameFromPrompt = (text) => {
-    const cleaned = String(text || "").trim();
-
-    const patterns = [
-      /^i am\s+([a-zA-Z ]{2,40})$/i,
-      /^i'm\s+([a-zA-Z ]{2,40})$/i,
-      /^my name is\s+([a-zA-Z ]{2,40})$/i,
-      /^this is\s+([a-zA-Z ]{2,40})$/i,
-      /^it'?s\s+([a-zA-Z ]{2,40})$/i,
-      /^([a-zA-Z]{2,30})$/i,
-    ];
-
-    for (const pattern of patterns) {
-      const match = cleaned.match(pattern);
-      if (match?.[1]) {
-        return match[1].trim();
-      }
-    }
-
-    return "";
-  };
-
   const handleSend = async (manualPrompt) => {
     const finalPrompt = typeof manualPrompt === "string" ? manualPrompt : prompt;
     const trimmedPrompt = finalPrompt.trim();
@@ -85,20 +61,6 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
     setMessages((prev) => [...prev, userMessage]);
     setPrompt("");
     setInputRows(1);
-
-    if (!customerName) {
-      const extractedName = detectNameFromPrompt(trimmedPrompt);
-
-      if (extractedName) {
-        setCustomerName(extractedName);
-
-        appendAssistantMessage(
-          `Wonderful, ${extractedName}. I’m pleased to assist you. You can now ask me about available plots, pricing, facing, tree details, project highlights, or comparisons.`
-        );
-        return;
-      }
-    }
-
     setLoading(true);
 
     try {
@@ -113,14 +75,13 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
           prompt: trimmedPrompt,
           context: contextData,
           history,
-          customerName,
         }),
       });
 
       let data = {};
       try {
         data = await res.json();
-      } catch (parseError) {
+      } catch {
         throw new Error("Invalid response from AI function.");
       }
 
@@ -129,8 +90,9 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
       }
 
       appendAssistantMessage(
-        data.message ||
-          `Certainly${customerName ? ` ${customerName}` : " sir"}, I’m here to assist you with project details, plot availability, pricing and tree information.`,
+        typeof data.message === "string" && data.message.trim()
+          ? data.message.trim()
+          : "I’m here to assist you with project details, plot availability, pricing, and tree information.",
         Array.isArray(data.actions) ? data.actions : []
       );
 
@@ -139,10 +101,8 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
       }
     } catch (error) {
       console.error("AskAI error:", error);
-
       appendAssistantMessage(
-        error.message ||
-          "Unable to connect to AI at the moment. Please check the Netlify function and try again."
+        "Sorry, I couldn’t respond properly just now. Please try again."
       );
     } finally {
       setLoading(false);
@@ -154,13 +114,12 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
       {
         role: "assistant",
         content:
-          "Hello sir, welcome. May I know your name so I can assist you better with the project and plot details?",
+          "Welcome. I’m here to assist you with plot details, pricing, availability, tree details, and project insights. How may I help you?",
         actions: [],
       },
     ]);
     setPrompt("");
     setInputRows(1);
-    setCustomerName("");
   };
 
   const handleKeyDown = (e) => {
@@ -177,15 +136,6 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
     const lineBreaks = value.split("\n").length;
     setInputRows(Math.min(3, Math.max(1, lineBreaks)));
   };
-
-  const quickPrompts = customerName
-    ? [
-        "Show available premium plots",
-        "Which plots have more trees?",
-        "Show east facing plots",
-        "Give me project highlights",
-      ]
-    : ["My name is Prashant", "My name is Rahul", "My name is Suresh"];
 
   const LeafIcon = ({ size = 12 }) => (
     <svg
@@ -222,23 +172,6 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
   const SendIcon = ({ size = 12 }) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
       <path d="M3.4 20.4 21 12 3.4 3.6l.1 6.5 11.5 1.9L3.5 14z" />
-    </svg>
-  );
-
-  const SparkleIcon = ({ size = 12 }) => (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.7"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8L12 3z" />
-      <path d="M19 15l.8 1.9L22 18l-2.2 1.1L19 21l-.8-1.9L16 18l2.2-1.1L19 15z" />
-      <path d="M5 14l1 2.4L8.5 17 6 18.2 5 20.5 4 18.2 1.5 17 4 16.4 5 14z" />
     </svg>
   );
 
@@ -375,7 +308,7 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                 <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.2 }}>
                   <span>Ask AI</span>
                   <span style={{ fontSize: "9px", opacity: 0.72 }}>
-                    {customerName ? `Sales Executive • ${customerName}` : "Sales Executive"}
+                    Sales Executive
                   </span>
                 </div>
               </div>
@@ -653,43 +586,6 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                 style={{
                   display: "flex",
                   gap: "6px",
-                  overflowX: "auto",
-                  paddingBottom: "1px",
-                }}
-                className="askai-scroll"
-              >
-                {quickPrompts.map((item, idx) => (
-                  <button
-                    key={`${item}-${idx}`}
-                    type="button"
-                    onClick={() => handleSend(item)}
-                    disabled={loading}
-                    style={{
-                      whiteSpace: "nowrap",
-                      border: "1px solid #e5e5e5",
-                      background: "#ffffff",
-                      color: "#111111",
-                      borderRadius: "999px",
-                      padding: "6px 9px",
-                      fontSize: "9px",
-                      fontWeight: 600,
-                      cursor: loading ? "not-allowed" : "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "5px",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <SparkleIcon size={10} />
-                    {item}
-                  </button>
-                ))}
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  gap: "6px",
                   alignItems: "flex-end",
                 }}
               >
@@ -697,11 +593,7 @@ const AskAI = ({ onApplyAiResult, onViewPlot, contextData }) => {
                   value={prompt}
                   onChange={handleTextareaChange}
                   onKeyDown={handleKeyDown}
-                  placeholder={
-                    customerName
-                      ? "Ask about plots, prices, trees, project..."
-                      : "Please enter your name first..."
-                  }
+                  placeholder="Ask about plots, pricing, trees, project..."
                   rows={inputRows}
                   style={{
                     flex: 1,

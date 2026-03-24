@@ -1,119 +1,142 @@
 // netlify/functions/ask-ai.js
+
 export default async (req) => {
+  const jsonHeaders = { "Content-Type": "application/json" };
+
+  const send = (body, status = 200) =>
+    new Response(JSON.stringify(body), {
+      status,
+      headers: jsonHeaders,
+    });
+
+  const buildFallback = () => ({
+    allowed: true,
+    message:
+      "Certainly. I’m ready to assist with plot availability, pricing, facing, tree details, and project highlights.",
+    matchingPlotIds: [],
+    focusPlotId: null,
+    filters: {
+      status: null,
+      facing: null,
+    },
+    actions: [],
+  });
+
+  const normalizeHistory = (history) => {
+    if (!Array.isArray(history)) return [];
+
+    return history
+      .filter(
+        (msg) =>
+          msg &&
+          typeof msg === "object" &&
+          (msg.role === "user" || msg.role === "assistant") &&
+          typeof msg.content === "string" &&
+          msg.content.trim()
+      )
+      .slice(-12)
+      .map((msg) => ({
+        role: msg.role,
+        content: msg.content.trim(),
+      }));
+  };
+
+  const extractJson = (text) => {
+    const raw = String(text || "").trim();
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch {}
+
+    const cleaned = raw
+      .replace(/^```json\s*/i, "")
+      .replace(/^```\s*/i, "")
+      .replace(/\s*```$/i, "")
+      .trim();
+
+    try {
+      return JSON.parse(cleaned);
+    } catch {}
+
+    const firstBrace = cleaned.indexOf("{");
+    const lastBrace = cleaned.lastIndexOf("}");
+
+    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+      const possibleJson = cleaned.slice(firstBrace, lastBrace + 1);
+      try {
+        return JSON.parse(possibleJson);
+      } catch {}
+    }
+
+    return null;
+  };
+
+  const normalizeFilters = (filters) => ({
+    status:
+      typeof filters?.status === "string" && filters.status.trim()
+        ? filters.status.trim()
+        : null,
+    facing:
+      typeof filters?.facing === "string" && filters.facing.trim()
+        ? filters.facing.trim()
+        : null,
+  });
+
+  const normalizeActions = (actions) => {
+    if (!Array.isArray(actions)) return [];
+
+    return actions
+      .map((action) => {
+        if (!action || typeof action !== "object") return null;
+
+        if (action.type === "view_plot") {
+          if (typeof action.plotId !== "string" || !action.plotId.trim()) {
+            return null;
+          }
+
+          return {
+            type: "view_plot",
+            label:
+              typeof action.label === "string" && action.label.trim()
+                ? action.label.trim()
+                : "View Plot",
+            plotId: action.plotId.trim(),
+          };
+        }
+
+        if (action.type === "apply_filter") {
+          return {
+            type: "apply_filter",
+            label:
+              typeof action.label === "string" && action.label.trim()
+                ? action.label.trim()
+                : "Apply Filter",
+            filters: normalizeFilters(action.filters || {}),
+          };
+        }
+
+        if (action.type === "reset_filters") {
+          return {
+            type: "reset_filters",
+            label:
+              typeof action.label === "string" && action.label.trim()
+                ? action.label.trim()
+                : "Clear Filters",
+          };
+        }
+
+        return null;
+      })
+      .filter(Boolean);
+  };
+
   try {
     if (req.method !== "POST") {
-      return new Response(
-        JSON.stringify({
-          allowed: false,
-          message: "Method not allowed",
-          actions: [],
-          filters: {},
-        }),
+      return send(
         {
-          status: 405,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-    }
-
-    const { prompt, context, history = [], customerName = "" } = await req.json();
-
-    if (!prompt?.trim()) {
-      return new Response(
-        JSON.stringify({
           allowed: false,
-          message: "Prompt is required.",
-          actions: [],
-          filters: {},
-        }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-    }
-
-    const allowedKeywords = [
-      "hello",
-      "hi",
-      "hey",
-      "good morning",
-      "good evening",
-      "good afternoon",
-      "how are you",
-      "thanks",
-      "thank you",
-      "ok",
-      "okay",
-      "great",
-      "nice",
-      "show more",
-      "similar",
-      "that one",
-      "those",
-      "continue",
-      "plot",
-      "plots",
-      "project",
-      "block",
-      "layout",
-      "map",
-      "image mapping",
-      "availability",
-      "available",
-      "sold",
-      "booked",
-      "reserved",
-      "facing",
-      "corner",
-      "park",
-      "area",
-      "sqft",
-      "sq ft",
-      "price",
-      "pricing",
-      "cost",
-      "rate",
-      "coordinates",
-      "company",
-      "service",
-      "launch",
-      "location",
-      "trees",
-      "tree",
-      "fruit",
-      "forest",
-      "coconut",
-      "details",
-      "comparison",
-      "compare",
-      "investment",
-      "highlight",
-      "highlights",
-      "amenities",
-      "amenity",
-      "status",
-      "premium",
-      "east",
-      "west",
-      "north",
-      "south",
-      "unit",
-      "units",
-      "survey",
-      "description",
-      "value",
-      "real estate",
-    ];
-
-    const lowerPrompt = prompt.toLowerCase();
-    const isAllowed = allowedKeywords.some((word) => lowerPrompt.includes(word));
-
-    if (!isAllowed) {
-      return new Response(
-        JSON.stringify({
-          allowed: false,
-          message: `Certainly${customerName ? ` ${customerName}` : " sir"}. I can assist only with project, plot, map, pricing, tree details, coordinates, and company-related queries for this application.`,
+          message: "Method not allowed.",
           matchingPlotIds: [],
           focusPlotId: null,
           filters: {
@@ -121,121 +144,125 @@ export default async (req) => {
             facing: null,
           },
           actions: [],
-        }),
+        },
+        405
+      );
+    }
+
+    const { prompt, context, history = [] } = await req.json();
+
+    if (!prompt || !String(prompt).trim()) {
+      return send(
         {
-          status: 200,
-          headers: { "Content-Type": "application/json" },
-        }
+          allowed: false,
+          message: "Prompt is required.",
+          matchingPlotIds: [],
+          focusPlotId: null,
+          filters: {
+            status: null,
+            facing: null,
+          },
+          actions: [],
+        },
+        400
       );
     }
 
     const apiKey = process.env.NVIDIA_API_KEY;
 
     if (!apiKey) {
-      return new Response(
-        JSON.stringify({
+      return send(
+        {
           allowed: false,
           message: "Missing NVIDIA_API_KEY in Netlify environment variables.",
+          matchingPlotIds: [],
+          focusPlotId: null,
+          filters: {
+            status: null,
+            facing: null,
+          },
           actions: [],
-          filters: {},
-        }),
-        {
-          status: 500,
-          headers: { "Content-Type": "application/json" },
-        }
+        },
+        500
       );
     }
 
-    const upstreamRes = await fetch(
-      "https://integrate.api.nvidia.com/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "meta/llama-3.1-70b-instruct",
-          temperature: 0.2,
-          top_p: 0.9,
-          max_tokens: 1400,
-          messages: [
-            {
-              role: "system",
-              content: `
+    const safeFallback = buildFallback();
+    const chatHistory = normalizeHistory(history);
+    const trimmedPrompt = String(prompt).trim();
+
+    const systemPrompt = `
 You are a professional real-estate sales executive assistant for a plotted development application.
 
-Your name is the digital sales executive for this project.
+Your role:
+- Assist users with project details, plot availability, facing, pricing, area, trees, highlights, comparisons, and related project information.
+- Answer ONLY from the provided project data context and conversation history.
+- Never invent any pricing, plot details, project facts, tree counts, or company information.
 
-You must answer ONLY from:
-1. provided company details
-2. provided project details
-3. provided selected plot details
-4. provided plots array
-5. provided coordinate and map details
-6. conversation history
+Tone rules:
+- Professional
+- Warm
+- Respectful
+- Neutral
+- Do not use gender-based words like sir or madam
+- Speak like a polished real-estate sales executive
+- Keep responses concise, helpful, and premium
 
-You must never invent any project, plot, tree, pricing, or company information.
-
-TONE RULES:
-- Sound like a polished sales executive speaking to a valued customer
-- Professional, warm, premium, helpful, persuasive
-- If customerName is available, use it naturally in responses
-- Example style:
-  "Certainly Prashant, based on the available project details..."
-  "That is a strong choice, Prashant..."
-- Keep response concise but useful
-
-CONVERSATION RULES:
-- Use conversation history carefully
-- Understand follow-up phrases like:
-  "show more like that"
-  "similar plots"
-  "that was good"
-  "compare with that"
-- Resolve these follow-ups using previous context from history
+Conversation rules:
+- Understand natural follow-up replies
+- Resolve phrases like:
+  - show more like that
+  - similar plots
+  - continue
+  - compare with that
+  - show other similar plots
+  - that was good
+  - show more
+- Use previous conversation context carefully
 - If previous context is unclear, politely say so
 
-GREETING RULES:
-- If user says hello, hi, good morning, how are you, thanks, etc, respond warmly and professionally
-- Greeting responses are allowed
+Greeting rules:
+- Greetings like hello, hi, hey, good morning, good evening, thanks, thank you, and how are you are valid and should receive a warm professional response
 
-BEHAVIOR RULES:
-- If the user asks about plot suggestions, mention benefits like facing, area, trees, pricing, status, and project appeal if available
-- If the user asks about project details, mention location, launch date, highlights, amenities, availability, description and value if available
-- If user asks about trees, mention counts and names wherever available
-- If user asks about pricing, mention available price-related values only if present
-- If user asks about multiple plots, compare only using the given data
+Project behavior:
+- For plot suggestions, mention benefits only if available in data
+- For tree-related queries, mention counts or names only if available
+- For pricing queries, mention only available pricing values
+- For comparisons, compare only using available context data
 - If data is missing, clearly say it is not available in the current project data
 
-IMPORTANT UI RULES:
-- Do NOT auto-open a plot directly
+UI rules:
 - focusPlotId must always be null
-- Instead, when specific plot(s) are relevant, return clickable action buttons
+- Do not auto-open any plot
+- When relevant, return action buttons
 
-ACTION BUTTON RULES:
-- For plot button:
-  {
-    "type": "view_plot",
-    "label": "View Plot 20",
-    "plotId": "plot-20"
+Valid action button formats:
+
+For viewing a plot:
+{
+  "type": "view_plot",
+  "label": "View Plot 20",
+  "plotId": "plot-20"
+}
+
+For applying a filter:
+{
+  "type": "apply_filter",
+  "label": "Show east facing plots",
+  "filters": {
+    "status": null,
+    "facing": "E"
   }
+}
 
-- For filter button:
-  {
-    "type": "apply_filter",
-    "label": "Show east facing plots",
-    "filters": { "facing": "E" }
-  }
+For resetting filters:
+{
+  "type": "reset_filters",
+  "label": "Clear Filters"
+}
 
-- For clearing filters:
-  {
-    "type": "reset_filters",
-    "label": "Clear filters"
-  }
-
-RETURN FORMAT:
-Return valid JSON only in exactly this shape:
+Return format:
+Return ONLY valid JSON in exactly this shape:
 {
   "allowed": true,
   "message": "string",
@@ -248,14 +275,15 @@ Return valid JSON only in exactly this shape:
   "actions": []
 }
 
-FIELD RULES:
-- allowed true for in-scope questions
+Rules:
+- allowed should be true for in-scope queries and greetings
+- message must always be plain readable text for chat UI
+- matchingPlotIds must always be an array
 - focusPlotId must always be null
-- actions should be added when useful
-- If greeting only, actions can be empty
-- If follow-up asks for similar plots, return multiple relevant view_plot actions if available
+- filters must contain only status and facing
+- actions must always be an array
 
-SPECIAL FILTER MAPPING:
+Filter mapping:
 - east => E
 - west => W
 - north => N
@@ -264,27 +292,71 @@ SPECIAL FILTER MAPPING:
 - sold => Sold
 - booked => Booked
 - reserved => Reserved
-              `.trim(),
-            },
-            {
-              role: "user",
-              content: JSON.stringify({
-                customerName,
-                prompt,
-                history,
-                context,
-              }),
-            },
-          ],
+
+Critical output rule:
+- Return JSON only
+- Do not wrap JSON in markdown
+- Do not add explanation before or after JSON
+- Do not use code fences
+`.trim();
+
+    const contextMessage = {
+      role: "system",
+      content: `Here is the project data context in JSON. Use only this data and the chat history:\n${JSON.stringify(
+        { context }
+      )}`,
+    };
+
+    const messages = [
+      { role: "system", content: systemPrompt },
+      contextMessage,
+      ...chatHistory,
+      { role: "user", content: trimmedPrompt },
+    ];
+
+    const upstreamRes = await fetch(
+      "https://integrate.api.nvidia.com/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "openai/gpt-oss-120b",
+          messages,
+          temperature: 0.2,
+          top_p: 0.9,
+          max_tokens: 1200,
+          stream: false,
+          response_format: { type: "json_object" },
         }),
       }
     );
 
-    const upstreamData = await upstreamRes.json();
+    let upstreamData = {};
+    try {
+      upstreamData = await upstreamRes.json();
+    } catch {
+      return send(
+        {
+          allowed: false,
+          message: "Invalid response received from NVIDIA API.",
+          matchingPlotIds: [],
+          focusPlotId: null,
+          filters: {
+            status: null,
+            facing: null,
+          },
+          actions: [],
+        },
+        500
+      );
+    }
 
     if (!upstreamRes.ok) {
-      return new Response(
-        JSON.stringify({
+      return send(
+        {
           allowed: false,
           message:
             upstreamData?.error?.message ||
@@ -297,140 +369,44 @@ SPECIAL FILTER MAPPING:
             facing: null,
           },
           actions: [],
-        }),
-        {
-          status: 500,
-          headers: { "Content-Type": "application/json" },
-        }
+        },
+        500
       );
     }
 
-    const raw = upstreamData?.choices?.[0]?.message?.content || "{}";
+    const rawContent = upstreamData?.choices?.[0]?.message?.content || "";
+    const parsed = extractJson(rawContent);
 
-    const safeFallback = {
-      allowed: true,
-      message: `Certainly${customerName ? ` ${customerName}` : " sir"}, based on the available project data, I’m ready to assist you with plot availability, pricing, facing, tree details, and project highlights.`,
-      matchingPlotIds: [],
-      focusPlotId: null,
-      filters: {
-        status: null,
-        facing: null,
-      },
-      actions: [],
-    };
-
-    let parsed;
-
-    try {
-      parsed = JSON.parse(raw);
-    } catch {
-      const cleanedRaw = String(raw)
-        .replace(/^```json/i, "")
-        .replace(/^```/i, "")
-        .replace(/```$/i, "")
-        .trim();
-
-      try {
-        parsed = JSON.parse(cleanedRaw);
-      } catch {
-        parsed = {
-          ...safeFallback,
-          message: cleanedRaw || safeFallback.message,
-        };
-      }
+    if (!parsed || typeof parsed !== "object") {
+      return send({
+        ...safeFallback,
+        message:
+          "Sorry, I couldn’t structure that response properly. Please ask again about plots, pricing, facing, tree details, or project information.",
+      });
     }
 
     const normalized = {
-      allowed:
-        typeof parsed?.allowed === "boolean" ? parsed.allowed : safeFallback.allowed,
-
+      allowed: typeof parsed.allowed === "boolean" ? parsed.allowed : true,
       message:
-        typeof parsed?.message === "string" && parsed.message.trim()
+        typeof parsed.message === "string" && parsed.message.trim()
           ? parsed.message.trim()
           : safeFallback.message,
-
-      matchingPlotIds: Array.isArray(parsed?.matchingPlotIds)
-        ? parsed.matchingPlotIds.filter(Boolean)
+      matchingPlotIds: Array.isArray(parsed.matchingPlotIds)
+        ? parsed.matchingPlotIds.filter(
+            (id) => typeof id === "string" && id.trim()
+          )
         : [],
-
       focusPlotId: null,
-
-      filters: {
-        status:
-          typeof parsed?.filters?.status === "string" && parsed.filters.status.trim()
-            ? parsed.filters.status.trim()
-            : null,
-        facing:
-          typeof parsed?.filters?.facing === "string" && parsed.filters.facing.trim()
-            ? parsed.filters.facing.trim()
-            : null,
-      },
-
-      actions: Array.isArray(parsed?.actions)
-        ? parsed.actions
-            .map((action) => {
-              if (!action || typeof action !== "object") return null;
-
-              if (action.type === "view_plot") {
-                return {
-                  type: "view_plot",
-                  label:
-                    typeof action.label === "string" && action.label.trim()
-                      ? action.label.trim()
-                      : "View Plot",
-                  plotId:
-                    typeof action.plotId === "string" ? action.plotId : null,
-                };
-              }
-
-              if (action.type === "apply_filter") {
-                return {
-                  type: "apply_filter",
-                  label:
-                    typeof action.label === "string" && action.label.trim()
-                      ? action.label.trim()
-                      : "Apply Filter",
-                  filters:
-                    action.filters && typeof action.filters === "object"
-                      ? {
-                          status:
-                            typeof action.filters.status === "string"
-                              ? action.filters.status
-                              : null,
-                          facing:
-                            typeof action.filters.facing === "string"
-                              ? action.filters.facing
-                              : null,
-                        }
-                      : {},
-                };
-              }
-
-              if (action.type === "reset_filters") {
-                return {
-                  type: "reset_filters",
-                  label:
-                    typeof action.label === "string" && action.label.trim()
-                      ? action.label.trim()
-                      : "Clear Filters",
-                };
-              }
-
-              return null;
-            })
-            .filter(Boolean)
-        : [],
+      filters: normalizeFilters(parsed.filters || {}),
+      actions: normalizeActions(parsed.actions),
     };
 
-    return new Response(JSON.stringify(normalized), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return send(normalized);
   } catch (error) {
-    return new Response(
-      JSON.stringify({
+    return send(
+      {
         allowed: false,
-        message: error.message || "Unexpected server error.",
+        message: error?.message || "Unexpected server error.",
         matchingPlotIds: [],
         focusPlotId: null,
         filters: {
@@ -438,11 +414,8 @@ SPECIAL FILTER MAPPING:
           facing: null,
         },
         actions: [],
-      }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      }
+      },
+      500
     );
   }
 };
