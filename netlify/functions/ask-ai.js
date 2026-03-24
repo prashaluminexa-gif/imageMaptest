@@ -9,10 +9,9 @@ export default async (req) => {
       headers: jsonHeaders,
     });
 
-  const buildFallback = () => ({
+  const baseResponse = (message = "") => ({
     allowed: true,
-    message:
-      "Certainly. I’m ready to assist with plot availability, pricing, facing, tree details, and project highlights.",
+    message,
     matchingPlotIds: [],
     focusPlotId: null,
     filters: {
@@ -131,6 +130,357 @@ export default async (req) => {
       .filter(Boolean);
   };
 
+  const flattenPlots = (context) => {
+    if (!context) return [];
+
+    if (Array.isArray(context)) return context.filter(Boolean);
+
+    if (Array.isArray(context?.plots)) return context.plots.filter(Boolean);
+    if (Array.isArray(context?.plotData)) return context.plotData.filter(Boolean);
+    if (Array.isArray(context?.allPlots)) return context.allPlots.filter(Boolean);
+    if (Array.isArray(context?.availablePlots)) return context.availablePlots.filter(Boolean);
+
+    return [];
+  };
+
+  const getPlotId = (plot, index) =>
+    plot?.plotId ||
+    plot?.id ||
+    plot?.docId ||
+    plot?.projectId ||
+    `plot-${index + 1}`;
+
+  const getPlotNumber = (plot, index) =>
+    plot?.plotNumber ||
+    plot?.plotNo ||
+    plot?.plot_name ||
+    plot?.name ||
+    plot?.title ||
+    `Plot ${index + 1}`;
+
+  const getPlotLabel = (plot, index) => {
+    const plotNumber = getPlotNumber(plot, index);
+    const block = plot?.blockName || plot?.block || plot?.phase || "";
+    return block ? `${plotNumber} - ${block}` : plotNumber;
+  };
+
+  const normalizeFacingValue = (value) => {
+    const v = String(value || "").trim().toUpperCase();
+
+    if (v === "E" || v === "EAST") return "E";
+    if (v === "W" || v === "WEST") return "W";
+    if (v === "N" || v === "NORTH") return "N";
+    if (v === "S" || v === "SOUTH") return "S";
+
+    return null;
+  };
+
+  const normalizeStatusValue = (value) => {
+    const v = String(value || "").trim().toLowerCase();
+
+    if (v === "available") return "Available";
+    if (v === "sold") return "Sold";
+    if (v === "booked") return "Booked";
+    if (v === "reserved") return "Reserved";
+    if (v === "reserve") return "Reserved";
+
+    return null;
+  };
+
+  const getTreeCount = (plot) => {
+    const candidates = [
+      plot?.treeCount,
+      plot?.trees,
+      plot?.totalTrees,
+      plot?.tree_count,
+      plot?.noOfTrees,
+      plot?.tree,
+    ];
+
+    for (const value of candidates) {
+      const num = Number(value);
+      if (Number.isFinite(num)) return num;
+    }
+
+    return null;
+  };
+
+  const getArea = (plot) => {
+    const candidates = [
+      plot?.areaSqFt,
+      plot?.sqft,
+      plot?.sqFt,
+      plot?.plotArea,
+      plot?.area,
+    ];
+
+    for (const value of candidates) {
+      const num = Number(value);
+      if (Number.isFinite(num)) return num;
+    }
+
+    return null;
+  };
+
+  const detectGreeting = (prompt) => {
+    const text = String(prompt || "").trim().toLowerCase();
+
+    const map = {
+      hi: "Welcome. I’m here to assist you with plot details, pricing, availability, tree details, and project insights. How may I help you?",
+      hello:
+        "Welcome. I’m here to assist you with plot details, pricing, availability, tree details, and project insights. How may I help you?",
+      hey: "Welcome. I’m here to assist you with plot details, pricing, availability, tree details, and project insights. How may I help you?",
+      "good morning":
+        "Good morning. I’m here to assist you with project details, plot availability, pricing, and related information. How may I help you?",
+      "good afternoon":
+        "Good afternoon. I’m here to assist you with project details, plot availability, pricing, and related information. How may I help you?",
+      "good evening":
+        "Good evening. I’m here to assist you with project details, plot availability, pricing, and related information. How may I help you?",
+      "how are you":
+        "I’m doing well, thank you. I’m here to assist you with plot availability, pricing, facing, tree details, and project information. How may I help you?",
+      "how are you?":
+        "I’m doing well, thank you. I’m here to assist you with plot availability, pricing, facing, tree details, and project information. How may I help you?",
+      "who are you":
+        "I’m your digital sales executive for this project. I can assist with plot details, pricing, availability, facing, tree details, and project highlights.",
+      "who are you?":
+        "I’m your digital sales executive for this project. I can assist with plot details, pricing, availability, facing, tree details, and project highlights.",
+      thanks:
+        "You’re welcome. I’m here whenever you need help with plot details or project information.",
+      "thank you":
+        "You’re welcome. I’m here whenever you need help with plot details or project information.",
+    };
+
+    return map[text] || null;
+  };
+
+  const handleDirectQuery = (prompt, context) => {
+    const text = String(prompt || "").trim().toLowerCase();
+    const plots = flattenPlots(context);
+
+    const greeting = detectGreeting(text);
+    if (greeting) {
+      return baseResponse(greeting);
+    }
+
+    if (!plots.length) {
+      return null;
+    }
+
+    const actions = [];
+    const matchingPlotIds = [];
+
+    const facingMap = [
+      { keyword: "north", value: "N", label: "north facing" },
+      { keyword: "south", value: "S", label: "south facing" },
+      { keyword: "east", value: "E", label: "east facing" },
+      { keyword: "west", value: "W", label: "west facing" },
+    ];
+
+    for (const item of facingMap) {
+      if (text.includes(item.keyword) && (text.includes("plot") || text.includes("plots") || text.includes("facing"))) {
+        const matched = plots.filter(
+          (plot) => normalizeFacingValue(plot?.facing) === item.value
+        );
+
+        const top = matched.slice(0, 5);
+        top.forEach((plot, index) => {
+          const plotId = getPlotId(plot, index);
+          matchingPlotIds.push(plotId);
+          actions.push({
+            type: "view_plot",
+            label: `View ${getPlotLabel(plot, index)}`,
+            plotId,
+          });
+        });
+
+        actions.push({
+          type: "apply_filter",
+          label: `Show ${item.label} plots`,
+          filters: { status: null, facing: item.value },
+        });
+
+        return {
+          allowed: true,
+          message: matched.length
+            ? `Certainly. I found ${matched.length} ${item.label} plot${matched.length > 1 ? "s" : ""}. You can view the relevant options below.`
+            : `I could not find any ${item.label} plots in the current project data.`,
+          matchingPlotIds,
+          focusPlotId: null,
+          filters: {
+            status: null,
+            facing: item.value,
+          },
+          actions,
+        };
+      }
+    }
+
+    const statusMap = [
+      { keyword: "available", value: "Available", label: "available" },
+      { keyword: "sold", value: "Sold", label: "sold" },
+      { keyword: "booked", value: "Booked", label: "booked" },
+      { keyword: "reserved", value: "Reserved", label: "reserved" },
+    ];
+
+    for (const item of statusMap) {
+      if (text.includes(item.keyword) && (text.includes("plot") || text.includes("plots") || text.includes("show"))) {
+        const matched = plots.filter(
+          (plot) => normalizeStatusValue(plot?.status || plot?.Status) === item.value
+        );
+
+        const top = matched.slice(0, 5);
+        top.forEach((plot, index) => {
+          const plotId = getPlotId(plot, index);
+          matchingPlotIds.push(plotId);
+          actions.push({
+            type: "view_plot",
+            label: `View ${getPlotLabel(plot, index)}`,
+            plotId,
+          });
+        });
+
+        actions.push({
+          type: "apply_filter",
+          label: `Show ${item.label} plots`,
+          filters: { status: item.value, facing: null },
+        });
+
+        return {
+          allowed: true,
+          message: matched.length
+            ? `Certainly. I found ${matched.length} ${item.label} plot${matched.length > 1 ? "s" : ""}. You can review the relevant options below.`
+            : `I could not find any ${item.label} plots in the current project data.`,
+          matchingPlotIds,
+          focusPlotId: null,
+          filters: {
+            status: item.value,
+            facing: null,
+          },
+          actions,
+        };
+      }
+    }
+
+    if (text.includes("less trees") || text.includes("least trees") || text.includes("fewer trees")) {
+      const withTrees = plots
+        .map((plot, index) => ({
+          plot,
+          index,
+          treeCount: getTreeCount(plot),
+        }))
+        .filter((item) => item.treeCount !== null)
+        .sort((a, b) => a.treeCount - b.treeCount);
+
+      const top = withTrees.slice(0, 5);
+
+      top.forEach((item) => {
+        const plotId = getPlotId(item.plot, item.index);
+        matchingPlotIds.push(plotId);
+        actions.push({
+          type: "view_plot",
+          label: `View ${getPlotLabel(item.plot, item.index)} • ${item.treeCount} trees`,
+          plotId,
+        });
+      });
+
+      return {
+        allowed: true,
+        message: top.length
+          ? `Certainly. Here are the plots with lower tree counts from the current project data.`
+          : `Tree count details are not available in the current project data.`,
+        matchingPlotIds,
+        focusPlotId: null,
+        filters: {
+          status: null,
+          facing: null,
+        },
+        actions,
+      };
+    }
+
+    if (text.includes("more trees") || text.includes("most trees") || text.includes("higher trees")) {
+      const withTrees = plots
+        .map((plot, index) => ({
+          plot,
+          index,
+          treeCount: getTreeCount(plot),
+        }))
+        .filter((item) => item.treeCount !== null)
+        .sort((a, b) => b.treeCount - a.treeCount);
+
+      const top = withTrees.slice(0, 5);
+
+      top.forEach((item) => {
+        const plotId = getPlotId(item.plot, item.index);
+        matchingPlotIds.push(plotId);
+        actions.push({
+          type: "view_plot",
+          label: `View ${getPlotLabel(item.plot, item.index)} • ${item.treeCount} trees`,
+          plotId,
+        });
+      });
+
+      return {
+        allowed: true,
+        message: top.length
+          ? `Certainly. Here are the plots with higher tree counts from the current project data.`
+          : `Tree count details are not available in the current project data.`,
+        matchingPlotIds,
+        focusPlotId: null,
+        filters: {
+          status: null,
+          facing: null,
+        },
+        actions,
+      };
+    }
+
+    if (text.includes("premium")) {
+      const ranked = plots
+        .map((plot, index) => {
+          const area = getArea(plot) || 0;
+          const trees = getTreeCount(plot) || 0;
+          const facing = normalizeFacingValue(plot?.facing);
+          const score =
+            area +
+            trees * 10 +
+            (plot?.corner === "Yes" || plot?.corner === true ? 300 : 0) +
+            (plot?.parkFacing === "Yes" || plot?.parkFacing === true ? 250 : 0) +
+            (facing === "E" || facing === "N" ? 150 : 0);
+
+          return { plot, index, score };
+        })
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 5);
+
+      ranked.forEach((item) => {
+        const plotId = getPlotId(item.plot, item.index);
+        matchingPlotIds.push(plotId);
+        actions.push({
+          type: "view_plot",
+          label: `View ${getPlotLabel(item.plot, item.index)}`,
+          plotId,
+        });
+      });
+
+      return {
+        allowed: true,
+        message: ranked.length
+          ? `Certainly. Here are some premium plot options based on the available project details.`
+          : `I could not identify premium plot options from the current project data.`,
+        matchingPlotIds,
+        focusPlotId: null,
+        filters: {
+          status: null,
+          facing: null,
+        },
+        actions,
+      };
+    }
+
+    return null;
+  };
+
   try {
     if (req.method !== "POST") {
       return send(
@@ -139,10 +489,7 @@ export default async (req) => {
           message: "Method not allowed.",
           matchingPlotIds: [],
           focusPlotId: null,
-          filters: {
-            status: null,
-            facing: null,
-          },
+          filters: { status: null, facing: null },
           actions: [],
         },
         405
@@ -158,14 +505,19 @@ export default async (req) => {
           message: "Prompt is required.",
           matchingPlotIds: [],
           focusPlotId: null,
-          filters: {
-            status: null,
-            facing: null,
-          },
+          filters: { status: null, facing: null },
           actions: [],
         },
         400
       );
+    }
+
+    const trimmedPrompt = String(prompt).trim();
+
+    // Direct handling for common queries
+    const directResponse = handleDirectQuery(trimmedPrompt, context);
+    if (directResponse) {
+      return send(directResponse);
     }
 
     const apiKey = process.env.NVIDIA_API_KEY;
@@ -177,75 +529,40 @@ export default async (req) => {
           message: "Missing NVIDIA_API_KEY in Netlify environment variables.",
           matchingPlotIds: [],
           focusPlotId: null,
-          filters: {
-            status: null,
-            facing: null,
-          },
+          filters: { status: null, facing: null },
           actions: [],
         },
         500
       );
     }
 
-    const safeFallback = buildFallback();
     const chatHistory = normalizeHistory(history);
-    const trimmedPrompt = String(prompt).trim();
 
     const systemPrompt = `
 You are a professional real-estate sales executive assistant for a plotted development application.
 
-Your role:
-- Assist users with project details, plot availability, facing, pricing, area, trees, highlights, comparisons, and related project information.
-- Answer ONLY from the provided project data context and conversation history.
-- Never invent any pricing, plot details, project facts, tree counts, or company information.
-
-Tone rules:
-- Professional
-- Warm
-- Respectful
-- Neutral
-- Do not use gender-based words like sir or madam
-- Speak like a polished real-estate sales executive
-- Keep responses concise, helpful, and premium
-
-Conversation rules:
-- Understand natural follow-up replies
-- Resolve phrases like:
-  - show more like that
-  - similar plots
-  - continue
-  - compare with that
-  - show other similar plots
-  - that was good
-  - show more
-- Use previous conversation context carefully
-- If previous context is unclear, politely say so
-
-Greeting rules:
-- Greetings like hello, hi, hey, good morning, good evening, thanks, thank you, and how are you are valid and should receive a warm professional response
-
-Project behavior:
-- For plot suggestions, mention benefits only if available in data
-- For tree-related queries, mention counts or names only if available
-- For pricing queries, mention only available pricing values
-- For comparisons, compare only using available context data
-- If data is missing, clearly say it is not available in the current project data
+Rules:
+- Answer ONLY from the provided project data context and conversation history
+- Never invent plot details, pricing, tree counts, or project facts
+- Use a professional, warm, respectful, neutral tone
+- Do not use words like sir or madam
+- Keep the message concise and clear
+- For greetings, respond naturally
+- For follow-up questions like "show more like that", use previous conversation context carefully
+- If previous context is unclear, say so politely
 
 UI rules:
 - focusPlotId must always be null
-- Do not auto-open any plot
-- When relevant, return action buttons
+- Do not auto-open plots
+- Use actions when relevant
 
-Valid action button formats:
-
-For viewing a plot:
+Valid action formats:
 {
   "type": "view_plot",
   "label": "View Plot 20",
   "plotId": "plot-20"
 }
 
-For applying a filter:
 {
   "type": "apply_filter",
   "label": "Show east facing plots",
@@ -255,13 +572,11 @@ For applying a filter:
   }
 }
 
-For resetting filters:
 {
   "type": "reset_filters",
   "label": "Clear Filters"
 }
 
-Return format:
 Return ONLY valid JSON in exactly this shape:
 {
   "allowed": true,
@@ -275,41 +590,17 @@ Return ONLY valid JSON in exactly this shape:
   "actions": []
 }
 
-Rules:
-- allowed should be true for in-scope queries and greetings
-- message must always be plain readable text for chat UI
-- matchingPlotIds must always be an array
-- focusPlotId must always be null
-- filters must contain only status and facing
-- actions must always be an array
-
-Filter mapping:
-- east => E
-- west => W
-- north => N
-- south => S
-- available => Available
-- sold => Sold
-- booked => Booked
-- reserved => Reserved
-
-Critical output rule:
-- Return JSON only
-- Do not wrap JSON in markdown
-- Do not add explanation before or after JSON
-- Do not use code fences
+Do not use markdown.
+Do not use code fences.
+Do not add explanation outside JSON.
 `.trim();
-
-    const contextMessage = {
-      role: "system",
-      content: `Here is the project data context in JSON. Use only this data and the chat history:\n${JSON.stringify(
-        { context }
-      )}`,
-    };
 
     const messages = [
       { role: "system", content: systemPrompt },
-      contextMessage,
+      {
+        role: "system",
+        content: `Project data context:\n${JSON.stringify({ context })}`,
+      },
       ...chatHistory,
       { role: "user", content: trimmedPrompt },
     ];
@@ -325,11 +616,10 @@ Critical output rule:
         body: JSON.stringify({
           model: "openai/gpt-oss-120b",
           messages,
-          temperature: 0.2,
+          temperature: 0.1,
           top_p: 0.9,
-          max_tokens: 1200,
+          max_tokens: 900,
           stream: false,
-          response_format: { type: "json_object" },
         }),
       }
     );
@@ -338,38 +628,16 @@ Critical output rule:
     try {
       upstreamData = await upstreamRes.json();
     } catch {
-      return send(
-        {
-          allowed: false,
-          message: "Invalid response received from NVIDIA API.",
-          matchingPlotIds: [],
-          focusPlotId: null,
-          filters: {
-            status: null,
-            facing: null,
-          },
-          actions: [],
-        },
-        500
-      );
+      return send(baseResponse("Sorry, I couldn’t read the AI response properly. Please try again."));
     }
 
     if (!upstreamRes.ok) {
       return send(
-        {
-          allowed: false,
-          message:
-            upstreamData?.error?.message ||
+        baseResponse(
+          upstreamData?.error?.message ||
             upstreamData?.message ||
-            "Failed to connect to NVIDIA API.",
-          matchingPlotIds: [],
-          focusPlotId: null,
-          filters: {
-            status: null,
-            facing: null,
-          },
-          actions: [],
-        },
+            "Unable to connect to AI at the moment."
+        ),
         500
       );
     }
@@ -378,11 +646,11 @@ Critical output rule:
     const parsed = extractJson(rawContent);
 
     if (!parsed || typeof parsed !== "object") {
-      return send({
-        ...safeFallback,
-        message:
-          "Sorry, I couldn’t structure that response properly. Please ask again about plots, pricing, facing, tree details, or project information.",
-      });
+      return send(
+        baseResponse(
+          "I’m here to assist with plot details, pricing, facing, tree information, and project highlights. Please try rephrasing your request."
+        )
+      );
     }
 
     const normalized = {
@@ -390,7 +658,7 @@ Critical output rule:
       message:
         typeof parsed.message === "string" && parsed.message.trim()
           ? parsed.message.trim()
-          : safeFallback.message,
+          : "I’m here to assist with project and plot information.",
       matchingPlotIds: Array.isArray(parsed.matchingPlotIds)
         ? parsed.matchingPlotIds.filter(
             (id) => typeof id === "string" && id.trim()
@@ -398,7 +666,7 @@ Critical output rule:
         : [],
       focusPlotId: null,
       filters: normalizeFilters(parsed.filters || {}),
-      actions: normalizeActions(parsed.actions),
+      actions: normalizeActions(parsed.actions || []),
     };
 
     return send(normalized);
@@ -409,10 +677,7 @@ Critical output rule:
         message: error?.message || "Unexpected server error.",
         matchingPlotIds: [],
         focusPlotId: null,
-        filters: {
-          status: null,
-          facing: null,
-        },
+        filters: { status: null, facing: null },
         actions: [],
       },
       500
