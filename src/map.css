@@ -504,16 +504,16 @@ area[data-key]:hover + .mapster_el,
 
 @keyframes askai-glow {
   0% {
-    box-shadow: 0 0 0px rgba(255,255,255,0.2),
-                0 0 0px rgba(255,255,255,0.2);
+    box-shadow: 0 0 0px rgba(255, 0, 0, 0.2),
+                0 0 0px rgb(255, 3, 200);
   }
   50% {
-    box-shadow: 0 0 10px rgba(255,255,255,0.6),
-                0 0 20px rgba(255,255,255,0.3);
+    box-shadow: 0 0 10px rgb(0, 17, 250),
+                0 0 20px rgb(255, 255, 255);
   }
   100% {
-    box-shadow: 0 0 0px rgba(255,255,255,0.2),
-                0 0 0px rgba(255,255,255,0.2);
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0.945),
+                0 0 0px rgb(255, 255, 255);
   }
 }
 

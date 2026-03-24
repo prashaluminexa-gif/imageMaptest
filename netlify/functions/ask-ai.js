@@ -134,7 +134,6 @@ export default async (req) => {
     if (!context) return [];
 
     if (Array.isArray(context)) return context.filter(Boolean);
-
     if (Array.isArray(context?.plots)) return context.plots.filter(Boolean);
     if (Array.isArray(context?.plotData)) return context.plotData.filter(Boolean);
     if (Array.isArray(context?.allPlots)) return context.allPlots.filter(Boolean);
@@ -166,24 +165,19 @@ export default async (req) => {
 
   const normalizeFacingValue = (value) => {
     const v = String(value || "").trim().toUpperCase();
-
     if (v === "E" || v === "EAST") return "E";
     if (v === "W" || v === "WEST") return "W";
     if (v === "N" || v === "NORTH") return "N";
     if (v === "S" || v === "SOUTH") return "S";
-
     return null;
   };
 
   const normalizeStatusValue = (value) => {
     const v = String(value || "").trim().toLowerCase();
-
     if (v === "available") return "Available";
     if (v === "sold") return "Sold";
     if (v === "booked") return "Booked";
-    if (v === "reserved") return "Reserved";
-    if (v === "reserve") return "Reserved";
-
+    if (v === "reserved" || v === "reserve") return "Reserved";
     return null;
   };
 
@@ -222,35 +216,182 @@ export default async (req) => {
     return null;
   };
 
+  const formatCurrency = (value) => {
+    const num = Number(value);
+    if (!Number.isFinite(num)) return null;
+
+    try {
+      return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 0,
+      }).format(num);
+    } catch {
+      return `₹${num}`;
+    }
+  };
+
+  const getPrice = (plot) => {
+    const candidates = [
+      plot?.totalPrice,
+      plot?.totalAmount,
+      plot?.offerPrice,
+      plot?.price,
+      plot?.amount,
+      plot?.finalAmount,
+      plot?.saleValue,
+      plot?.basicSaleValue,
+    ];
+
+    for (const value of candidates) {
+      const num = Number(value);
+      if (Number.isFinite(num)) return num;
+    }
+
+    return null;
+  };
+
+  const getTreeSummary = (plot) => {
+    const treeFields = [
+      "guava",
+      "cashew",
+      "arecaNut",
+      "arecanut",
+      "mango",
+      "lemon",
+      "jamoon",
+      "jamun",
+      "pomegranate",
+      "custardApple",
+      "chikku",
+      "amla",
+      "coconut",
+    ];
+
+    const labels = {
+      guava: "Guava",
+      cashew: "Cashew",
+      arecaNut: "Areca Nut",
+      arecanut: "Areca Nut",
+      mango: "Mango",
+      lemon: "Lemon",
+      jamoon: "Jamoon",
+      jamun: "Jamun",
+      pomegranate: "Pomegranate",
+      custardApple: "Custard Apple",
+      chikku: "Chikku",
+      amla: "Amla",
+      coconut: "Coconut",
+    };
+
+    const items = [];
+
+    treeFields.forEach((key) => {
+      const value = Number(plot?.[key]);
+      if (Number.isFinite(value) && value > 0) {
+        items.push(`• ${labels[key]} (${value})`);
+      }
+    });
+
+    return items;
+  };
+
   const detectGreeting = (prompt) => {
     const text = String(prompt || "").trim().toLowerCase();
 
     const map = {
-      hi: "Welcome. I’m here to assist you with plot details, pricing, availability, tree details, and project insights. How may I help you?",
+      hi: "Welcome.\n\nI’m here to assist you with plot details, pricing, availability, tree details, and project insights.\n\nHow may I help you?",
       hello:
-        "Welcome. I’m here to assist you with plot details, pricing, availability, tree details, and project insights. How may I help you?",
-      hey: "Welcome. I’m here to assist you with plot details, pricing, availability, tree details, and project insights. How may I help you?",
+        "Welcome.\n\nI’m here to assist you with plot details, pricing, availability, tree details, and project insights.\n\nHow may I help you?",
+      hey: "Welcome.\n\nI’m here to assist you with plot details, pricing, availability, tree details, and project insights.\n\nHow may I help you?",
       "good morning":
-        "Good morning. I’m here to assist you with project details, plot availability, pricing, and related information. How may I help you?",
+        "Good morning.\n\nI’m here to assist you with project details, plot availability, pricing, and related information.\n\nHow may I help you?",
       "good afternoon":
-        "Good afternoon. I’m here to assist you with project details, plot availability, pricing, and related information. How may I help you?",
+        "Good afternoon.\n\nI’m here to assist you with project details, plot availability, pricing, and related information.\n\nHow may I help you?",
       "good evening":
-        "Good evening. I’m here to assist you with project details, plot availability, pricing, and related information. How may I help you?",
+        "Good evening.\n\nI’m here to assist you with project details, plot availability, pricing, and related information.\n\nHow may I help you?",
       "how are you":
-        "I’m doing well, thank you. I’m here to assist you with plot availability, pricing, facing, tree details, and project information. How may I help you?",
+        "I’m doing well, thank you.\n\nI’m here to assist you with plot availability, pricing, facing, tree details, and project information.\n\nHow may I help you?",
       "how are you?":
-        "I’m doing well, thank you. I’m here to assist you with plot availability, pricing, facing, tree details, and project information. How may I help you?",
+        "I’m doing well, thank you.\n\nI’m here to assist you with plot availability, pricing, facing, tree details, and project information.\n\nHow may I help you?",
       "who are you":
-        "I’m your digital sales executive for this project. I can assist with plot details, pricing, availability, facing, tree details, and project highlights.",
+        "I’m your digital sales executive for this project.\n\nI can assist with plot details, pricing, availability, facing, tree details, and project highlights.",
       "who are you?":
-        "I’m your digital sales executive for this project. I can assist with plot details, pricing, availability, facing, tree details, and project highlights.",
+        "I’m your digital sales executive for this project.\n\nI can assist with plot details, pricing, availability, facing, tree details, and project highlights.",
       thanks:
-        "You’re welcome. I’m here whenever you need help with plot details or project information.",
+        "You’re welcome.\n\nI’m here whenever you need help with plot details or project information.",
       "thank you":
-        "You’re welcome. I’m here whenever you need help with plot details or project information.",
+        "You’re welcome.\n\nI’m here whenever you need help with plot details or project information.",
     };
 
     return map[text] || null;
+  };
+
+  const buildStructuredPlotMessage = (plot, index) => {
+    const lines = [];
+
+    lines.push("Certainly. Here are the details:");
+    lines.push("");
+
+    lines.push(`Plot: ${getPlotNumber(plot, index)}`);
+
+    const block = plot?.blockName || plot?.block || plot?.phase;
+    if (block) lines.push(`Block: ${block}`);
+
+    const status = plot?.status || plot?.Status;
+    if (status) lines.push(`Status: ${status}`);
+
+    const facing = plot?.facing;
+    if (facing) lines.push(`Facing: ${facing}`);
+
+    const area = getArea(plot);
+    if (area !== null) lines.push(`Area: ${area} sq ft`);
+
+    const price = getPrice(plot);
+    if (price !== null) {
+      const formatted = formatCurrency(price);
+      if (formatted) lines.push(`Total Price: ${formatted}`);
+    }
+
+    const dimension =
+      plot?.siteArea || plot?.dimension || plot?.dimensions || plot?.plotDimension;
+    if (dimension) lines.push(`Dimension: ${dimension}`);
+
+    const treeList = getTreeSummary(plot);
+    const totalTrees = getTreeCount(plot);
+
+    if (treeList.length || totalTrees !== null) {
+      lines.push("");
+      lines.push("Trees:");
+
+      if (treeList.length) {
+        lines.push(...treeList);
+      } else if (totalTrees !== null) {
+        lines.push(`• Total Trees (${totalTrees})`);
+      }
+    }
+
+    const highlights = [];
+
+    if (plot?.corner === "Yes" || plot?.corner === true) {
+      highlights.push("Corner plot");
+    }
+
+    if (plot?.parkFacing === "Yes" || plot?.parkFacing === true) {
+      highlights.push("Park facing");
+    }
+
+    if (normalizeFacingValue(plot?.facing) === "N" || normalizeFacingValue(plot?.facing) === "E") {
+      highlights.push("Preferred facing");
+    }
+
+    if (highlights.length) {
+      lines.push("");
+      lines.push("Highlights:");
+      highlights.forEach((item) => lines.push(`• ${item}`));
+    }
+
+    return lines.join("\n").trim();
   };
 
   const handleDirectQuery = (prompt, context) => {
@@ -277,7 +418,10 @@ export default async (req) => {
     ];
 
     for (const item of facingMap) {
-      if (text.includes(item.keyword) && (text.includes("plot") || text.includes("plots") || text.includes("facing"))) {
+      if (
+        text.includes(item.keyword) &&
+        (text.includes("plot") || text.includes("plots") || text.includes("facing"))
+      ) {
         const matched = plots.filter(
           (plot) => normalizeFacingValue(plot?.facing) === item.value
         );
@@ -302,7 +446,9 @@ export default async (req) => {
         return {
           allowed: true,
           message: matched.length
-            ? `Certainly. I found ${matched.length} ${item.label} plot${matched.length > 1 ? "s" : ""}. You can view the relevant options below.`
+            ? `Certainly.\n\nI found ${matched.length} ${item.label} plot${
+                matched.length > 1 ? "s" : ""
+              }.\n\nYou can review the relevant options below.`
             : `I could not find any ${item.label} plots in the current project data.`,
           matchingPlotIds,
           focusPlotId: null,
@@ -323,7 +469,10 @@ export default async (req) => {
     ];
 
     for (const item of statusMap) {
-      if (text.includes(item.keyword) && (text.includes("plot") || text.includes("plots") || text.includes("show"))) {
+      if (
+        text.includes(item.keyword) &&
+        (text.includes("plot") || text.includes("plots") || text.includes("show"))
+      ) {
         const matched = plots.filter(
           (plot) => normalizeStatusValue(plot?.status || plot?.Status) === item.value
         );
@@ -348,7 +497,9 @@ export default async (req) => {
         return {
           allowed: true,
           message: matched.length
-            ? `Certainly. I found ${matched.length} ${item.label} plot${matched.length > 1 ? "s" : ""}. You can review the relevant options below.`
+            ? `Certainly.\n\nI found ${matched.length} ${item.label} plot${
+                matched.length > 1 ? "s" : ""
+              }.\n\nYou can review the relevant options below.`
             : `I could not find any ${item.label} plots in the current project data.`,
           matchingPlotIds,
           focusPlotId: null,
@@ -386,8 +537,8 @@ export default async (req) => {
       return {
         allowed: true,
         message: top.length
-          ? `Certainly. Here are the plots with lower tree counts from the current project data.`
-          : `Tree count details are not available in the current project data.`,
+          ? "Certainly.\n\nHere are the plots with lower tree counts from the current project data."
+          : "Tree count details are not available in the current project data.",
         matchingPlotIds,
         focusPlotId: null,
         filters: {
@@ -423,8 +574,8 @@ export default async (req) => {
       return {
         allowed: true,
         message: top.length
-          ? `Certainly. Here are the plots with higher tree counts from the current project data.`
-          : `Tree count details are not available in the current project data.`,
+          ? "Certainly.\n\nHere are the plots with higher tree counts from the current project data."
+          : "Tree count details are not available in the current project data.",
         matchingPlotIds,
         focusPlotId: null,
         filters: {
@@ -466,8 +617,8 @@ export default async (req) => {
       return {
         allowed: true,
         message: ranked.length
-          ? `Certainly. Here are some premium plot options based on the available project details.`
-          : `I could not identify premium plot options from the current project data.`,
+          ? "Certainly.\n\nHere are some premium plot options based on the available project details."
+          : "I could not identify premium plot options from the current project data.",
         matchingPlotIds,
         focusPlotId: null,
         filters: {
@@ -476,6 +627,39 @@ export default async (req) => {
         },
         actions,
       };
+    }
+
+    const plotNumberMatch = text.match(/plot\s*[-:]?\s*([a-z0-9]+)/i);
+    if (plotNumberMatch) {
+      const requested = plotNumberMatch[1].toLowerCase();
+
+      const foundIndex = plots.findIndex((plot, index) => {
+        const number = String(getPlotNumber(plot, index)).toLowerCase();
+        return number.includes(requested);
+      });
+
+      if (foundIndex !== -1) {
+        const plot = plots[foundIndex];
+        const plotId = getPlotId(plot, foundIndex);
+
+        return {
+          allowed: true,
+          message: buildStructuredPlotMessage(plot, foundIndex),
+          matchingPlotIds: [plotId],
+          focusPlotId: null,
+          filters: {
+            status: null,
+            facing: null,
+          },
+          actions: [
+            {
+              type: "view_plot",
+              label: `View ${getPlotLabel(plot, foundIndex)}`,
+              plotId,
+            },
+          ],
+        };
+      }
     }
 
     return null;
@@ -514,7 +698,6 @@ export default async (req) => {
 
     const trimmedPrompt = String(prompt).trim();
 
-    // Direct handling for common queries
     const directResponse = handleDirectQuery(trimmedPrompt, context);
     if (directResponse) {
       return send(directResponse);
@@ -550,6 +733,44 @@ Rules:
 - For greetings, respond naturally
 - For follow-up questions like "show more like that", use previous conversation context carefully
 - If previous context is unclear, say so politely
+
+RESPONSE FORMATTING RULES:
+- Format responses in short readable sections
+- Use line breaks between important details
+- Do not write everything in one paragraph
+- Keep each line short and readable for mobile chat UI
+- Use bullet points where useful
+- If explaining a single plot, prefer this style:
+
+Certainly. Here are the details:
+
+Plot: Plot 3
+Status: Available
+Facing: North
+Area: 1500 sq ft
+Price: ₹12,00,000
+
+Trees:
+• Mango (2)
+• Coconut (4)
+
+Highlights:
+• Corner plot
+• Good frontage
+
+- If giving comparison, prefer this style:
+
+Comparison:
+
+Plot 3
+• Facing: North
+• Area: 1500 sq ft
+• Trees: 8
+
+Plot 5
+• Facing: East
+• Area: 1650 sq ft
+• Trees: 5
 
 UI rules:
 - focusPlotId must always be null
@@ -590,8 +811,7 @@ Return ONLY valid JSON in exactly this shape:
   "actions": []
 }
 
-Do not use markdown.
-Do not use code fences.
+Do not use markdown code fences.
 Do not add explanation outside JSON.
 `.trim();
 
@@ -628,7 +848,11 @@ Do not add explanation outside JSON.
     try {
       upstreamData = await upstreamRes.json();
     } catch {
-      return send(baseResponse("Sorry, I couldn’t read the AI response properly. Please try again."));
+      return send(
+        baseResponse(
+          "Sorry.\n\nI couldn’t read the AI response properly.\n\nPlease try again."
+        )
+      );
     }
 
     if (!upstreamRes.ok) {
@@ -648,7 +872,7 @@ Do not add explanation outside JSON.
     if (!parsed || typeof parsed !== "object") {
       return send(
         baseResponse(
-          "I’m here to assist with plot details, pricing, facing, tree information, and project highlights. Please try rephrasing your request."
+          "I’m here to assist with plot details, pricing, facing, tree information, and project highlights.\n\nPlease try rephrasing your request."
         )
       );
     }
